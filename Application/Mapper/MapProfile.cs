@@ -22,7 +22,7 @@ namespace Application.Mapper
             CreateMap<string, Role>()
                 .ConstructUsing(name => new Role { Name = name, Id = Guid.NewGuid().ToString() });
 
-
+            CreateMap<UserRegisterRequest, ApplicationUser>();
 
         }
     }
