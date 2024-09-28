@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodSaver", "FoodSaver\FoodSaver.csproj", "{CC98171B-2133-4A11-B358-789A51337A5C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{73AD9327-7AA3-4107-BB62-A6D18B5F3D05} = {73AD9327-7AA3-4107-BB62-A6D18B5F3D05}
+		{792D5205-790A-42EB-8AF8-9058647D301F} = {792D5205-790A-42EB-8AF8-9058647D301F}
+		{C24DFE8B-7C26-4046-87D3-986550BF5917} = {C24DFE8B-7C26-4046-87D3-986550BF5917}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{C24DFE8B-7C26-4046-87D3-986550BF5917}"
+	ProjectSection(ProjectDependencies) = postProject
+		{792D5205-790A-42EB-8AF8-9058647D301F} = {792D5205-790A-42EB-8AF8-9058647D301F}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{792D5205-790A-42EB-8AF8-9058647D301F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{73AD9327-7AA3-4107-BB62-A6D18B5F3D05}"
+	ProjectSection(ProjectDependencies) = postProject
+		{792D5205-790A-42EB-8AF8-9058647D301F} = {792D5205-790A-42EB-8AF8-9058647D301F}
+		{C24DFE8B-7C26-4046-87D3-986550BF5917} = {C24DFE8B-7C26-4046-87D3-986550BF5917}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodSaverMaui", "FoodSaverMaui\FoodSaverMaui.csproj", "{26831FF3-257B-40A2-9490-19A87DF29322}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC98171B-2133-4A11-B358-789A51337A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC98171B-2133-4A11-B358-789A51337A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC98171B-2133-4A11-B358-789A51337A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC98171B-2133-4A11-B358-789A51337A5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C24DFE8B-7C26-4046-87D3-986550BF5917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C24DFE8B-7C26-4046-87D3-986550BF5917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C24DFE8B-7C26-4046-87D3-986550BF5917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C24DFE8B-7C26-4046-87D3-986550BF5917}.Release|Any CPU.Build.0 = Release|Any CPU
+		{792D5205-790A-42EB-8AF8-9058647D301F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{792D5205-790A-42EB-8AF8-9058647D301F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{792D5205-790A-42EB-8AF8-9058647D301F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{792D5205-790A-42EB-8AF8-9058647D301F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73AD9327-7AA3-4107-BB62-A6D18B5F3D05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73AD9327-7AA3-4107-BB62-A6D18B5F3D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73AD9327-7AA3-4107-BB62-A6D18B5F3D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73AD9327-7AA3-4107-BB62-A6D18B5F3D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26831FF3-257B-40A2-9490-19A87DF29322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26831FF3-257B-40A2-9490-19A87DF29322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26831FF3-257B-40A2-9490-19A87DF29322}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{26831FF3-257B-40A2-9490-19A87DF29322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26831FF3-257B-40A2-9490-19A87DF29322}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26831FF3-257B-40A2-9490-19A87DF29322}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB771284-A687-4D11-87CE-8EB46B7F554E}
+	EndGlobalSection
+EndGlobal
