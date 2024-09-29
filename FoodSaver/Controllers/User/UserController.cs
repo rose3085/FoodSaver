@@ -30,5 +30,19 @@ namespace FoodSaver.Controllers.User
         
         }
 
+
+        [HttpPost]
+        [Route("LoginUser")]
+        public async Task<IActionResult> LoginUser(UserLoginRequest loginRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.LoginUser(loginRequest);
+                return Ok(result);
+
+            }
+            return BadRequest(ModelState);
+
+        }
     }
 }

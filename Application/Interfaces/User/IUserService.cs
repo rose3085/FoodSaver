@@ -11,5 +11,6 @@ namespace Application.Interfaces.User
     public interface IUserService
     {
         Task<UserManagerResponse> RegisterUser(UserRegisterRequest registerRequest, string role);
+        Task<UserLoginResponse> LoginUser(UserLoginRequest loginRequest);
     }
 }

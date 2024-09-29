@@ -34,6 +34,79 @@ namespace Application.Services.User
             _mapper = mapper;
         }
 
+        public async Task<UserLoginResponse> LoginUser(UserLoginRequest loginRequest)
+        {
+            try
+            {
+                var userExists = await _userManager.FindByEmailAsync(loginRequest.Email);
+                if (userExists == null)
+                {
+                    return new UserLoginResponse
+                    { 
+                        IsSuccess = false,
+                        Message= "Invalid Credentials!!"
+                    };
+
+                }
+                var isPasswordCorrect = await _userManager.CheckPasswordAsync(userExists, loginRequest.Password);
+                if (!isPasswordCorrect)
+                {
+                    return new UserLoginResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Invalid Credentials!!"
+                    };
+                }
+                var getRole = await _userManager.GetRolesAsync(userExists);
+               
+                var authClaims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, userExists.UserName),
+                new Claim(ClaimTypes.NameIdentifier, userExists.Id),
+                new Claim("JWTID", Guid.NewGuid().ToString()),
+                
+            };
+                foreach (var userRole in getRole)
+                {
+                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                }
+                var token = GenerateNewJsonWebToken(authClaims);
+                if (token != null)
+                {
+                    return new UserLoginResponse
+                    {
+                        IsSuccess = true,
+                        Message = "User login Successful",
+                        Token = token,
+                        Role = getRole,
+                    };
+
+                }
+                else 
+                {
+
+                    return new UserLoginResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Invalid Credentials!!"
+                    };
+                }
+
+                
+
+
+            }
+            catch (Exception ex)
+            {
+                return new UserLoginResponse
+                    
+                {
+                    IsSuccess = false,
+                    Error = ex.Message
+                };
+            }
+        }
+
         public async Task<UserManagerResponse> RegisterUser(UserRegisterRequest registerRequest, string role)
         {
             try
