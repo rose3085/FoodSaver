@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace FoodSaverMaui.ViewModel
 {
@@ -68,7 +67,10 @@ namespace FoodSaverMaui.ViewModel
             //var status = BiometricHwStatus.LockedOut;
             if (result.Status == BiometricResponseStatus.Success)
             {
-                await Shell.Current.DisplayAlert("Success", "Fingerprint authenticated successfully", "Ok!");
+                //await Shell.Current.DisplayAlert("Success", "Fingerprint authenticated successfully", "Ok!");
+                await Shell.Current.GoToAsync("//HomePage");
+                // await Navigation.PushAsync(new HomePage());
+                //Microsoft.Maui.Controls.Application.Current.MainPage = new HomePage();
             }
 
             else

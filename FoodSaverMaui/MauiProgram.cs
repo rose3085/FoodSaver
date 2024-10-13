@@ -35,8 +35,14 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<Login>();
             builder.Services.AddSingleton<LoginViewModel>();
 
+            builder.Services.AddSingleton<HomePage>();
+            builder.Services.AddSingleton<HomePageViewModel>();
+
+            builder.Services.AddSingleton<LandingPage>();
+            builder.Services.AddSingleton<UserProfile>();
+            builder.Services.AddSingleton<FindFood>();
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 
 #endif
 

@@ -12,4 +12,7 @@
         ContentTemplate="{DataTemplate local:CreateAccount}"
         Route="CreateAccount" />
 
+    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}" />
+
+
 </Shell>

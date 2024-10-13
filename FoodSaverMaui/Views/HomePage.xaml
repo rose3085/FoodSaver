@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:FoodSaverMaui.Views"
+             xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
+        x:DataType="viewmodel:HomePageViewModel"
+            
+             x:Class="FoodSaverMaui.Views.HomePage"
+             >
+ 
+    <TabBar IsVisible="True">
+        
+        <!--<local:LandingPage />
+        <local:UserProfile />-->
+       
+            <ShellContent 
+                     Icon="home.png"
+                      ContentTemplate="{DataTemplate local:LandingPage}" />
+       
+           <ShellContent 
+                 Icon="find.png"
+   ContentTemplate="{DataTemplate local:FindFood}" />
+        <ShellContent 
+                            Icon="profile.png"
+              ContentTemplate="{DataTemplate local:UserProfile}" />
+    
+
+    </TabBar>
+
+</Shell>
+    
