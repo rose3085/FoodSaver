@@ -1,9 +1,12 @@
+using FoodSaverMaui.ViewModel;
+
 namespace FoodSaverMaui.Views;
 
 public partial class UserProfile : ContentPage
 {
-	public UserProfile()
+	public UserProfile(UserProfileViewModel vm)
 	{
 		InitializeComponent();
+		BindingContext=vm;
 	}
 }

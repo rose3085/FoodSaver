@@ -2,11 +2,26 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FoodSaverMaui.Views.FindFood"
-             Title="FindFood">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+            NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+        <VerticalStackLayout Grid.Row="0" Padding="10">
+            <Border StrokeShape="RoundRectangle 10,10,10,10">
+                <SearchBar Placeholder="Search items..."  BackgroundColor="WhiteSmoke" />
+            </Border>
+        </VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <CollectionView >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid RowDefinitions="Auto,Auto,*">
+                            </Grid>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+               
+            </CollectionView>
+        </ScrollView>
+
+    </Grid>
 </ContentPage>

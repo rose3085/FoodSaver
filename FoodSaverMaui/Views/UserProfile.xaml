@@ -2,11 +2,97 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FoodSaverMaui.Views.UserProfile"
-             Title="UserProfile">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+               xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
+ x:DataType="viewmodel:UserProfileViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            
+             NavigationPage.HasNavigationBar="False">
+
+
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+
+      
+
+            <!--<Label Grid.Row="0" Text="My Profile" Padding="0" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Start"/>-->
+ 
+            <!--<toolkit:Expander>
+                <toolkit:Expander.Header>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15" BackgroundColor="AliceBlue">
+                        <Image Grid.Column="0" Source="user.png" HeightRequest="34" WidthRequest="34"  />
+                        <Label Grid.Column="1" Text="Account" 
+                   FontAttributes="Bold"
+                   FontSize="25" /></Grid>
+                    
+                </toolkit:Expander.Header>
+                <VerticalStackLayout Padding="10" Spacing="5" VerticalOptions="Center" HorizontalOptions="Center" >
+                    <Label Text="Update Username" FontSize="15" FontFamily="Poppins" />
+                    <Label Text="Update Email" FontSize="15" FontFamily="Poppins" />
+                    <Label Text="Forget Password" FontSize="15" FontFamily="Poppins"/>
+                    
+                </VerticalStackLayout>
+            </toolkit:Expander>-->
+
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="Center" Padding="0,30,0,0" >
+                <Image Grid.Column="0" Source="user.png" HeightRequest="84" WidthRequest="84"  />
+                <Grid  Grid.Column="1" RowDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                    <Label Grid.Row="0" Text="Rabina Sedhai" 
+                    FontAttributes="Bold"
+                    FontSize="25" />
+                    <Label Grid.Row="1" Text="rabinasedhai1@gmail.com" />
+                </Grid>
+            </Grid>
+        <VerticalStackLayout Grid.Row="1" BackgroundColor="WhiteSmoke" Spacing="10">
+
+            <Border StrokeShape="RoundRectangle 30,30,30,30" HeightRequest="50">
+                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
+                    <Image Grid.Column="0" Source="user.png" HeightRequest="24" WidthRequest="24"  />
+
+                    <Label Grid.Column="1" Text="Edit Profile" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+        
+        FontSize="18" />
+
+                </Grid>
+            </Border>
+            <Border StrokeShape="RoundRectangle 30,30,30,30" HeightRequest="50">
+                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
+                    <Image Grid.Column="0" Source="key.png" HeightRequest="24" WidthRequest="24"  />
+
+                    <Label Grid.Column="1" Text="Change Password" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+
+FontSize="18" />
+
+                </Grid>
+            </Border>
+            <Border StrokeShape="RoundRectangle 30,30,30,30" HeightRequest="50">
+                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
+                    <Image Grid.Column="0" Source="fingerprint.png" HeightRequest="24" WidthRequest="24"  />
+
+                    <Label Grid.Column="1" Text="Enable Biometric" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+
+FontSize="18" />
+                </Grid>
+            </Border>
+            <Border StrokeShape="RoundRectangle 30,30,30,30" HeightRequest="50">
+                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
+                    <Image Grid.Column="0" Source="question.png" HeightRequest="24" WidthRequest="24"  />
+
+                    <Label Grid.Column="1" Text="Help" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+
+FontSize="18" />
+                </Grid>
+            </Border>
+            <Border StrokeShape="RoundRectangle 30,30,30,30" HeightRequest="50">
+                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
+                    <Image Grid.Column="0" Source="logout.png" HeightRequest="24" WidthRequest="24"  />
+
+                    <Label Grid.Column="1" Text="Log Out" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+
+FontSize="18" />
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+
+    </Grid>
+
+
 </ContentPage>

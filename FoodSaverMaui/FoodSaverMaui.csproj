@@ -67,8 +67,10 @@
 	  <None Remove="Resources\Images\finger_print.png" />
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\key.png" />
+	  <None Remove="Resources\Images\logout.png" />
 	  <None Remove="Resources\Images\phone.png" />
 	  <None Remove="Resources\Images\profile.png" />
+	  <None Remove="Resources\Images\question.png" />
 	  <None Remove="Resources\Images\user.png" />
 	</ItemGroup>
 

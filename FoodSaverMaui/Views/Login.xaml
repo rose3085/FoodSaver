@@ -4,6 +4,7 @@
              x:Class="FoodSaverMaui.Views.Login"
               xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
             x:DataType="viewmodel:LoginViewModel"
+              NavigationPage.HasNavigationBar="False"
             >
     <!--<Shell.BackButtonBehavior>
         <BackButtonBehavior  IsVisible="False" />
