@@ -1,6 +1,9 @@
-﻿using FoodSaverMaui.ViewModel;
+﻿using CommunityToolkit.Maui;
+using FoodSaverMaui.Services.User;
+using FoodSaverMaui.ViewModel;
 using FoodSaverMaui.Views;
 using Microsoft.Extensions.Logging;
+using Plugin.Maui.Biometric;
 
 namespace FoodSaverMaui
 {
@@ -11,6 +14,7 @@ namespace FoodSaverMaui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -20,12 +24,16 @@ namespace FoodSaverMaui
                     fonts.AddFont("Poppins-Regular", "PoppinsRegular");
                 });
 
+            builder.Services.AddSingleton<IBiometric>(BiometricAuthenticationService.Default);
 
+            builder.Services.AddSingleton<HttpClient>();
             builder.Services.AddSingleton<CreateAccount>();
             builder.Services.AddSingleton<CreateAccountViewModel>();
+            builder.Services.AddSingleton<UserServices>();
 
 
-
+            builder.Services.AddSingleton<Login>();
+            builder.Services.AddSingleton<LoginViewModel>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

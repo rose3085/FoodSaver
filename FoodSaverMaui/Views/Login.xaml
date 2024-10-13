@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodSaverMaui.Views.Login"
+              xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
+            x:DataType="viewmodel:LoginViewModel"
+            >
+    <!--<Shell.BackButtonBehavior>
+        <BackButtonBehavior  IsVisible="False" />
+    </Shell.BackButtonBehavior>-->
+
+
+    <ContentPage.Content >
+
+
+
+        <Grid  >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+
+            </Grid.ColumnDefinitions>
+
+            <StackLayout Grid.Row="0" Padding="50,80,50,60" VerticalOptions="End"
+                         HorizontalOptions="FillAndExpand">
+                <Label Text="Login to your account!"
+                       FontSize="30" TextColor="#385897"
+                       FontFamily="PoppinsBold"
+                       HorizontalOptions="Center"></Label>
+
+            </StackLayout>
+
+
+
+            <StackLayout Orientation="Vertical" Padding="10" Spacing="10" Grid.Row="1">
+
+
+                    <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0" 
+                               Margin="30,10,30,0">
+                        <Grid ColumnSpacing="15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image Source="email.png" WidthRequest="34" HeightRequest="34"
+            Margin="10,0,0,0"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center" Grid.Column="0" />
+                            <Entry Placeholder="Email"
+                                   Text="{Binding Email}"
+                                   PlaceholderColor="Black"
+                               FontSize="Medium"
+                                   Grid.Column="1" HorizontalOptions="Start"
+                               WidthRequest="{OnIdiom Phone=250, Tablet=400}" />
+                        </Grid>
+                    </Frame>
+
+
+                   
+
+                    <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0" 
+           Margin="30,10,30,0">
+
+
+                        <Grid  ColumnSpacing="15" HorizontalOptions="FillAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image Source="key.png" WidthRequest="34" HeightRequest="34"
+Margin="10,0,0,0"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center" Grid.Column="0" />
+                            <Entry Placeholder="Password" 
+                                   Text="{Binding Password}"
+                                   PlaceholderColor="Black" IsPassword="True"
+                           FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
+                             WidthRequest="{OnIdiom Phone=250, Tablet=400}" />
+                        </Grid>
+                    </Frame>
+
+
+                <HorizontalStackLayout Spacing="20" Padding="20" HorizontalOptions="Center">
+
+                    <Button Text="Sign In" BackgroundColor="#03b25a" 
+                            WidthRequest="{OnIdiom Phone=230, Tablet=350}" 
+                            HorizontalOptions="FillAndExpand" 
+                                Command="{Binding OnSignInTapped}"
+                                />
+                    <Border HorizontalOptions="End" HeightRequest="42" Background="Transparent"
+                            WidthRequest="45" StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="1" 
+                            >
+
+                        <Frame Background="Transparent">
+                            <Image Source="fingerprint.png" HeightRequest="32" WidthRequest="32"
+                              />
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer  Command="{Binding OnFingerPrintTapped}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </Border>
+                </HorizontalStackLayout>
+
+                <Frame HeightRequest="75" 
+           BackgroundColor="Transparent" 
+           BorderColor="Transparent"
+            Margin="0,-10,0,0">
+
+                    <StackLayout x:Name="LoadingOverlay"
+             Margin="0,-10,0,0"
+             BackgroundColor="Transparent"
+             Opacity="0.7"
+            
+             VerticalOptions="Center"
+             HorizontalOptions="Center">
+                            <ActivityIndicator IsRunning="True" Color="White" />
+
+                        </StackLayout>
+                    </Frame>
+
+                </StackLayout>
+           
+            <StackLayout Grid.Row="3" Orientation="Horizontal" Padding="15,0,0,290"
+                         HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Spacing="15">
+                <Label Text="Don't have an account?"
+           FontSize="Medium" VerticalOptions="Center"
+           HorizontalOptions="Center" />
+                <Label Text="Register"   FontSize="Medium"
+         HorizontalOptions="Center" TextColor="#385897">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnRegisterTapped}" />
+                    </Label.GestureRecognizers>
+
+
+                </Label>
+            </StackLayout>
+        </Grid>
+
+    </ContentPage.Content>
+
+
+</ContentPage>

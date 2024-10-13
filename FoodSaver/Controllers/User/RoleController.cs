@@ -57,7 +57,7 @@ namespace FoodSaver.Controllers.User
 
             if (ModelState.IsValid)
             {
-                var result = await _roleService.UpdateRole(newName,role);
+                var result = await _roleService.UpdateRole(newName,role);   
                 return Ok(result);
 
             }

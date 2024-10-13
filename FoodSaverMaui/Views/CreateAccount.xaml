@@ -49,7 +49,9 @@
                                Margin="10,0,0,0"
                                HorizontalOptions="Start"
                                VerticalOptions="Center" Grid.Column="0" />
-                                <Entry Placeholder="Username"  PlaceholderColor="Black"
+                                <Entry Placeholder="Username"  
+                                       Text="{Binding UserName}"
+                                       PlaceholderColor="Black"
                            FontSize="Medium"
                                Grid.Column="1" HorizontalOptions="Start"
                            WidthRequest="{OnIdiom Phone=250, Tablet=400}" />
@@ -70,7 +72,9 @@
             Margin="10,0,0,0"
                             HorizontalOptions="Start"
                             VerticalOptions="Center" Grid.Column="0" />
-                            <Entry Placeholder="Email"  PlaceholderColor="Black"
+                            <Entry Placeholder="Email"
+                                   Text="{Binding Email}"
+                                   PlaceholderColor="Black"
                                FontSize="Medium"
                                    Grid.Column="1" HorizontalOptions="Start"
                                WidthRequest="{OnIdiom Phone=250, Tablet=400}" />
@@ -91,7 +95,9 @@
 Margin="10,0,0,0"
                         HorizontalOptions="Start"
                         VerticalOptions="Center" Grid.Column="0" />
-                            <Entry Placeholder="Phone"  PlaceholderColor="Black"
+                            <Entry Placeholder="Phone" 
+                                   Text="{Binding Phone}"
+                                   PlaceholderColor="Black"
                            FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
                             WidthRequest="{OnIdiom Phone=250, Tablet=400}" />
                         </Grid>
@@ -112,7 +118,9 @@ Margin="10,0,0,0"
 Margin="10,0,0,0"
                             HorizontalOptions="Start"
                             VerticalOptions="Center" Grid.Column="0" />
-                            <Entry Placeholder="Password"  PlaceholderColor="Black" IsPassword="True"
+                            <Entry Placeholder="Password" 
+                                   Text="{Binding Password}"
+                                   PlaceholderColor="Black" IsPassword="True"
                            FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
                              WidthRequest="{OnIdiom Phone=250, Tablet=400}" />
                         </Grid>
@@ -132,7 +140,7 @@ Margin="10,0,0,0"
 Margin="10,0,0,0"
                             HorizontalOptions="Start"
                             VerticalOptions="Center" Grid.Column="0" />
-                            <Entry Placeholder="ConfirmPassword"  PlaceholderColor="Black" IsPassword="True"
+                            <Entry Placeholder="ConfirmPassword" Text="{Binding ConfirmPassword}"  PlaceholderColor="Black" IsPassword="True"
                            FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
                             WidthRequest="{OnIdiom Phone=250, Tablet=400}" />
                         </Grid>
@@ -163,24 +171,60 @@ Margin="10,0,0,0"
                             </Frame.GestureRecognizers>
                         </Frame>
                         
-                        <RadioButton Content="Buyer" IsVisible="{Binding IsRadioButtonsVisible}" HorizontalOptions="Center"/>
-                        <RadioButton Content="Seller" IsVisible="{Binding IsRadioButtonsVisible}" HorizontalOptions="Center"/>
+                        <RadioButton Content="Buyer"
+                                     GroupName="RoleGroup" 
+                                     IsChecked="{Binding IsBuyerChecked}" 
+                                     IsVisible="{Binding IsRadioButtonsVisible}" HorizontalOptions="Center"/>
+                        <RadioButton Content="Seller"
+                                     GroupName="RoleGroup" 
+                 IsChecked="{Binding IsSellerChecked}" 
+                                     
+                                     IsVisible="{Binding IsRadioButtonsVisible}" HorizontalOptions="Center"/>
 
                         </StackLayout>
                         <Button Text="Sign Up" BackgroundColor="#03b25a" Margin="0,10,0,0"
                             WidthRequest="{OnIdiom Phone=320, Tablet=400}" 
-                            HorizontalOptions="Center" />
+                            HorizontalOptions="Center" 
+                                Command="{Binding OnRegisterTapped}"
+                                />
 
-                   
+                    <Frame HeightRequest="75" 
+       BackgroundColor="Transparent" 
+       BorderColor="Transparent"
+        Margin="0,-10,0,0">
+
+                        <StackLayout x:Name="LoadingOverlay"
+             Margin="0,-10,0,0"
+             BackgroundColor="Transparent"
+             Opacity="0.7"
+            
+             VerticalOptions="Center"
+             HorizontalOptions="Center">
+                            <ActivityIndicator IsRunning="True" Color="White" />
+
+                        </StackLayout>
+                    </Frame>
+                    <Frame>
+                        <StackLayout>
+                            
+                        </StackLayout>
+                    </Frame>
                 </StackLayout>
-                </ScrollView>
+              
+            </ScrollView>
             <StackLayout Grid.Row="3" Orientation="Horizontal" Padding="15"
                          HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Spacing="15">
                 <Label Text="Already have an account?"
    FontSize="Micro" VerticalOptions="Center"
    HorizontalOptions="Center" />
-                <Label Text="Sign In"  FontSize="Small"
- HorizontalOptions="Center" TextColor="#385897"></Label>
+                <Label Text="Sign In"   FontSize="Small"
+ HorizontalOptions="Center" TextColor="#385897">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnSignInTapped}" />
+                    </Label.GestureRecognizers>
+                    
+                    
+                </Label>
             </StackLayout>
         </Grid>
         
