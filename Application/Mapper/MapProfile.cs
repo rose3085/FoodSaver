@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Entities.User;
 using Microsoft.AspNetCore.Identity;
+using Domain.Entities.Foods;
+using Application.Response.Food;
 
 namespace Application.Mapper
 {
@@ -23,6 +25,8 @@ namespace Application.Mapper
                 .ConstructUsing(name => new Role { Name = name, Id = Guid.NewGuid().ToString() });
 
             CreateMap<UserRegisterRequest, ApplicationUser>();
+            CreateMap<FoodModel, GetProductResponse>();
+            CreateMap<GetProductResponse,FoodModel>();
 
         }
     }

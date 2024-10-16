@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using FoodSaverMaui.Helper;
 using FoodSaverMaui.Model;
 using FoodSaverMaui.Services.User;
 using FoodSaverMaui.Views;
 using Microsoft.Maui;
+using Newtonsoft.Json.Linq;
 using Plugin.Maui.Biometric;
 using System;
 using System.Collections.Generic;
@@ -43,13 +45,15 @@ namespace FoodSaverMaui.ViewModel
         
         }
 
+        private readonly IJwtHelper _jwtHelper;
         private readonly UserServices _userServices;
 
         public Command OnSignInTapped { get; }
         public Command OnRegisterTapped { get; }
         public Command OnFingerPrintTapped { get; }
-        public LoginViewModel(UserServices userServices)
+        public LoginViewModel(UserServices userServices, IJwtHelper jwtHelper)
         {
+            _jwtHelper = jwtHelper;
             _userServices = userServices;
             OnSignInTapped = new Command(async() => await SignInTapped());
             OnRegisterTapped = new Command(async() => await RegisterTapped());
@@ -68,9 +72,10 @@ namespace FoodSaverMaui.ViewModel
             if (result.Status == BiometricResponseStatus.Success)
             {
                 //await Shell.Current.DisplayAlert("Success", "Fingerprint authenticated successfully", "Ok!");
+                var jwtToken = await SecureStorage.GetAsync("token");
+                var username = _jwtHelper.ExtractUserInfo(jwtToken);
                 await Shell.Current.GoToAsync("//HomePage");
-                // await Navigation.PushAsync(new HomePage());
-                //Microsoft.Maui.Controls.Application.Current.MainPage = new HomePage();
+             
             }
 
             else

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Entities.Foods;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,8 @@ namespace Domain.Entities.User
     public class ApplicationUser : IdentityUser
     {
         // using Microsoft.AspNet.Identity; doesn't allow Generic identityUser 
+
+        public ICollection<FoodModel> Foods { get; set; }
+
     }
 }

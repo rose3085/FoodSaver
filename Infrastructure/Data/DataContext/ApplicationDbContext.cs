@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities.User;
+using Domain.Entities.Foods;
 
 
 namespace Infrastructure.Data.DataContext
@@ -18,7 +19,8 @@ namespace Infrastructure.Data.DataContext
         {
 
         }
-
+        public DbSet<FoodModel> FoodModel { get; set; }
+       // public DbSet<ApplicationUserFoodModel> ApplicationUserFoodModel { get; set; }
     }
 }
 

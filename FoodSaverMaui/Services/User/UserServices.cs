@@ -36,6 +36,7 @@ namespace FoodSaverMaui.Services.User
                     var result = await response.Content.ReadFromJsonAsync<UserLoginResponse>();
                     if (result.IsSuccess == true)
                     {
+                        await SecureStorage.SetAsync("token", result.Token);
                         return true;
                     }
                     else 

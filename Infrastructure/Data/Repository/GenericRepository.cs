@@ -1,15 +1,4 @@
-﻿//using Application.Interfaces.Data;
-//using System;
-//using System.Collections.Generic;
-//using System.Data.Entity;
-//using System.Linq;
-//using System.Text;
-
-//using Infrastructure.Data.ApplicationDbContext;
-//using System.Threading.Tasks;
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -71,7 +60,13 @@ namespace Infrastructure.Data.Repository
 
         public async Task<T> GetByName(Expression<Func<T, bool>> filter)
         {
-            return await _db.FirstAsync(filter);
+            //return await _db.FirstAsync(filter);
+            var results = await _db
+        .Where(filter)
+        .ToListAsync(); // Load results into memory
+
+            // Return a random result from the filtered results
+            return results.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
         }
 
         public async Task UpdateAsync(T entity)

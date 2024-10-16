@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Maui;
+using FoodSaverMaui.Helper;
+using FoodSaverMaui.Services.Food;
 using FoodSaverMaui.Services.User;
 using FoodSaverMaui.ViewModel;
 using FoodSaverMaui.Views;
@@ -25,7 +27,7 @@ namespace FoodSaverMaui
                 });
 
             builder.Services.AddSingleton<IBiometric>(BiometricAuthenticationService.Default);
-
+            builder.Services.AddSingleton<IJwtHelper, JwtHelper>();
             builder.Services.AddSingleton<HttpClient>();
             builder.Services.AddSingleton<CreateAccount>();
             builder.Services.AddSingleton<CreateAccountViewModel>();
@@ -39,9 +41,13 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<HomePageViewModel>();
 
             builder.Services.AddSingleton<LandingPage>();
+
             builder.Services.AddSingleton<UserProfile>();
             builder.Services.AddSingleton<UserProfileViewModel>();
+
             builder.Services.AddSingleton<FindFood>();
+            builder.Services.AddSingleton<FindFoodViewModel>();
+            builder.Services.AddSingleton<FoodService>();
 #if DEBUG
             builder.Logging.AddDebug();
 
