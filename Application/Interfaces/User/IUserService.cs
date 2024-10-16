@@ -12,5 +12,8 @@ namespace Application.Interfaces.User
     {
         Task<UserManagerResponse> RegisterUser(UserRegisterRequest registerRequest, string role);
         Task<UserLoginResponse> LoginUser(UserLoginRequest loginRequest);
+
+        Task<UserManagerResponse> LogoutUser(UserLoginRequest logoutRequest);
+        Task<UserManagerResponse> DeleteUser(UserLoginRequest deleteRequest);
     }
 }
