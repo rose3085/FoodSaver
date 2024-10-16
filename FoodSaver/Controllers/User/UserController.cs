@@ -44,5 +44,33 @@ namespace FoodSaver.Controllers.User
             return BadRequest(ModelState);
 
         }
+
+        [HttpPost]
+        [Route("DeleteUser")]
+        public async Task<IActionResult> DeleteUser(UserLoginRequest deleteRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.DeleteUser(deleteRequest);
+                return Ok(result);
+
+            }
+            return BadRequest(ModelState);
+
+        }
+
+        [HttpPost]
+        [Route("LogoutUser")]
+        public async Task<IActionResult> LogoutUser(UserLoginRequest logoutRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.LogoutUser(logoutRequest);
+                return Ok(result);
+
+            }
+            return BadRequest(ModelState);
+
+        }
     }
 }

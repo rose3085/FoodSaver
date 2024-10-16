@@ -4,6 +4,7 @@ using Application.Response;
 using AutoMapper;
 using Domain.Entities.User;
 using Microsoft.AspNetCore.Identity;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -22,16 +23,72 @@ namespace Application.Services.User
 
         private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
 
-        public UserService(UserManager<ApplicationUser> userManager, RoleManager<Role> roleManager ,
+        public UserService(UserManager<ApplicationUser> userManager, RoleManager<Role> roleManager , SignInManager<ApplicationUser> signInManager,
                             IConfiguration configuration, IMapper mapper)
         {
+            _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
             _mapper = mapper;
+        }
+
+        public async Task<UserManagerResponse> DeleteUser(UserLoginRequest deleteRequest)
+        {
+            try {
+
+                var userExists = await _userManager.FindByEmailAsync(deleteRequest.Email);
+                if (userExists == null)
+                {
+                    return new UserManagerResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Invalid Credentials!!"
+                    };
+
+                }
+                var isPasswordCorrect = await _userManager.CheckPasswordAsync(userExists, deleteRequest.Password);
+                if (!isPasswordCorrect)
+                {
+                    return new UserManagerResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Invalid Credentials!!"
+                    };
+                }
+                await _signInManager.SignOutAsync();
+                var result = await _userManager.DeleteAsync(userExists);
+                if (result == null)
+                {
+
+                    return new UserManagerResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Couldn't delete user!!",
+                       
+                    };
+
+                }
+                return new UserManagerResponse
+                {
+                    IsSuccess = true,
+                    Message = "User Deleted Sucessfully",
+                    
+                };
+            }
+
+            catch(Exception ex) {
+               return new UserManagerResponse
+                {
+                    IsSuccess = false,
+                    Message = "Couldn't delete user!!",
+                    Error = ex.Message
+                };
+            }
         }
 
         public async Task<UserLoginResponse> LoginUser(UserLoginRequest loginRequest)
@@ -102,6 +159,62 @@ namespace Application.Services.User
                     
                 {
                     IsSuccess = false,
+                    Error = ex.Message
+                };
+            }
+        }
+
+        public async Task<UserManagerResponse> LogoutUser(UserLoginRequest logoutRequest)
+        {
+            try
+            {
+
+                var userExists = await _userManager.FindByEmailAsync(logoutRequest.Email);
+                if (userExists == null)
+                {
+                    return new UserManagerResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Invalid Credentials!!"
+                    };
+
+                }
+                var isPasswordCorrect = await _userManager.CheckPasswordAsync(userExists, logoutRequest.Password);
+                if (!isPasswordCorrect)
+                {
+                    return new UserManagerResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Invalid Credentials!!"
+                    };
+                }
+
+                var result =  _signInManager.SignOutAsync();
+                if (result == null)
+                {
+
+                    return new UserManagerResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Couldn't sign out user!!",
+
+                    };
+
+                }
+                return new UserManagerResponse
+                {
+                    IsSuccess = true,
+                    Message = "User logout Sucessfull",
+
+                };
+            }
+
+            catch (Exception ex)
+            {
+                return new UserManagerResponse
+                {
+                    IsSuccess = false,
+                    Message = "Couldn't delete user!!",
                     Error = ex.Message
                 };
             }
