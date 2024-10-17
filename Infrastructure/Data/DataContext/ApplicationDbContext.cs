@@ -21,6 +21,7 @@ namespace Infrastructure.Data.DataContext
         }
         public DbSet<FoodModel> FoodModel { get; set; }
        // public DbSet<ApplicationUserFoodModel> ApplicationUserFoodModel { get; set; }
+       public DbSet<OrderModel> Orders { get; set; }
     }
 }
 

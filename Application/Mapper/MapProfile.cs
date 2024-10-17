@@ -10,6 +10,7 @@ using Domain.Entities.User;
 using Microsoft.AspNetCore.Identity;
 using Domain.Entities.Foods;
 using Application.Response.Food;
+using Application.DTO.Foods;
 
 namespace Application.Mapper
 {
@@ -27,7 +28,7 @@ namespace Application.Mapper
             CreateMap<UserRegisterRequest, ApplicationUser>();
             CreateMap<FoodModel, GetProductResponse>();
             CreateMap<GetProductResponse,FoodModel>();
-
+            CreateMap<CreateOrderDto,OrderModel>();
         }
     }
 }
