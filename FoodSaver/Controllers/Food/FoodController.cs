@@ -40,5 +40,19 @@ namespace FoodSaver.Controllers.Food
             }
             return BadRequest();
         }
+
+        [HttpDelete]
+        [Route("DeleteFood")]
+        [Authorize]
+        public async Task<IActionResult> DeleteFood(string id)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _foodService.DeleteFood(id);
+                return Ok(result);
+
+            }
+            return BadRequest();
+        }
     }
 }

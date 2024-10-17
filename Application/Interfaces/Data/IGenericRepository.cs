@@ -12,11 +12,18 @@ namespace Application.Interfaces.Data
         Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
+        Task DeleteById<TPrimaryKey>(TPrimaryKey id);
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetById<TPrimaryKey>(TPrimaryKey id);
-
+        Task<IEnumerable<T>> GetRandomAsync();
         Task<T> GetByName(Expression<Func<T, bool>> filter);
         Task<bool> EmailExists(Expression<Func<T, bool>> filter);
+        Task<IEnumerable<T>> GetWithInclude(Expression<Func<T, object>>[] children);
+        //Task<T> GetWithIncludeAndFilter(
+        //    Expression<Func<T, object>>[] children,
+        //    Expression<Func<T, string>> filter
+        //);
 
+        Task<T> GetWithIncludeAndId<TPrimaryKey>(TPrimaryKey id, Expression<Func<T, object>>[] children);
     }
 }

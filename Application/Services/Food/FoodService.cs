@@ -5,10 +5,13 @@ using Application.Response.Food;
 using Application.Services.User;
 using AutoMapper;
 using Azure.Core;
+using System.Linq;
+using System.Linq.Expressions;
 using Domain.Entities.Foods;
 using Domain.Entities.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Hosting;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
@@ -121,19 +124,81 @@ namespace Application.Services.Food
             }
         }
 
+        public async Task<FoodServiceResponse> DeleteFood(string foodId)
+        {
+            try {
+                var includes = new Expression<Func<FoodModel, object>>[]
+                   {
+                        s => s.Users,
+                   };
+                var seller = await _uow.AsyncRepositories<FoodModel>().GetWithIncludeAndId(foodId,includes);
+                if (seller == null)
+                {
+                    return new FoodServiceResponse()
+                    {
+                        IsSuccess = false,
+                        Message = "select a valid food!",
+                        
+
+                    };
+
+                }
+
+                var userInfo = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
+
+                if (!seller.Users.Contains(userInfo))
+                {
+                    return new FoodServiceResponse()
+                    {
+                        IsSuccess = false,
+                        Message = "You are not authorized to delete the food",
+
+
+                    };
+                }
+
+                var result = _uow.AsyncRepositories<FoodModel>().DeleteById(foodId);
+                _uow.save();
+
+                return new FoodServiceResponse()
+                { 
+                    IsSuccess = true,
+                    Message = "Food deleted Sucessfully",
+                
+                };
+            }
+            catch (Exception ex)
+            {
+                return new FoodServiceResponse()
+                {
+                    IsSuccess = false,
+                    //Message = "File size shouldn't exist 1MB.",
+                    Error = ex.Message,
+
+                };
+
+            }
+
+        }
+
         public async Task<IEnumerable<GetProductResponse>> GetProductsAsync()
         {
-            var result = await _uow.AsyncRepositories<FoodModel>().GetAllAsync();
+            var result = await _uow.AsyncRepositories<FoodModel>().GetRandomAsync();
+
 
             // var baseUrl = $"https://616a-2405-acc0-1504-9a1f-f568-cac7-3127-f895.ngrok-free.app";
             var baseUrl = $"https://localhost:7293";
-            var productResult =  result.Select(product => new GetProductResponse
+            var productResult =  result
+                .Where(product => product.IsBooked == false)
+                .Select(product => new GetProductResponse
             {
                Id= product.Id,
                ProductName= product.FoodName,
                Description= product.Description,
                PricePerKg = product.PricePerKg,
                Quantity = product.Quantity,
+               IsBooked = product.IsBooked,
+
                // image Url form ma return garne
                 ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
             }).ToList();

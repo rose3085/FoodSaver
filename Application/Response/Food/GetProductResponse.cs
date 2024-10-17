@@ -13,7 +13,7 @@ namespace Application.Response.Food
         public string? Description { get; set; }
         public double PricePerKg { get; set; }
         public double Quantity { get; set; }
-
+        public bool IsBooked { get; set; }  
         public string ImageUrl { get; set; }
     }
 }

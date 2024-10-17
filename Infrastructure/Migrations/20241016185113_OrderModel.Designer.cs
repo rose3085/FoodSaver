@@ -4,6 +4,7 @@ using Infrastructure.Data.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241016185113_OrderModel")]
+    partial class OrderModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,9 +53,6 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsBooked")
-                        .HasColumnType("bit");
-
                     b.Property<double>("PricePerKg")
                         .HasColumnType("float");
 
@@ -73,10 +73,10 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("BuyerId")
+                    b.Property<string>("BuyerIdId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FoodId")
+                    b.Property<string>("FoodIdId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -85,9 +85,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BuyerId");
+                    b.HasIndex("BuyerIdId");
 
-                    b.HasIndex("FoodId");
+                    b.HasIndex("FoodIdId");
 
                     b.ToTable("Orders");
                 });
@@ -307,19 +307,19 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Foods.OrderModel", b =>
                 {
-                    b.HasOne("Domain.Entities.User.ApplicationUser", "Buyer")
+                    b.HasOne("Domain.Entities.User.ApplicationUser", "BuyerId")
                         .WithMany()
-                        .HasForeignKey("BuyerId");
+                        .HasForeignKey("BuyerIdId");
 
-                    b.HasOne("Domain.Entities.Foods.FoodModel", "Food")
+                    b.HasOne("Domain.Entities.Foods.FoodModel", "FoodId")
                         .WithMany()
-                        .HasForeignKey("FoodId")
+                        .HasForeignKey("FoodIdId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Buyer");
+                    b.Navigation("BuyerId");
 
-                    b.Navigation("Food");
+                    b.Navigation("FoodId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

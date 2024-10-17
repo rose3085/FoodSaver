@@ -16,5 +16,7 @@ namespace Application.Interfaces.Food
         Task<string> SaveFileAsync(IFormFile imageFile, string[] allowedFileExtensions);
 
         Task<IEnumerable<GetProductResponse>> GetProductsAsync();
+
+        Task<FoodServiceResponse> DeleteFood(string foodId);
     }
 }
