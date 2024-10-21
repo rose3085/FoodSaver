@@ -155,36 +155,51 @@ namespace FoodSaverMaui.ViewModel
         }
 
         public async Task RegisterTapped()
-        {
+         {
             if (!string.IsNullOrWhiteSpace(UserName))
             {
                 if (!string.IsNullOrWhiteSpace(Email) &&
                   long.IsPositive(Phone) && !string.IsNullOrWhiteSpace(Password) && !string.IsNullOrWhiteSpace(ConfirmPassword)
                   && !string.IsNullOrWhiteSpace(SelectedRole) && Password == ConfirmPassword)
                 {
-
-                    var requestModel = new UserRegisterRequest
+                    try
                     {
-                        UserName = UserName,
-                        Email = Email,
-                        Phone = Phone,
-                        Password = Password,
-                        ConfirmPassword = ConfirmPassword,
 
-                    };
+                        IsBusy = true;
 
-                    var registerRequest = await _userServices.RegisterUser(requestModel, SelectedRole);
-                    if (registerRequest == true)
+                        var requestModel = new UserRegisterRequest
+                        {
+                            UserName = UserName,
+                            Email = Email,
+                            Phone = Phone,
+                            Password = Password,
+                            ConfirmPassword = ConfirmPassword,
+
+                        };
+
+                        var registerRequest = await _userServices.RegisterUser(requestModel, SelectedRole);
+                        if (registerRequest == true)
+                        {
+                            //await Shell.Current.DisplayAlert("Success", "User successfully registered.", "OK!");
+                            await Shell.Current.GoToAsync("//HomePage");
+                        }
+                        else
+                        {
+
+                            await Shell.Current.DisplayAlert("Couldn't register user", "Please try again.", "OK!");
+                        }
+                    }
+                    finally
                     {
-                        await Shell.Current.DisplayAlert("Success", "User successfully registered.", "OK!");
+                        IsBusy = false;
                     }
 
                 }
             }
             else 
             {
-            
-            
+
+                await Shell.Current.DisplayAlert("Couldn't register user", "Please try again.", "OK!");
             }
         }
 

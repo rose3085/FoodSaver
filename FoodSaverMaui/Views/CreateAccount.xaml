@@ -4,10 +4,275 @@
             x:Class="FoodSaverMaui.Views.CreateAccount"
               xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
              x:DataType="viewmodel:CreateAccountViewModel"
-             NavigationPage.HasNavigationBar="False"
-             >
+                         xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            NavigationPage.HasNavigationBar="False"
+            x:Name="CreateAccountPage"
+           >
 
-    <ContentPage.Content >
+    <ContentPage.Resources>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+        <Style x:Key="ValidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Green" />
+        </Style>
+    </ContentPage.Resources>
+
+
+    <Grid RowDefinitions="Auto,Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+        <Grid Grid.Row="0" RowDefinitions="Auto" Padding="50,10,50,0"  VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand">
+
+            <Label Grid.Row="0" Text="Create your account!"
+       FontSize="30" TextColor="#385897"
+       FontFamily="PoppinsBold"
+       HorizontalOptions="Center"></Label>
+        </Grid>
+        <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*" RowSpacing="5" Padding="20" >
+
+            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="0"
+Margin="30,10,30,0">
+
+
+                <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+
+                    <Image Source="user.png" WidthRequest="34" HeightRequest="34"
+                        Margin="10,0,0,0"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center" Grid.Column="0" />
+                    <Entry Placeholder="Username"  
+                        Text="{Binding UserName}"
+                        PlaceholderColor="Black"
+            FontSize="Medium"
+                Grid.Column="1" HorizontalOptions="Start"
+WidthRequest="{OnIdiom Phone=220, Tablet=400}" />
+
+
+                </Grid>
+            </Frame>
+
+            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="1"
+         Margin="30,10,30,0">
+
+
+                <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+
+
+                    <Image  Source="email.png" WidthRequest="34" HeightRequest="34"
+     Margin="10,0,0,0"
+                     HorizontalOptions="Start"
+                     VerticalOptions="Center" Grid.Column="0" />
+                    <Entry Placeholder="Email" x:Name="CreateEmail"
+                    toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference CreatePassword}" ReturnType="Next"
+                            Text="{Binding Email}"
+                            PlaceholderColor="Black"
+                        FontSize="Medium"
+                            Grid.Column="1" HorizontalOptions="Start"
+                        WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
+                        <Entry.Behaviors>
+                            <toolkit:EmailValidationBehavior 
+         InvalidStyle="{StaticResource InvalidEntryStyle}"
+         ValidStyle="{StaticResource ValidEntryStyle}"
+         Flags="ValidateOnValueChanged" />
+                        </Entry.Behaviors>
+                    </Entry>
+                </Grid>
+            </Frame>
+
+
+            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="2"
+Margin="30,10,30,0">
+
+
+                <Grid ColumnSpacing="15" Padding="3"  ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+
+
+
+                    <Image Source="phone.png" WidthRequest="34" HeightRequest="34"
+Margin="10,0,0,0"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center" Grid.Column="0" />
+                    <Entry Placeholder="Phone Number" x:Name="CreatePhone"
+                                   Text="{Binding Phone}"
+                                   PlaceholderColor="Black"
+                           FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
+                            WidthRequest="{OnIdiom Phone=220, Tablet=400}"  >
+                        <Entry.Behaviors>
+                            <toolkit:CharactersValidationBehavior 
+         InvalidStyle="{StaticResource InvalidEntryStyle}"
+         ValidStyle="{StaticResource ValidEntryStyle}"
+         Flags="ValidateOnValueChanged"
+           RegexPattern="^\d+$"
+         CharacterType="Digit"
+        MaximumCharacterTypeCount="10"
+         MinimumCharacterTypeCount="10" />
+
+
+
+                        </Entry.Behaviors>
+                    </Entry>
+
+                </Grid>
+            </Frame>
+
+
+
+            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="3"
+    Margin="30,10,30,0">
+
+
+                <Grid ColumnSpacing="15" Padding="3"  ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+                    <Image Source="key.png" WidthRequest="34" HeightRequest="34"
+             Margin="10,0,0,0"
+                     HorizontalOptions="Start"
+                     VerticalOptions="Center" Grid.Column="0" />
+                    <Entry Placeholder="Password" x:Name="CreatePassword"
+                            Text="{Binding Password}"
+                            PlaceholderColor="Black" IsPassword="True"
+                    FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
+                      WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
+                        <Entry.Behaviors>
+                            <toolkit:CharactersValidationBehavior 
+         InvalidStyle="{StaticResource InvalidEntryStyle}"
+         ValidStyle="{StaticResource ValidEntryStyle}"
+         Flags="ValidateOnValueChanged"
+             RegexPattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[A-Za-z\d\W]{6,}$"
+         CharacterType="Alphanumeric"
+         MinimumCharacterTypeCount="6" />
+
+                            <toolkit:UserStoppedTypingBehavior 
+                 Command="{Binding Source={x:Reference CreateAccountPage}, Path=BindingContext.SearchCommand}"
+                 StoppedTypingTimeThreshold="10"
+                 MinimumLengthThreshold="3"
+                 ShouldDismissKeyboardAutomatically="True" />
+
+                        </Entry.Behaviors>
+                    </Entry>
+                </Grid>
+            </Frame>
+
+
+            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="4"
+Margin="30,10,30,0">
+
+
+                <Grid ColumnSpacing="15" Padding="3"  ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+                    <Image Source="key.png" WidthRequest="34" HeightRequest="34"
+    Margin="10,0,0,0"
+            HorizontalOptions="Start"
+            VerticalOptions="Center" Grid.Column="0" />
+                    <Entry Placeholder="Confirm Password" x:Name="ConfirmPassword"
+                   Text="{Binding ConfirmPassword}"
+                   PlaceholderColor="Black" IsPassword="True"
+           FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
+             WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
+                        <Entry.Behaviors>
+                            <toolkit:CharactersValidationBehavior 
+InvalidStyle="{StaticResource InvalidEntryStyle}"
+ValidStyle="{StaticResource ValidEntryStyle}"
+Flags="ValidateOnValueChanged"
+    RegexPattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[A-Za-z\d\W]{6,}$"
+CharacterType="Alphanumeric"
+MinimumCharacterTypeCount="6" />
+
+                            <toolkit:UserStoppedTypingBehavior 
+        Command="{Binding Source={x:Reference CreateAccountPage}, Path=BindingContext.SearchCommand}"
+        StoppedTypingTimeThreshold="10"
+        MinimumLengthThreshold="3"
+        ShouldDismissKeyboardAutomatically="True" />
+
+                        </Entry.Behaviors>
+                    </Entry>
+                </Grid>
+            </Frame>
+
+            <Grid RowDefinitions="Auto,*" RadioButtonGroup.GroupName="role" Margin="0,0,0,0" Grid.Row="5">
+                <Frame Grid.Row="0" BackgroundColor="#f7f7f7" BorderColor="Black" Padding="5" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
+        Margin="30,10,30,0">
+
+                    <Grid  ColumnSpacing="50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image Source="down.png" WidthRequest="34" HeightRequest="34"
+       Margin="10,0,0,0"
+           HorizontalOptions="Start"
+           VerticalOptions="Center" Grid.Column="0" />
+                        <Label Text="Choose a Role" FontSize="Medium"
+                      HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1"
+                       Margin="10,0,0,0"
+       WidthRequest="{OnIdiom Phone=261, Tablet=400}" >
+
+                        </Label>
+                    </Grid>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleRadioButtonsCommand}" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <Grid Grid.Row="1"  RowDefinitions="Auto,Auto" HorizontalOptions="StartAndExpand" Padding="70,0,0,0">
+                    <RadioButton Grid.Row="0" Content="Buyer"
+                    GroupName="RoleGroup" 
+                    IsChecked="{Binding IsBuyerChecked}" 
+                    IsVisible="{Binding IsRadioButtonsVisible}" />
+                    <RadioButton Grid.Row="1" Content="Seller"
+                    GroupName="RoleGroup" 
+IsChecked="{Binding IsSellerChecked}" 
+                    
+                    IsVisible="{Binding IsRadioButtonsVisible}" />
+                </Grid>
+
+            </Grid>
+
+            <Button Grid.Row="6" Text="Sign Up" BackgroundColor="#03b25a" Margin="0,10,0,0"
+      WidthRequest="{OnIdiom Phone=300, Tablet=400}" 
+      HorizontalOptions="Center" 
+          Command="{Binding OnRegisterTapped}"
+          />
+
+        </Grid>
+
+        <Grid Grid.Row="2" RowDefinitions="*,Auto">
+            <Grid Grid.Row="0" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+                <Frame HeightRequest="75" 
+            BackgroundColor="Transparent" 
+            BorderColor="Transparent"
+>
+
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" 
+     IsVisible="{Binding IsBusy}"
+                     Color="Black" />
+
+
+                </Frame>
+
+            </Grid>
+
+            <Grid Grid.Row="1" ColumnSpacing="15" ColumnDefinitions="Auto,*" Padding="10" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
+                <Label Grid.Column="0" Text="Already have an account?"
+       FontSize="Medium" VerticalOptions="Center"
+       />
+                <Label Grid.Column="1" Text="SignIn"   FontSize="Medium"
+     TextColor="#385897">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnSignInTapped}" />
+                    </Label.GestureRecognizers>
+
+
+                </Label>
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+
+
+
+
+
+    <!--<ContentPage.Content >
 
 
        
@@ -225,5 +490,5 @@ Margin="10,0,0,0"
             </StackLayout>
         </Grid>
         
-    </ContentPage.Content>
+    </ContentPage.Content>-->
 </ContentPage>

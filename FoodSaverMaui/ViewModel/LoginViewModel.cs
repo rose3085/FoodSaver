@@ -106,23 +106,43 @@ namespace FoodSaverMaui.ViewModel
         {
             if (!string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password))
             {
-
-                var requestModel = new UserLoginRequest
+                try
                 {
-                    Email = Email,
-                    Password = Password,
-                };
 
-                var request =await _userServices.LoginUser(requestModel);
-                if (request == true)
-                {
-                    await Shell.Current.DisplayAlert("Success", "User login successful", "Ok!");
+                    IsBusy = true;
+                    var requestModel = new UserLoginRequest
+                    {
+                        Email = Email,
+                        Password = Password,
+                    };
+
+                    var request = await _userServices.LoginUser(requestModel);
+                    if (request == true)
+                    {
+                        //await Shell.Current.DisplayAlert("Success", "User login successful", "Ok!");
+                        await Shell.Current.GoToAsync("//HomePage");
+
+                    }
+                    else
+                    {
+                        string resultError = "Enter Valid Credentials!!";
+                        var toast = Toast.Make($"{resultError}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                        await toast.Show();
+
+
+                    }
                 }
-                else 
+                finally
                 {
-                    await Shell.Current.DisplayAlert("Error", "Invalid Credential!!", "Ok!");
-
+                    IsBusy = false;
                 }
+            }
+            else
+            {
+                string resultError = "Enter Valid Credentials!!";
+                var toast = Toast.Make($"{resultError}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                await toast.Show();
+
             }
 
         }
