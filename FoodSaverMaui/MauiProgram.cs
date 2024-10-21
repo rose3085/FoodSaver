@@ -48,6 +48,9 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<FindFood>();
             builder.Services.AddSingleton<FindFoodViewModel>();
             builder.Services.AddSingleton<FoodService>();
+
+            builder.Services.AddSingleton<UploadFood>();
+            builder.Services.AddSingleton<UploadFoodViewModel>();
 #if DEBUG
             builder.Logging.AddDebug();
 

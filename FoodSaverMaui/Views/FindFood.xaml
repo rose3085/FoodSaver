@@ -13,7 +13,7 @@
             <Border StrokeShape="RoundRectangle 10,10,10,10">
                 <SearchBar Grid.Column="0" Placeholder="Search items..."  BackgroundColor="WhiteSmoke" />
             </Border>
-            <Button Grid.Column="1" Background="#385897"  HeightRequest="48" ImageSource="addpost.png" />
+            <Button Grid.Column="1" Background="#385897"  HeightRequest="48" ImageSource="addpost.png" Command="{Binding OnAddButtonClick}"/>
         </Grid>
         <!--<Button Grid.Row="1" Text="Click" Command="{Binding OnClickTapped}"/>-->
         <!--<Image  HeightRequest="405"  Aspect="AspectFill" >

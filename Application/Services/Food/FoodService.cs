@@ -2,25 +2,15 @@
 using Application.Interfaces.Data;
 using Application.Interfaces.Food;
 using Application.Response.Food;
-using Application.Services.User;
 using AutoMapper;
-using Azure.Core;
-using System.Linq;
 using System.Linq.Expressions;
 using Domain.Entities.Foods;
 using Domain.Entities.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Hosting;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application.Services.Food
 {
@@ -186,8 +176,8 @@ namespace Application.Services.Food
             var result = await _uow.AsyncRepositories<FoodModel>().GetRandomAsync();
 
 
-            // var baseUrl = $"https://616a-2405-acc0-1504-9a1f-f568-cac7-3127-f895.ngrok-free.app";
-            var baseUrl = $"https://localhost:7293";
+             var baseUrl = $"https://1ede-2405-acc0-1504-9a1f-5ddf-6da4-40d2-3713.ngrok-free.app";
+            // var baseUrl = $"https://localhost:7293";
             var productResult =  result
                 .Where(product => product.IsBooked == false)
                 .Select(product => new GetProductResponse

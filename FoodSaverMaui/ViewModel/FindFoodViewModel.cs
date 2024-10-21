@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Response;
 using FoodSaverMaui.Services.Food;
+using FoodSaverMaui.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ namespace FoodSaverMaui.ViewModel
     {
         private readonly FoodService _foodService;
         public Command OnClickTapped { get; }
+        public Command OnAddButtonClick { get; }
         public ObservableCollection<GetProductsResponse> Products { get; } = new();
 
         //private IEnumerable<GetProductsResponse> _products;
@@ -30,9 +32,16 @@ namespace FoodSaverMaui.ViewModel
         {
             _foodService = foodService;
             OnClickTapped = new Command(async() => await ClickTapped());
+            OnAddButtonClick = new Command(async() => await AddButtonClick());
             //Products = new ObservableCollection<GetProductsResponse>();
         }
 
+
+        public async Task AddButtonClick()
+        {
+            await Shell.Current.GoToAsync(nameof(UploadFood));
+        
+        }
       
         
 

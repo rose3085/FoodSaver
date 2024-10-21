@@ -3,6 +3,7 @@ using FoodSaverMaui.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,8 +23,13 @@ namespace FoodSaverMaui.Services.Food
         {
             try
             {
-
+                var jwtToken = await SecureStorage.GetAsync("token");
+                if (string.IsNullOrEmpty(jwtToken))
+                {
+                    throw new InvalidOperationException("Token not found.");
+                }
                 var url = $"{App.Settings.ApiBaseUrl}/api/Food/GetFood";
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 var response = await _httpClient.GetAsync(url, CancellationToken.None);
                 Console.WriteLine($"s Code: {(int)response.StatusCode}");
                 if (response.IsSuccessStatusCode)
@@ -45,5 +51,12 @@ namespace FoodSaverMaui.Services.Food
             }
             
         }
+
+
+        //public async Task<T> AddFood()
+        //{ 
+        
+        
+        //}
     }
 }

@@ -8,7 +8,7 @@
             InitializeComponent();
             Settings = new AppSettings
             {
-                ApiBaseUrl = "https://616a-2405-acc0-1504-9a1f-f568-cac7-3127-f895.ngrok-free.app"
+                ApiBaseUrl = "https://a0af-2400-1a00-bb20-f9f-a873-b229-b2e6-a42e.ngrok-free.app"
             };
 
             MainPage = new AppShell();
