@@ -178,13 +178,18 @@ namespace FoodSaverMaui.ViewModel
                     {
                         await Shell.Current.DisplayAlert("Success", "User successfully registered.", "OK!");
                     }
+                    else
+                    {
+
+                        await Shell.Current.DisplayAlert("Couldn't register user", "Please try again.", "OK!");
+                    }
 
                 }
             }
             else 
             {
-            
-            
+
+                await Shell.Current.DisplayAlert("Couldn't register user", "Please try again.", "OK!");
             }
         }
 
