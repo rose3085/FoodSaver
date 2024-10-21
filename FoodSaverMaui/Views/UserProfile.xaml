@@ -64,12 +64,16 @@ FontSize="18" />
                 </Grid>
             </Border>
             <Border StrokeShape="RoundRectangle 30,30,30,30" HeightRequest="50">
-                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
+                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"   >
                     <Image Grid.Column="0" Source="fingerprint.png" HeightRequest="24" WidthRequest="24"  />
 
                     <Label Grid.Column="1" Text="Enable Biometric" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+                           
 
 FontSize="18" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnEnableFingerprintTapped}" />
+                    </Grid.GestureRecognizers>
                 </Grid>
             </Border>
             <Border StrokeShape="RoundRectangle 30,30,30,30" HeightRequest="50">
