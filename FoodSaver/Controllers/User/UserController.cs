@@ -72,5 +72,36 @@ namespace FoodSaver.Controllers.User
             return BadRequest(ModelState);
 
         }
+
+
+        [HttpPost]
+        [Route("UpdatePassword")]
+        public async Task<IActionResult> UpdatePassword(UpdatePasswordDto updatePassword)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.UpdatePassword(updatePassword);
+                return Ok(result);
+
+            }
+            return BadRequest(ModelState);
+
+        }
+
+
+
+        [HttpPost]
+        [Route("UpdateEmail")]
+        public async Task<IActionResult> UpdateEmail(UpdateEmailDto updateEmail)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.UpdateEmail(updateEmail);
+                return Ok(result);
+
+            }
+            return BadRequest(ModelState);
+
+        }
     }
 }

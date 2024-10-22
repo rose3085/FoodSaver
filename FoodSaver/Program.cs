@@ -16,6 +16,7 @@ using System.Text;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using FoodSaver.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -211,7 +212,7 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/Resources"
 });
 
-
+app.UseMiddleware<AccessTokenMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();
