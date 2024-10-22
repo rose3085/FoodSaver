@@ -11,9 +11,24 @@
     <Grid RowDefinitions="Auto,Auto,*" RowSpacing="5" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
         <Grid ColumnDefinitions="*,Auto" Grid.Row="0" Padding="15" ColumnSpacing="20">
             <Border StrokeShape="RoundRectangle 10,10,10,10">
-                <SearchBar Grid.Column="0" Placeholder="Search items..."  BackgroundColor="WhiteSmoke" />
+                <SearchBar Grid.Column="0" Placeholder="Search items..."  BackgroundColor="WhiteSmoke" 
+                           Text="{Binding SearchQuery, Mode=TwoWay}"
+                           SearchCommand="{Binding OnSearchButtonPressed}"
+                           />
             </Border>
             <Button Grid.Column="1" Background="#385897"  HeightRequest="48" ImageSource="addpost.png" Command="{Binding OnAddButtonClick}"/>
+        </Grid>
+        <Grid Grid.Row="1" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+           
+
+
+                <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                   IsVisible="{Binding IsBusy}"
+                                   Color="#03b25a" />
+
+
+            
+
         </Grid>
         <!--<Button Grid.Row="1" Text="Click" Command="{Binding OnClickTapped}"/>-->
         <!--<Image  HeightRequest="405"  Aspect="AspectFill" >
@@ -21,20 +36,23 @@
                 <UriImageSource Uri="https://616a-2405-acc0-1504-9a1f-f568-cac7-3127-f895.ngrok-free.app/Resources/f4c8f45e-ea44-454c-bbbc-88cee1e49586.png"   CacheValidity="2" CachingEnabled="True"/>
             </Image.Source>
         </Image>-->
-        <ScrollView Grid.Row="2">
+        
+        <RefreshView IsRefreshing="{Binding IsRefreshing}" Grid.Row="2"
+             Command="{Binding OnClickTapped}">
+            <ScrollView >
 
 
 
-            <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:GetProductsResponse">
-                        <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:GetProductsResponse">
+                            <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
-                            <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12">
-                                <Grid RowDefinitions="Auto,*,*,Auto,Auto" RowSpacing="10" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
-                                    
+                                <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12">
+                                    <Grid RowDefinitions="Auto,*,*,Auto,Auto" RowSpacing="10" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+
                                         <Label Grid.Row="0" Text="{Binding ProductName}" TextColor="#385897" FontSize="20" FontAttributes="Bold" />
-                                    <Image Grid.Row="1"  HeightRequest="135" Aspect="AspectFill" >
+                                        <Image Grid.Row="1"  HeightRequest="135" Aspect="AspectFill" >
                                             <Image.Source>
                                                 <UriImageSource Uri="{Binding ImageUrl}"   CacheValidity="2" CachingEnabled="True"/>
                                             </Image.Source>
@@ -42,21 +60,22 @@
 
 
 
-                                    <Label Grid.Row="2" Text="{Binding Description}" FontSize="14" />
-                                    <Grid  Grid.Row="3" ColumnDefinitions="Auto,*" ColumnSpacing="20">
-                                        <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="10" Padding="20" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
-                                            <Label Grid.Row="0" TextColor="#385897"  Text="{Binding PricePerKg, StringFormat='Price: Rs {0}'}" FontAttributes="Bold" FontSize="14" />
-                                            <Label Grid.Row="1" TextColor="#385897"  Text="{Binding Quantity, StringFormat='Quantity: {0} kg'}" FontAttributes="Bold" FontSize="14"  />
+                                        <Label Grid.Row="2" Text="{Binding Description}" FontSize="14" />
+                                        <Grid  Grid.Row="3" ColumnDefinitions="Auto,*" ColumnSpacing="20">
+                                            <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="10" Padding="20" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                                                <Label Grid.Row="0" TextColor="#385897"  Text="{Binding PricePerKg, StringFormat='Price: Rs {0}'}" FontAttributes="Bold" FontSize="14" />
+                                                <Label Grid.Row="1" TextColor="#385897"  Text="{Binding Quantity, StringFormat='Quantity: {0} kg'}" FontAttributes="Bold" FontSize="14"  />
+                                            </Grid>
+                                            <Button Grid.Column="1" Text="Add Cart" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
                                         </Grid>
-                                        <Button Grid.Column="1" Text="Add Cart" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
                                     </Grid>
-                                </Grid>
-                            </Border>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </ScrollView>
+                                </Border>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+        </RefreshView>
 
     </Grid>
 </ContentPage>

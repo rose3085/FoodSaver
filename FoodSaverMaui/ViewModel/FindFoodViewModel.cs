@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Response;
 using FoodSaverMaui.Services.Food;
 using FoodSaverMaui.Views;
@@ -28,11 +29,18 @@ namespace FoodSaverMaui.ViewModel
         //        OnPropertyChanged(nameof(Products));  // Notify UI about the change
         //    }
         //}
+        public Command OnSearchButtonPressed { get; }
+        [ObservableProperty]
+        string searchQuery;
+
+        [ObservableProperty]
+        bool isRefreshing;
         public FindFoodViewModel(FoodService foodService)
         {
             _foodService = foodService;
             OnClickTapped = new Command(async() => await ClickTapped());
             OnAddButtonClick = new Command(async() => await AddButtonClick());
+            OnSearchButtonPressed = new Command(async () => await SearchButtonPressed(SearchQuery));
             //Products = new ObservableCollection<GetProductsResponse>();
         }
 
@@ -42,28 +50,76 @@ namespace FoodSaverMaui.ViewModel
             await Shell.Current.GoToAsync(nameof(UploadFood));
         
         }
-      
-        
+
+        public async Task SearchButtonPressed(string query)
+        {
+
+           
+                if (string.IsNullOrWhiteSpace(query))
+                {
+                    await ClickTapped();
+                }
+                else
+                {
+                    
+                    var filteredList = Products
+                        .Where(p => p.ProductName.Contains(query, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+                if (filteredList.Count == 0)
+                {
+                    Products.Clear();
+                    OnPropertyChanged(nameof(Products));
+                    var message = $"No product of name {query} found!! ";
+                    var toast = Toast.Make($"{message}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                    await toast.Show();
+
+                }
+                else
+                {
+                    Products.Clear();
+                    foreach (var product in filteredList)
+                    {
+                        Products.Add(product);
+                    }
+
+
+                    OnPropertyChanged(nameof(Products));
+                }
+                }
+            
+
+        }
+
 
         //// Command that fetches the data
         //[RelayCommand]
         public async Task ClickTapped()
-        { 
-
-            var request =await _foodService.GetAllProducts();
-            if (request != null)
+        {
+            try
             {
-                Products.Clear();
-                foreach (var product in request)
+                
+                IsBusy = true;
+                var request = await _foodService.GetAllProducts();
+                if (request != null)
                 {
-                    Products.Add(product);
+                    Products.Clear();
+                    foreach (var product in request)
+                    {
+                        Products.Add(product);
+                    }
+                    OnPropertyChanged(nameof(Products));
+
                 }
-                OnPropertyChanged(nameof(Products));
+                else
+                {
 
+                    await Shell.Current.DisplayAlert("Success", "", "Ok!");
+                }
             }
-            else {
-
-                await Shell.Current.DisplayAlert("Success", "", "Ok!");
+            finally
+            {
+                IsBusy = false;
+                IsRefreshing = false;
             }
 
         }

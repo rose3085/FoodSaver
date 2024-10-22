@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core.Platform;
 using FoodSaverMaui.Helper;
 using FoodSaverMaui.Model;
 using FoodSaverMaui.Services.User;
@@ -61,38 +62,46 @@ namespace FoodSaverMaui.ViewModel
         }
 
         public async Task FingerPrintTapped()
-        {  
-            var result = await BiometricAuthenticationService.Default.AuthenticateAsync(new AuthenticationRequest()
+        {
+            var jwtToken = await SecureStorage.GetAsync("token");
+            var fingerPrint = await SecureStorage.GetAsync("FingerPrint");
+            if (jwtToken != null && fingerPrint != null)
+            {
+
+                var result = await BiometricAuthenticationService.Default.AuthenticateAsync(new AuthenticationRequest()
                 {
-                Title="Please enter your fingerprint",
-                NegativeText="Cancel Authentication",
-            }, CancellationToken.None);
+                    Title = "Please enter your fingerprint",
+                    NegativeText = "Cancel Authentication",
+                }, CancellationToken.None);
 
-            //var status = BiometricHwStatus.LockedOut;
-            if (result.Status == BiometricResponseStatus.Success)
-            {
-                //await Shell.Current.DisplayAlert("Success", "Fingerprint authenticated successfully", "Ok!");
-                var jwtToken = await SecureStorage.GetAsync("token");
-                var username = _jwtHelper.ExtractUserInfo(jwtToken);
-                await Shell.Current.GoToAsync("//HomePage");
-             
+               
+                if (result.Status == BiometricResponseStatus.Success)
+                {
+                    //await Shell.Current.DisplayAlert("Success", "Fingerprint authenticated successfully", "Ok!");
+
+                    var username = _jwtHelper.ExtractUserInfo(jwtToken);
+                    await Shell.Current.GoToAsync("//HomePage");
+
+                }
+
+                else
+
+                {
+                    var errorMsg = result.ErrorMsg;
+                    var remove = "code:";
+                    string pattern = $@"{remove}\s*\d{{1,2}}\s*(.*)";
+                    Match match = Regex.Match(errorMsg, pattern);
+                    string resultError = match.Groups[1].Value.Trim();
+                    var toast = Toast.Make($"{resultError}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                    await toast.Show();
+                }
+              
+            }  else
+                {
+                await Shell.Current.DisplayAlert("Error", "Fingerprint not enabled", "Ok!");
+
             }
-
-            else
-
-            {
-                var errorMsg = result.ErrorMsg;
-                var remove = "code:";
-                string pattern = $@"{remove}\s*\d{{1,2}}\s*(.*)";
-                Match match = Regex.Match(errorMsg, pattern);
-                string resultError = match.Groups[1].Value.Trim();
-                // string resultError = Regex.Replace(errorMsg, pattern, "").Trim();
-                // await Shell.Current.DisplayAlert( $"{resultError}","", "Ok!"); }
-                var toast =  Toast.Make($"{resultError}",CommunityToolkit.Maui.Core.ToastDuration.Long,14);
-                await toast.Show();
-            }
-
-            //var errorMsg = result.ErrorMsg;
+        
         }
         public async Task RegisterTapped()
 
@@ -104,6 +113,7 @@ namespace FoodSaverMaui.ViewModel
 
         public async Task SignInTapped()
         {
+            
             if (!string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password))
             {
                 try

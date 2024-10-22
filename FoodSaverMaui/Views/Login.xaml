@@ -81,11 +81,11 @@
                 CharacterType="Alphanumeric"
                 MinimumCharacterTypeCount="6" />
 
-                            <toolkit:UserStoppedTypingBehavior 
-                        Command="{Binding Source={x:Reference LoginPage}, Path=BindingContext.SearchCommand}"
-                        StoppedTypingTimeThreshold="10"
-                        MinimumLengthThreshold="3"
-                        ShouldDismissKeyboardAutomatically="True" />
+
+                            <toolkit:EventToCommandBehavior 
+            EventName="Completed"
+            Command="{Binding OnSignInTapped}" />
+
 
                         </Entry.Behaviors>
                     </Entry>

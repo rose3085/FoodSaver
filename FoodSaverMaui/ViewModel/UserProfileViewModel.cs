@@ -32,6 +32,9 @@ namespace FoodSaverMaui.ViewModel
                 if (result.Status == BiometricResponseStatus.Success)
                 {
                    IsFingerPrintEnabled = true;
+                    var msg = "enabled";
+                    //bool msg = true;
+                    await SecureStorage.SetAsync("FingerPrint", msg);
                     var message = "Finger print enabled successfully";
                     var toast = Toast.Make($"{message}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
                     await toast.Show();

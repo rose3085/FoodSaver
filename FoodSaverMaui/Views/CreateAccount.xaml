@@ -40,7 +40,7 @@ Margin="30,10,30,0">
                         Margin="10,0,0,0"
                         HorizontalOptions="Start"
                         VerticalOptions="Center" Grid.Column="0" />
-                    <Entry Placeholder="Username"  
+                    <Entry Placeholder="Username"   toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference CreateEmail}" ReturnType="Next"
                         Text="{Binding UserName}"
                         PlaceholderColor="Black"
             FontSize="Medium"
@@ -63,7 +63,7 @@ WidthRequest="{OnIdiom Phone=220, Tablet=400}" />
                      HorizontalOptions="Start"
                      VerticalOptions="Center" Grid.Column="0" />
                     <Entry Placeholder="Email" x:Name="CreateEmail"
-                    toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference CreatePassword}" ReturnType="Next"
+                    toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference CreatePhone}" ReturnType="Next"
                             Text="{Binding Email}"
                             PlaceholderColor="Black"
                         FontSize="Medium"
@@ -93,7 +93,7 @@ Margin="10,0,0,0"
                         HorizontalOptions="Start"
                         VerticalOptions="Center" Grid.Column="0" />
                     <Entry Placeholder="Phone Number" x:Name="CreatePhone"
-                                   Text="{Binding Phone}"
+                                   Text="{Binding Phone}"  toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference CreatePassword}" ReturnType="Next"
                                    PlaceholderColor="Black"
                            FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
                             WidthRequest="{OnIdiom Phone=220, Tablet=400}"  >
@@ -128,6 +128,7 @@ Margin="10,0,0,0"
                      VerticalOptions="Center" Grid.Column="0" />
                     <Entry Placeholder="Password" x:Name="CreatePassword"
                             Text="{Binding Password}"
+                            toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference ConfirmPassword}" ReturnType="Next"
                             PlaceholderColor="Black" IsPassword="True"
                     FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
                       WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
