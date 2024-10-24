@@ -16,25 +16,38 @@
         <Style x:Key="ValidEntryStyle" TargetType="Entry">
             <Setter Property="TextColor" Value="Green" />
         </Style>
+        <!--<Style TargetType="Entry">
+            <Setter Property="FontAutoScalingEnabled" Value="False" />
+        </Style>-->
+
+        <!--<Style TargetType="Label">
+                <Setter Property="FontAutoScalingEnabled" Value="False" />
+            </Style>
+        
+            
+            <Style TargetType="Button">
+                <Setter Property="FontAutoScalingEnabled" Value="False" />
+            </Style>-->
+           
     </ContentPage.Resources>
 
 
     <Grid RowDefinitions="Auto,Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
-        <Grid Grid.Row="0" RowDefinitions="Auto" Padding="50,10,50,0"  VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand">
+        <Grid Grid.Row="0" RowDefinitions="Auto" Padding="50,10,50,0"  VerticalOptions="Center" HorizontalOptions="Center">
 
             <Label Grid.Row="0" Text="Create your account!"
-       FontSize="30" TextColor="#385897"
-       FontFamily="PoppinsBold"
+       FontSize="28" TextColor="#385897"
+       FontFamily="PoppinsBold" FontAutoScalingEnabled="False"
        HorizontalOptions="Center"></Label>
         </Grid>
-        <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*" RowSpacing="5" Padding="20" >
+        <Grid Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*" RowSpacing="5" Padding="20,5,0,0" >
 
             <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="0"
-Margin="30,10,30,0">
+Margin="30,0,30,0">
 
 
-                <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+                <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" >
 
                     <Image Source="user.png" WidthRequest="34" HeightRequest="34"
                         Margin="10,0,0,0"
@@ -43,7 +56,7 @@ Margin="30,10,30,0">
                     <Entry Placeholder="Username"   toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference CreateEmail}" ReturnType="Next"
                         Text="{Binding UserName}"
                         PlaceholderColor="Black"
-            FontSize="Medium"
+            FontSize="18"
                 Grid.Column="1" HorizontalOptions="Start"
 WidthRequest="{OnIdiom Phone=220, Tablet=400}" />
 
@@ -66,7 +79,7 @@ WidthRequest="{OnIdiom Phone=220, Tablet=400}" />
                     toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference CreatePhone}" ReturnType="Next"
                             Text="{Binding Email}"
                             PlaceholderColor="Black"
-                        FontSize="Medium"
+                        FontSize="18"
                             Grid.Column="1" HorizontalOptions="Start"
                         WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
                         <Entry.Behaviors>
@@ -84,7 +97,7 @@ WidthRequest="{OnIdiom Phone=220, Tablet=400}" />
 Margin="30,10,30,0">
 
 
-                <Grid ColumnSpacing="15" Padding="3"  ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+                <Grid ColumnSpacing="15" Padding="3"  ColumnDefinitions="Auto,*"  >
 
 
 
@@ -95,7 +108,7 @@ Margin="10,0,0,0"
                     <Entry Placeholder="Phone Number" x:Name="CreatePhone"
                                    Text="{Binding Phone}"  toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference CreatePassword}" ReturnType="Next"
                                    PlaceholderColor="Black"
-                           FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
+                           FontSize="18" Grid.Column="1" HorizontalOptions="Start"
                             WidthRequest="{OnIdiom Phone=220, Tablet=400}"  >
                         <Entry.Behaviors>
                             <toolkit:CharactersValidationBehavior 
@@ -130,7 +143,7 @@ Margin="10,0,0,0"
                             Text="{Binding Password}"
                             toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference ConfirmPassword}" ReturnType="Next"
                             PlaceholderColor="Black" IsPassword="True"
-                    FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
+                    FontSize="18" Grid.Column="1" HorizontalOptions="Start"
                       WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
                         <Entry.Behaviors>
                             <toolkit:CharactersValidationBehavior 
@@ -141,11 +154,7 @@ Margin="10,0,0,0"
          CharacterType="Alphanumeric"
          MinimumCharacterTypeCount="6" />
 
-                            <toolkit:UserStoppedTypingBehavior 
-                 Command="{Binding Source={x:Reference CreateAccountPage}, Path=BindingContext.SearchCommand}"
-                 StoppedTypingTimeThreshold="10"
-                 MinimumLengthThreshold="3"
-                 ShouldDismissKeyboardAutomatically="True" />
+                           
 
                         </Entry.Behaviors>
                     </Entry>
@@ -165,7 +174,7 @@ Margin="30,10,30,0">
                     <Entry Placeholder="Confirm Password" x:Name="ConfirmPassword"
                    Text="{Binding ConfirmPassword}"
                    PlaceholderColor="Black" IsPassword="True"
-           FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
+           FontSize="15" Grid.Column="1" HorizontalOptions="Start"
              WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
                         <Entry.Behaviors>
                             <toolkit:CharactersValidationBehavior 
@@ -201,7 +210,7 @@ MinimumCharacterTypeCount="6" />
        Margin="10,0,0,0"
            HorizontalOptions="Start"
            VerticalOptions="Center" Grid.Column="0" />
-                        <Label Text="Choose a Role" FontSize="Medium"
+                        <Label Text="Choose a Role" FontSize="18"
                       HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1"
                        Margin="10,0,0,0"
        WidthRequest="{OnIdiom Phone=261, Tablet=400}" >
@@ -213,7 +222,7 @@ MinimumCharacterTypeCount="6" />
                     </Frame.GestureRecognizers>
                 </Frame>
 
-                <Grid Grid.Row="1"  RowDefinitions="Auto,Auto" HorizontalOptions="StartAndExpand" Padding="70,0,0,0">
+                <Grid Grid.Row="1"  RowDefinitions="Auto,Auto"  HorizontalOptions="StartAndExpand" Padding="70,0,0,0">
                     <RadioButton Grid.Row="0" Content="Buyer"
                     GroupName="RoleGroup" 
                     IsChecked="{Binding IsBuyerChecked}" 
@@ -251,11 +260,11 @@ IsChecked="{Binding IsSellerChecked}"
 
             </Grid>
 
-            <Grid Grid.Row="1" ColumnSpacing="15" ColumnDefinitions="Auto,*" Padding="10" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
+            <Grid Grid.Row="1" ColumnSpacing="15" ColumnDefinitions="Auto,*" Padding="10" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
                 <Label Grid.Column="0" Text="Already have an account?"
-       FontSize="Medium" VerticalOptions="Center"
+       FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontAutoScalingEnabled="False"
        />
-                <Label Grid.Column="1" Text="SignIn"   FontSize="Medium"
+                <Label Grid.Column="1" Text="SignIn"   FontSize="15" FontAutoScalingEnabled="False"
      TextColor="#385897">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OnSignInTapped}" />

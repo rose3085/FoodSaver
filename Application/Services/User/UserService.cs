@@ -43,9 +43,10 @@ namespace Application.Services.User
         public async Task<UserManagerResponse> DeleteUser(UserLoginRequest deleteRequest)
         {
             try {
-
+                //var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+                var userInfo = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
                 var userExists = await _userManager.FindByEmailAsync(deleteRequest.Email);
-                if (userExists == null)
+                if (userExists == null || userInfo != userExists)
                 {
                     return new UserManagerResponse
                     {
@@ -64,7 +65,7 @@ namespace Application.Services.User
                     };
                 }
                 await _signInManager.SignOutAsync();
-                var result = await _userManager.DeleteAsync(userExists);
+                var result = await _userManager.DeleteAsync(userInfo);
                 if (result == null)
                 {
 

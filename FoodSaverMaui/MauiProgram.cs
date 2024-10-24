@@ -34,8 +34,8 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<UserServices>();
 
 
-            builder.Services.AddSingleton<Login>();
-            builder.Services.AddSingleton<LoginViewModel>();
+            builder.Services.AddTransient<Login>();
+            builder.Services.AddTransient<LoginViewModel>();
 
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<HomePageViewModel>();
@@ -44,13 +44,23 @@ namespace FoodSaverMaui
 
             builder.Services.AddSingleton<UserProfile>();
             builder.Services.AddSingleton<UserProfileViewModel>();
+            builder.Services.AddSingleton<UserProfileService>();
+
+            builder.Services.AddSingleton<UpdatePassword>();
+            builder.Services.AddSingleton<UpdatePasswordViewModel>();
+
+            builder.Services.AddSingleton<DeleteUser>();
+            builder.Services.AddSingleton<DeleteUserViewModel>();
+
+            builder.Services.AddSingleton<UpdateEmail>();
+            builder.Services.AddSingleton<UpdateEmailViewModel>();
 
             builder.Services.AddSingleton<FindFood>();
             builder.Services.AddSingleton<FindFoodViewModel>();
             builder.Services.AddSingleton<FoodService>();
 
-            builder.Services.AddSingleton<UploadFood>();
-            builder.Services.AddSingleton<UploadFoodViewModel>();
+            builder.Services.AddTransient<UploadFood>();
+            builder.Services.AddTransient<UploadFoodViewModel>();
 #if DEBUG
             builder.Logging.AddDebug();
 

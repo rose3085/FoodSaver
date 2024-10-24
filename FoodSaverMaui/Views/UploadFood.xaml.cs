@@ -16,7 +16,7 @@ public partial class UploadFood : ContentPage
         base.OnDisappearing();
       //  _viewModel.PickedImage = null;
         
-        _viewModel.DisposeImage(); // Call Dispose method in ViewModel
+       // _viewModel.DisposeImage(); // Call Dispose method in ViewModel
     }
     //protected override async void OnAppearing()
     //{

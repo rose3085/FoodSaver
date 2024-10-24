@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using FoodSaverMaui.Model;
 using Microsoft.Maui.Storage;
 
 namespace FoodSaverMaui.ViewModel
@@ -11,9 +13,17 @@ namespace FoodSaverMaui.ViewModel
     public partial class UploadFoodViewModel : BaseViewModel
     {
 
-        private double _stepperValue;
+        [ObservableProperty]
+        string food;
 
-        
+        [ObservableProperty]
+        string description;
+
+        [ObservableProperty]
+        double price;
+
+
+        private double _stepperValue;
 
         public double StepperValue
         {
@@ -27,12 +37,8 @@ namespace FoodSaverMaui.ViewModel
             }
         }
 
-
-
         private ImageSource _pickedImage;
 
-        private Stream _imageStream;
-        private bool _isInitialized;
         public ImageSource PickedImage
         {
             get => _pickedImage;
@@ -47,17 +53,50 @@ namespace FoodSaverMaui.ViewModel
         public Command OnFliePicked { get; }
         public Command IncrementCommand { get; }
 
-    
+        public Command OnPostTapped { get; }
         public Command DecrementCommand { get; }
         public UploadFoodViewModel()
         {
             OnFliePicked = new Command(async() => await ImagePicked());
             IncrementCommand = new Command(OnIncrement);
             DecrementCommand = new Command(OnDecrement);
+            OnPostTapped = new Command(async () => await PostButtonTapped());
 
         }
- public bool IsImageSelected => PickedImage != null;
+        public bool IsImageSelected => PickedImage != null;
         private byte[] _imageData;
+
+
+
+        public async Task PostButtonTapped()
+        {
+            try {
+                if (!string.IsNullOrWhiteSpace(food) && !string.IsNullOrWhiteSpace(description) && !double.IsNaN(price)
+                    && !double.IsNaN(_stepperValue) && !ImageSource.IsNullOrEmpty(_pickedImage) )
+                    {
+
+                    var requestModel = new PostFoodRequest()
+                    {
+                        ImageFile = _pickedImage,
+                        ProductName = food,
+                        Description = description,
+                        Quantity = _stepperValue,
+                        PricePerKg = price,
+
+                    };
+
+
+                }
+            
+            
+            
+            
+            }
+            catch { }
+        
+        }
+
+
         public async Task ImagePicked()
         {
 
@@ -80,17 +119,7 @@ namespace FoodSaverMaui.ViewModel
                 PickedImage = ImageSource.FromStream(() => new MemoryStream(_imageData));
             }
         }
-        public void DisposeImage()
-        {
-            if (_imageStream != null)
-            {
-               // _imageStream.Dispose();
-                _imageData = null;
-                PickedImage = null;
-                OnPropertyChanged(nameof(PickedImage));
-            }
-
-        }
+       
 
         //public void Reset()
         //{

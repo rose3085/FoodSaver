@@ -24,7 +24,7 @@
 
             <Label Grid.Row="0" Text="Login to your account!"
            FontSize="30" TextColor="#385897"
-           FontFamily="PoppinsBold"
+           FontFamily="PoppinsBold" FontAutoScalingEnabled="False"
            HorizontalOptions="Center"></Label>  
         </Grid>
 
@@ -45,7 +45,7 @@
                            toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference Password}" ReturnType="Next"
                                    Text="{Binding Email}"
                                    PlaceholderColor="Black"
-                               FontSize="Medium"
+                               FontSize="18"
                                    Grid.Column="1" HorizontalOptions="Start"
                                WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
                         <Entry.Behaviors>
@@ -70,7 +70,7 @@
                     <Entry Placeholder="Password" x:Name="Password"
                                    Text="{Binding Password}"
                                    PlaceholderColor="Black" IsPassword="True"
-                           FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
+                           FontSize="18" Grid.Column="1" HorizontalOptions="Start"
                              WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
                         <Entry.Behaviors>
                             <toolkit:CharactersValidationBehavior 
@@ -134,10 +134,10 @@
 
 
             <Grid Grid.Row="1" ColumnSpacing="15" ColumnDefinitions="Auto,*" Padding="10" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
-                <Label Grid.Column="0" Text="Don't have an account?"
-                  FontSize="Medium" VerticalOptions="Center"
+                <Label Grid.Column="0" Text="Don't have an account?" FontAutoScalingEnabled="False"
+                  FontSize="15" VerticalOptions="Center"
                   />
-                <Label Grid.Column="1" Text="Register"   FontSize="Medium"
+                <Label Grid.Column="1" Text="Register"   FontSize="15" FontAutoScalingEnabled="False"
                 TextColor="#385897">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OnRegisterTapped}" />

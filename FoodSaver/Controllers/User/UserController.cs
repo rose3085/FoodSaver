@@ -1,5 +1,6 @@
 ﻿using Application.DTO.User;
 using Application.Interfaces.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,6 +48,7 @@ namespace FoodSaver.Controllers.User
 
         [HttpPost]
         [Route("DeleteUser")]
+        [Authorize]
         public async Task<IActionResult> DeleteUser(UserLoginRequest deleteRequest)
         {
             if (ModelState.IsValid)
@@ -76,6 +78,7 @@ namespace FoodSaver.Controllers.User
 
         [HttpPost]
         [Route("UpdatePassword")]
+        [Authorize]
         public async Task<IActionResult> UpdatePassword(UpdatePasswordDto updatePassword)
         {
             if (ModelState.IsValid)
@@ -92,6 +95,7 @@ namespace FoodSaver.Controllers.User
 
         [HttpPost]
         [Route("UpdateEmail")]
+        [Authorize]
         public async Task<IActionResult> UpdateEmail(UpdateEmailDto updateEmail)
         {
             if (ModelState.IsValid)

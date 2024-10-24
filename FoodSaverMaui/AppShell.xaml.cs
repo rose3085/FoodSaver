@@ -12,6 +12,9 @@ namespace FoodSaverMaui
             Routing.RegisterRoute(nameof(LandingPage), typeof(LandingPage));
             Routing.RegisterRoute(nameof(UserProfile), typeof(UserProfile));
             Routing.RegisterRoute(nameof(UploadFood), typeof(UploadFood));
+            Routing.RegisterRoute(nameof(UpdatePassword), typeof(UpdatePassword));
+            Routing.RegisterRoute(nameof(DeleteUser), typeof(DeleteUser));
+            Routing.RegisterRoute(nameof(UpdateEmail), typeof(UpdateEmail));
         }
     }
 }

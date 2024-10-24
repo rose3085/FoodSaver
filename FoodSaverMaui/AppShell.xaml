@@ -4,9 +4,16 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:FoodSaverMaui.Views"
+       xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Shell.FlyoutBehavior="Disabled"
     Title="FoodSaverMaui">
 
+
+    <Shell.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="#03b25a" StatusBarStyle="LightContent" />
+    </Shell.Behaviors>
+    
+    
     <ShellContent
        
         ContentTemplate="{DataTemplate local:CreateAccount}"
