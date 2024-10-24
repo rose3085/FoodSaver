@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Model;
+using FoodSaverMaui.Services.Food;
 using Microsoft.Maui.Storage;
 
 namespace FoodSaverMaui.ViewModel
@@ -50,13 +52,17 @@ namespace FoodSaverMaui.ViewModel
                 OnPropertyChanged(nameof(IsImageSelected));
             }
         }
+
+        private readonly FoodService _foodService;
+
         public Command OnFliePicked { get; }
         public Command IncrementCommand { get; }
 
         public Command OnPostTapped { get; }
         public Command DecrementCommand { get; }
-        public UploadFoodViewModel()
+        public UploadFoodViewModel(FoodService foodService)
         {
+            _foodService = foodService;
             OnFliePicked = new Command(async() => await ImagePicked());
             IncrementCommand = new Command(OnIncrement);
             DecrementCommand = new Command(OnDecrement);
@@ -65,34 +71,59 @@ namespace FoodSaverMaui.ViewModel
         }
         public bool IsImageSelected => PickedImage != null;
         private byte[] _imageData;
+        public string PickedImageName;
 
 
 
         public async Task PostButtonTapped()
         {
-            try {
-                if (!string.IsNullOrWhiteSpace(food) && !string.IsNullOrWhiteSpace(description) && !double.IsNaN(price)
-                    && !double.IsNaN(_stepperValue) && !ImageSource.IsNullOrEmpty(_pickedImage) )
+            try
+            {
+                IsBusy = true;
+                if (!string.IsNullOrEmpty(food) && !string.IsNullOrEmpty(description) && !double.IsNaN(price)
+                    && !double.IsNaN(_stepperValue) && !ImageSource.IsNullOrEmpty(_pickedImage) && !string.IsNullOrEmpty(PickedImageName))
+                {
+                    var result = await _foodService.PostFood(food, description, price, _stepperValue, _imageData, PickedImageName);
+                    if (result != null)
                     {
 
-                    var requestModel = new PostFoodRequest()
+                        //string resultError = "Enter Valid Credentials!!";
+                        var toast = Toast.Make($"{result}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                        await toast.Show();
+
+                    }
+                    else
                     {
-                        ImageFile = _pickedImage,
-                        ProductName = food,
-                        Description = description,
-                        Quantity = _stepperValue,
-                        PricePerKg = price,
+                        string resultError = "Couldn't upload your post!!";
+                        var toast = Toast.Make($"{resultError}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                        await toast.Show();
 
-                    };
-
+                    }
+                }
+                else
+                {
+                    string resultError = "Enter all fields!";
+                    var toast = Toast.Make($"{resultError}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                    await toast.Show();
 
                 }
-            
-            
-            
+
+
+
+
+            }
+            catch
+            {
+
+                string resultError = "Couldn't upload your post!!";
+                var toast = Toast.Make($"{resultError}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                await toast.Show();
+            }
+            finally
+            { 
+                IsBusy = false;
             
             }
-            catch { }
         
         }
 
@@ -108,6 +139,7 @@ namespace FoodSaverMaui.ViewModel
 
             if (result != null)
             {
+                PickedImageName = result.FileName;
                 using (var stream = await result.OpenReadAsync())
                 {
                     using (var memoryStream = new MemoryStream())
@@ -121,22 +153,6 @@ namespace FoodSaverMaui.ViewModel
         }
        
 
-        //public void Reset()
-        //{
-        //    // Reset all the properties you want to initialize again
-        //    PickedImage = null;
-        //    _isInitialized = false;
-        //}
-
-        //public void Initialize()
-        //{
-        //    if (!_isInitialized)
-        //    {
-        //        // Initial setup when the page is first loaded
-        //        // Perform any setup tasks
-        //        _isInitialized = true;
-        //    }
-        //}
         private void OnIncrement()
         {
             StepperValue += 1; // Increment value by 1

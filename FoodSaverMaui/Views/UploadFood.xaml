@@ -10,13 +10,13 @@
              Title="Upload Food"
              >
 
-  
-   
-    
-        <Grid
-         RowDefinitions="Auto,Auto,Auto,Auto,*"  HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"
+
+
+
+    <Grid
+         RowDefinitions="Auto,Auto,Auto,Auto,Auto,*"  HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"
             >
-            <Grid Margin="15,20,0,0" HorizontalOptions="Center" VerticalOptions="Center">
+        <Grid Margin="15,20,0,0" HorizontalOptions="Center" VerticalOptions="Center">
             <Frame
             BorderColor="Gray"
             BackgroundColor="WhiteSmoke"
@@ -33,29 +33,29 @@
                     Aspect="AspectFill"
                    
                 >
-                   
-                        <ImageButton.Triggers>
-                            <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="false">
-                                <Setter Property="Source" Value="plus.png" />
-                                <Setter Property="HeightRequest" Value="30"/>
-                                <Setter Property="WidthRequest" Value="30 "/>
+
+                    <ImageButton.Triggers>
+                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="false">
+                            <Setter Property="Source" Value="plus.png" />
+                            <Setter Property="HeightRequest" Value="30"/>
+                            <Setter Property="WidthRequest" Value="30 "/>
 
 
 
-                            </DataTrigger>
-                            <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="true">
-                                <Setter Property="Source" Value="{Binding PickedImage}" />
-                                <Setter Property="BackgroundColor" Value="Transparent" />
-                               <Setter Property="HeightRequest" Value="180"/>
-                                <Setter Property="WidthRequest" Value="310 "/>
-                            </DataTrigger>
-                        </ImageButton.Triggers>
-                   
-                    </ImageButton>
-                </Frame>
-            </Grid>
+                        </DataTrigger>
+                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="true">
+                            <Setter Property="Source" Value="{Binding PickedImage}" />
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="HeightRequest" Value="180"/>
+                            <Setter Property="WidthRequest" Value="310 "/>
+                        </DataTrigger>
+                    </ImageButton.Triggers>
 
-            <Grid RowDefinitions="Auto,*" Grid.Row="1"  HorizontalOptions="Start" VerticalOptions="Start" Padding="30,10,0,20">
+                </ImageButton>
+            </Frame>
+        </Grid>
+
+        <Grid RowDefinitions="Auto,*" Grid.Row="1"  HorizontalOptions="Start" VerticalOptions="Start" Padding="30,10,0,20">
 
             <Grid Grid.Row="0" ColumnSpacing="10" ColumnDefinitions="Auto,Auto" >
                 <BoxView Grid.ColumnSpan="0"
@@ -65,7 +65,7 @@
                 VerticalOptions="Center"
                 Color="#03b25a"
                                 BackgroundColor="Transparent"
-                CornerRadius="25" >     
+                CornerRadius="25" >
                     <BoxView.Shadow>
                         <Shadow  Brush="Green"
              Offset="0,10"
@@ -77,8 +77,8 @@
             </Grid>
             <Entry Grid.Row="1" Text="{Binding Food}" Placeholder="Enter Food Name" WidthRequest='330' />
 
-            </Grid>
-            <Grid RowDefinitions="Auto,*" Grid.Row="2" HorizontalOptions="Start" VerticalOptions="Start" Padding="30,10,0,20">
+        </Grid>
+        <Grid RowDefinitions="Auto,*" Grid.Row="2" HorizontalOptions="Start" VerticalOptions="Start" Padding="30,10,0,20">
             <Grid Grid.Row="0" ColumnSpacing="10" ColumnDefinitions="Auto,Auto" >
                 <BoxView Grid.ColumnSpan="0"
             HeightRequest="10"
@@ -87,7 +87,7 @@
             VerticalOptions="Center"
             Color="#03b25a"
                             BackgroundColor="Transparent"
-            CornerRadius="25" > 
+            CornerRadius="25" >
                     <BoxView.Shadow>
                         <Shadow  Brush="Green"
              Offset="0,10"
@@ -109,7 +109,7 @@
                    
                     Margin="0,10,0,0"/>
 
-            </Grid>
+        </Grid>
         <Grid Grid.Row="3" ColumnDefinitions="Auto,Auto" ColumnSpacing="25" >
             <Grid RowDefinitions="Auto,*" Grid.Column="0"  HorizontalOptions="Start" VerticalOptions="Start" Padding="30,10,0,20">
                 <Grid Grid.Row="0" ColumnSpacing="5" ColumnDefinitions="Auto,Auto" >
@@ -120,7 +120,7 @@
                 VerticalOptions="Center"
                 Color="#03b25a"
                                 BackgroundColor="Transparent"
-                CornerRadius="25" > 
+                CornerRadius="25" >
                         <BoxView.Shadow>
                             <Shadow  Brush="Green"
                  Offset="0,10"
@@ -141,14 +141,14 @@
                 VerticalOptions="Center"
                 Color="#03b25a"
                                 BackgroundColor="Transparent"
-                CornerRadius="25" >     
+                CornerRadius="25" >
                         <BoxView.Shadow>
                             <Shadow  Brush="Green"
                  Offset="0,10"
                 Opacity="0.3" />
                         </BoxView.Shadow>
                     </BoxView>
-                    
+
                     <Label Grid.Column="1" Text="Quantity" FontSize="18" FontAttributes="Bold" TextColor="#385897"/>
                 </Grid>
                 <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="30" Grid.Row="1"  HorizontalOptions="Start" VerticalOptions="Start" >
@@ -178,11 +178,21 @@
      />
 
         </Grid>
+        <Grid Grid.Row="5" RowDefinitions="*,Auto">
+            <Grid Grid.Row="0" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+                <Frame HeightRequest="75" 
+            BackgroundColor="Transparent" 
+            BorderColor="Transparent"
+>
+
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                   IsVisible="{Binding IsBusy}"
+                                   Color="Black" />
+
+
+                </Frame>
+
+            </Grid>
+        </Grid>
     </Grid>
-
-   
-
-
-
-
 </ContentPage>

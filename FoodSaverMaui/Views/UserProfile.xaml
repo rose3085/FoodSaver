@@ -100,27 +100,21 @@ FontSize="18" />
             
             <toolkit:Expander.Header >
                 <Frame Background="Transparent" BorderColor="Transparent" HorizontalOptions="Start" VerticalOptions="Start" >
-                    <Image   Source="settings.png" HeightRequest="24" WidthRequest="24"  />
+                    <Image   Source="settings.png" HeightRequest="24" WidthRequest="24"  >
+                      
+                    </Image>
                 </Frame>
+                <!--<Image   Source="settings.png" HeightRequest="24" WidthRequest="24"  />-->
             </toolkit:Expander.Header>
 
             <VerticalStackLayout Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Background="GhostWhite" HeightRequest="750"  Spacing="10" Padding="10">
 
-                <!--<VerticalStackLayout.Behaviors>
-
-                    <toolkit:AnimationBehavior>
-                        <toolkit:AnimationBehavior.AnimationType>
-                            <toolkit:FadeAnimation Opacity="0.1" />
-                        </toolkit:AnimationBehavior.AnimationType>
-                    </toolkit:AnimationBehavior>
-
-                </VerticalStackLayout.Behaviors>--> 
                     
-                <VerticalStackLayout.Shadow>
+                <!--<VerticalStackLayout.Shadow>
                     <Shadow Brush="Black"
  Offset="0,20"
 Opacity="0.8" />
-                </VerticalStackLayout.Shadow>
+                </VerticalStackLayout.Shadow>-->
 
                     <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="10" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
 
@@ -226,56 +220,6 @@ FontSize="18" />
                 </Frame>
 
 
-
-                <!--<Grid  ColumnDefinitions="Auto,*" ColumnSpacing="10" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Padding="40,0,0,0"  >
-
-
-                    <Label Grid.Column="0" Text="Account" TextColor="#A4A4A4" VerticalOptions="Start" HorizontalOptions="StartAndExpand"
-
-                    FontSize="18" />
-                    <Image Grid.Column="1" Source="rightArrows.png" HeightRequest="24" WidthRequest="24"  />
-                </Grid>
-                
-                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
-                    <Image Grid.Column="1" Source="email.png" HeightRequest="24" WidthRequest="24"  />
-
-                    <Label Grid.Column="0" Text="Change Email" TextColor="#A4A4A4" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
-
-                    FontSize="18" />
-                </Grid>
-
-                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
-                    <Image Grid.Column="0" Source="key.png" HeightRequest="24" WidthRequest="24"  />
-
-                    <Label Grid.Column="1" Text="Change Password" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
-
-FontSize="18" />
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OnChangePasswordTapped}" />
-                    </Grid.GestureRecognizers>
-                </Grid>
-
-
-
-                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"   >
-                    <Image Grid.Column="0" Source="fingerprint.png" HeightRequest="24" WidthRequest="24"  />
-
-                    <Label Grid.Column="1" Text="Enable Biometric" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
-                           
-
-FontSize="18" />
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OnEnableFingerprintTapped}" />
-                    </Grid.GestureRecognizers>
-                </Grid>
-
-                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
-                    <Image Grid.Column="0" Source="question.png" HeightRequest="24" WidthRequest="24"  />
-
-                    <Label Grid.Column="1" Text="Help" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
-
-FontSize="18" />
-                </Grid>-->
 
                 </VerticalStackLayout>
                 

@@ -14,6 +14,6 @@ namespace FoodSaverMaui.Model
         public double Quantity { get; set; }
 
 
-        public ImageSource ImageFile { get; set; }
+        public byte[] ImageFile { get; set; }
     }
 }

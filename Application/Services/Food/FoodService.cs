@@ -176,7 +176,7 @@ namespace Application.Services.Food
             var result = await _uow.AsyncRepositories<FoodModel>().GetRandomAsync();
 
 
-             var baseUrl = $"https://1b22-2400-1a00-bb20-db04-90c7-6070-88d6-ff9c.ngrok-free.app";
+             var baseUrl = $"https://0432-2405-acc0-1504-9a1f-7d83-813b-6a64-8e82.ngrok-free.app";
             // var baseUrl = $"https://localhost:7293";
             var productResult =  result
                 .Where(product => product.IsBooked == false)
@@ -218,23 +218,7 @@ namespace Application.Services.Food
             var fileNameWithPath = Path.Combine(path, fileName);
             using var stream = new FileStream(fileNameWithPath, FileMode.Create);
             await imageFile.CopyToAsync(stream);
-            //using (var stream = new MemoryStream())
-            //{
-            //    await imageFile.CopyToAsync(stream);
-            //    stream.Position = 0; // Reset the stream position
-
-            //    using (var image = Image.Load(stream))
-            //    {
-            //        // Resize the image while maintaining the aspect ratio
-            //        image.Mutate(x => x.Resize(new ResizeOptions
-            //        {
-            //            Size = new Size(40, 40),
-            //            Mode = ResizeMode.Max // Maintain aspect ratio
-            //        }));
-
-            //        await image.SaveAsync(fileNameWithPath); // Save the image to the file path
-            //    }
-            //}
+          
             return fileName;
         }
     }

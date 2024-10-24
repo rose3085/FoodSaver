@@ -8,7 +8,10 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
+using System.Net.Http;
+using System.IO;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace FoodSaverMaui.Services.Food
 {
@@ -56,7 +59,7 @@ namespace FoodSaverMaui.Services.Food
 
 
 
-        public async Task<bool> PostFood(PostFoodRequest request)
+        public async Task<string> PostFood(string productName, string description, double pricePerKg, double quantity, byte[] imageData, string imageName)
         {
 
             try
@@ -65,34 +68,64 @@ namespace FoodSaverMaui.Services.Food
                 if (jwtToken == null)
                 {
 
-                    return false;
+                    return null;
                 }
-                var url = $"{App.Settings.ApiBaseUrl}/api/User/DeleteUser";
-                var json = JsonConvert.SerializeObject(request);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                var response = await _httpClient.PostAsync(url, content);
-                Console.WriteLine($"s Code: {(int)response.StatusCode}");
-                if (response.IsSuccessStatusCode)
+                var url = $"{App.Settings.ApiBaseUrl}/api/Food/AddFood";
+                //var json = JsonConvert.SerializeObject(request);
+                using (var formData = new MultipartFormDataContent())
                 {
-                    var result = await response.Content.ReadFromJsonAsync<UserManagerResponse>();
-                    if (result.IsSuccess == true)
+                    formData.Add(new StringContent(productName), "ProductName");
+                    formData.Add(new StringContent(description), "Description");
+                    formData.Add(new StringContent(pricePerKg.ToString(CultureInfo.InvariantCulture)), "PricePerKg");
+                    formData.Add(new StringContent(quantity.ToString(CultureInfo.InvariantCulture)), "Quantity");
+                   
+                   
+                    if (imageData != null && imageData.Length > 0)
                     {
+                        var fileContent = new ByteArrayContent(imageData);
+                        string fileExtension = Path.GetExtension(imageName).ToLower();
+                        switch (fileExtension)
+                        {
+                            case ".jpg":
+                            case ".jpeg":
+                                fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+                                break;
+                            case ".png":
+                                fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                                break;
+                            default:
+                                
+                                Console.WriteLine("Unsupported file type.");
+                                return "Image must be .jpg or .jpeg or .png"; 
+                        }
 
-                        //SecureStorage.RemoveAll();
-                        //return result.Message;
-
-                        return true;
+                        formData.Add(fileContent, "ImageFile", imageName);
                     }
+                    //var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                    var response = await _httpClient.PostAsync(url, formData);
+                    Console.WriteLine($"s Code: {(int)response.StatusCode}");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = await response.Content.ReadFromJsonAsync<UserManagerResponse>();
+                        if (result.IsSuccess == true)
+                        {
 
+                            //SecureStorage.RemoveAll();
+                            return result.Message;
+
+                           // return true;
+                        }
+
+                        else
+                        {
+                            return result.Message;
+                        }
+                    }
                     else
                     {
-                        return false;
+                        return null;
                     }
-                }
-                else
-                {
-                    return true;
                 }
             }
             catch (Exception ex)
@@ -105,10 +138,6 @@ namespace FoodSaverMaui.Services.Food
         }
 
 
-        //public async Task<T> AddFood()
-        //{ 
-        
-        
-        //}
+       
     }
 }

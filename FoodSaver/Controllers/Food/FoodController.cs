@@ -30,7 +30,7 @@ namespace FoodSaver.Controllers.Food
         [HttpPost]
         [Route("AddFood")]
         [Authorize]
-        public async Task<IActionResult> AddFood(PostFoodRequestDto postFood)
+        public async Task<IActionResult> AddFood([FromForm]PostFoodRequestDto postFood)
         {
             if (ModelState.IsValid)
             {
