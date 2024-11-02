@@ -77,7 +77,7 @@ namespace Application.Services.Food
                         PricePerKg = postFood.PricePerKg,
                         Quantity = postFood.Quantity,
                         ProductImage = createdImageName,
-                        Users = new List<ApplicationUser> {userInfo },
+                        Seller = userInfo,
                     };
                     var createdProduct = await _uow.AsyncRepositories<FoodModel>().AddAsync(product);
                    
@@ -119,7 +119,7 @@ namespace Application.Services.Food
             try {
                 var includes = new Expression<Func<FoodModel, object>>[]
                    {
-                        s => s.Users,
+                        s => s.Seller,
                    };
                 var seller = await _uow.AsyncRepositories<FoodModel>().GetWithIncludeAndId(foodId,includes);
                 if (seller == null)
@@ -136,7 +136,7 @@ namespace Application.Services.Food
 
                 var userInfo = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
 
-                if (!seller.Users.Contains(userInfo))
+                if (userInfo == null)
                 {
                     return new FoodServiceResponse()
                     {

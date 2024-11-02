@@ -14,7 +14,7 @@ namespace Domain.Entities.Foods
         public ApplicationUser Buyer { get; set; }
 
         public FoodModel Food { get; set; }
-        public double Quantity { get; set; }
+       public DateTime CreatedTime { get; set; }
 
     }
 }

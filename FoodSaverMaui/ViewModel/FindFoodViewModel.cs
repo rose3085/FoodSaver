@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FoodSaverMaui.ViewModel
 {
@@ -29,12 +30,15 @@ namespace FoodSaverMaui.ViewModel
         //        OnPropertyChanged(nameof(Products));  // Notify UI about the change
         //    }
         //}
+        [ObservableProperty]
+        private bool isPopupVisible;
         public Command OnSearchButtonPressed { get; }
         [ObservableProperty]
         string searchQuery;
 
         [ObservableProperty]
         bool isRefreshing;
+        public ICommand ShowPopupCommand => new Command(ShowPopup);
         public FindFoodViewModel(FoodService foodService)
         {
             _foodService = foodService;
@@ -44,6 +48,23 @@ namespace FoodSaverMaui.ViewModel
             //Products = new ObservableCollection<GetProductsResponse>();
         }
 
+        
+        public async void ShowPopup()
+        {
+            string action = await Shell.Current.DisplayActionSheet("Arrange Price?", "Cancel", null, "High to Low", "Low to High");
+
+            if (action == "High to Low")
+            {
+               
+                var result = await SortProductsDescending();
+            }
+            if (action == "Low to High")
+            {
+                var result = await SortProductsAscending();
+            }
+
+           
+        }
 
         public async Task AddButtonClick()
         {
@@ -113,7 +134,7 @@ namespace FoodSaverMaui.ViewModel
                 else
                 {
 
-                    await Shell.Current.DisplayAlert("Success", "", "Ok!");
+                    await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
                 }
             }
             finally
@@ -123,5 +144,94 @@ namespace FoodSaverMaui.ViewModel
             }
 
         }
+
+
+        public async Task<IEnumerable<GetProductsResponse>> SortProductsAscending()
+        {
+            var sortedProducts = MergeSort(Products, true);
+            Products.Clear();
+            foreach (var product in sortedProducts)
+            {
+                Products.Add(product);
+            }
+            OnPropertyChanged(nameof(Products));
+            return sortedProducts;
+        }
+
+   
+        public async Task<IEnumerable<GetProductsResponse>> SortProductsDescending()
+        {
+
+            var sortedProducts = MergeSort(Products, false);
+            Products.Clear();
+            foreach (var product in sortedProducts)
+            {
+                Products.Add(product);
+            }
+            OnPropertyChanged(nameof(Products));
+            return sortedProducts;
+        }
+
+
+
+        public IEnumerable<GetProductsResponse> MergeSort(IEnumerable<GetProductsResponse> products, bool ascending = true)
+        {
+            List<GetProductsResponse> productList = products.ToList();
+
+            if (productList.Count <= 1)
+            {
+                return productList; 
+            }
+
+           
+            int mid = productList.Count / 2;
+            var left = productList.Take(mid);
+            var right = productList.Skip(mid);
+
+           
+            return Merge(MergeSort(left, ascending), MergeSort(right, ascending), ascending);
+        }
+
+      
+        private IEnumerable<GetProductsResponse> Merge(IEnumerable<GetProductsResponse> left, IEnumerable<GetProductsResponse> right, bool ascending)
+        {
+            List<GetProductsResponse> merged = new List<GetProductsResponse>();
+            using (var leftEnumerator = left.GetEnumerator())
+            using (var rightEnumerator = right.GetEnumerator())
+            {
+                bool hasLeft = leftEnumerator.MoveNext();
+                bool hasRight = rightEnumerator.MoveNext();
+
+                while (hasLeft && hasRight)
+                {
+                    if ((ascending && leftEnumerator.Current.PricePerKg < rightEnumerator.Current.PricePerKg) ||
+                        (!ascending && leftEnumerator.Current.PricePerKg > rightEnumerator.Current.PricePerKg))
+                    {
+                        merged.Add(leftEnumerator.Current);
+                        hasLeft = leftEnumerator.MoveNext();
+                    }
+                    else
+                    {
+                        merged.Add(rightEnumerator.Current);
+                        hasRight = rightEnumerator.MoveNext();
+                    }
+                }
+
+                
+                while (hasLeft)
+                {
+                    merged.Add(leftEnumerator.Current);
+                    hasLeft = leftEnumerator.MoveNext();
+                }
+                while (hasRight)
+                {
+                    merged.Add(rightEnumerator.Current);
+                    hasRight = rightEnumerator.MoveNext();
+                }
+            }
+
+            return merged;
+        }
     }
 }
+

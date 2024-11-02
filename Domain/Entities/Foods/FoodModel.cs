@@ -18,6 +18,6 @@ namespace Domain.Entities.Foods
         public string ProductImage { get; set; }
 
         public bool IsBooked { get; set; } = false;
-        public ICollection<ApplicationUser> Users { get; set; }
+        public ApplicationUser Seller { get; set; }  //single seller
     }
 }

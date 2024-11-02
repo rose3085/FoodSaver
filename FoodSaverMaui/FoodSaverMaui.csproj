@@ -68,10 +68,14 @@
 	  <None Remove="Resources\Images\finger_print.png" />
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\key.png" />
+	  <None Remove="Resources\Images\list.png" />
 	  <None Remove="Resources\Images\logout.png" />
 	  <None Remove="Resources\Images\minus.png" />
+	  <None Remove="Resources\Images\more.png" />
 	  <None Remove="Resources\Images\phone.png" />
+	  <None Remove="Resources\Images\picture.png" />
 	  <None Remove="Resources\Images\plus.png" />
+	  <None Remove="Resources\Images\post.png" />
 	  <None Remove="Resources\Images\profile.png" />
 	  <None Remove="Resources\Images\question.png" />
 	  <None Remove="Resources\Images\rightArrows.png" />

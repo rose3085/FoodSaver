@@ -12,6 +12,7 @@ namespace Domain.Entities.User
     {
         // using Microsoft.AspNet.Identity; doesn't allow Generic identityUser 
 
+        public bool IsDeleted { get; set; } = false;
         public ICollection<FoodModel> Foods { get; set; }
 
     }
