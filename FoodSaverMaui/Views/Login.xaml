@@ -28,9 +28,34 @@
            HorizontalOptions="Center"></Label>  
         </Grid>
 
-        <Grid Grid.Row="1" RowDefinitions="Auto,Auto,*" Padding="20" >
+        <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,*" Padding="20" >
+
 
             <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="0"
+    Margin="30,10,30,0">
+
+
+                <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+
+
+                    <Image  Source="email.png" WidthRequest="34" HeightRequest="34"
+Margin="10,0,0,0"
+                HorizontalOptions="Start"
+                VerticalOptions="Center" Grid.Column="0" />
+                    <Entry Placeholder="UserName" x:Name="UserName"
+               toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference Email}" ReturnType="Next"
+                       Text="{Binding UserName}"
+                       PlaceholderColor="Black"
+                   FontSize="18"
+                       Grid.Column="1" HorizontalOptions="Start"
+                   WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
+                     
+                    </Entry>
+                </Grid>
+            </Frame>
+
+
+            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="1"
                 Margin="30,10,30,0">
 
 
@@ -58,7 +83,7 @@
                 </Grid>
             </Frame>
 
-            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="1"
+            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="2"
            Margin="30,10,30,0">
 
 
@@ -92,7 +117,7 @@
                 </Grid>
             </Frame>
 
-            <Grid Grid.Row="2" ColumnSpacing="15" ColumnDefinitions="*,Auto"  Padding="30,20,10,0">
+            <Grid Grid.Row="3" ColumnSpacing="15" ColumnDefinitions="*,Auto"  Padding="30,20,10,0">
                 <Button Text="Sign In" BackgroundColor="#03b25a" Grid.Column="0"  HorizontalOptions="Start"
                  WidthRequest="{OnIdiom Phone=240, Tablet=350}" 
                 
