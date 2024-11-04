@@ -65,7 +65,10 @@ namespace Application.Services.User
                     };
                 }
                 await _signInManager.SignOutAsync();
-                var result = await _userManager.DeleteAsync(userInfo);
+                //var result = await _userManager.DeleteAsync(userInfo);
+                userInfo.IsDeleted = true;
+                var result = await _userManager.UpdateAsync(userInfo);
+
                 if (result == null)
                 {
 
@@ -99,8 +102,9 @@ namespace Application.Services.User
         {
             try
             {
-                var userExists = await _userManager.FindByEmailAsync(loginRequest.Email);
-                if (userExists == null)
+                //var userExists = await _userManager.FindByEmailAsync(loginRequest.Email);
+                var userExists = await _userManager.FindByNameAsync(loginRequest.UserName);
+                if (userExists == null || userExists.IsDeleted == true && userExists.Email != loginRequest.Email)
                 {
                     return new UserLoginResponse
                     { 
@@ -109,6 +113,8 @@ namespace Application.Services.User
                     };
 
                 }
+
+
                 var isPasswordCorrect = await _userManager.CheckPasswordAsync(userExists, loginRequest.Password);
                 if (!isPasswordCorrect)
                 {
@@ -229,12 +235,20 @@ namespace Application.Services.User
             try
             {
                 var userExists = await _userManager.FindByEmailAsync(registerRequest.Email);
-                if (userExists != null)
+                if (userExists != null && userExists.IsDeleted != true )
                 {
                     return new UserManagerResponse
                     {
                         IsSuccess = false,
                         Message = "Couldn't create user!!",
+                    };
+                }
+                if (userExists.IsDeleted == true && userExists.UserName == registerRequest.UserName)
+                {
+                    return new UserManagerResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Invalid username",
                     };
                 }
 
@@ -309,7 +323,7 @@ namespace Application.Services.User
         {
             try {
                 var checkEmail = await _userManager.FindByEmailAsync(updateEmailRequest.Email);
-                if (checkEmail == null)
+                if (checkEmail == null )
                 {
                     return new UserManagerResponse
                     {
