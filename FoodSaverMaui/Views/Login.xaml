@@ -18,6 +18,10 @@
         </Style>
     </ContentPage.Resources>
 
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+
     <Grid RowDefinitions="Auto,Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
         <Grid Grid.Row="0" RowDefinitions="Auto" Padding="50,80,100,0" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand">

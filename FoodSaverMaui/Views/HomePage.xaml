@@ -4,7 +4,7 @@
             xmlns:local="clr-namespace:FoodSaverMaui.Views"
              xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
         x:DataType="viewmodel:HomePageViewModel"
-            
+            NavigationPage.HasNavigationBar="False"
              x:Class="FoodSaverMaui.Views.HomePage"
              >
  

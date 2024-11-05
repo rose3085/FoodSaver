@@ -60,6 +60,7 @@
 	  <None Remove="Resources\Fonts\Poppins-Bold.ttf" />
 	  <None Remove="Resources\Fonts\Poppins-Regular.ttf" />
 	  <None Remove="Resources\Fonts\Poppins-SemiBold.ttf" />
+	  <None Remove="Resources\Fonts\Solway-Bold.ttf" />
 	  <None Remove="Resources\Images\addpost.png" />
 	  <None Remove="Resources\Images\dots.png" />
 	  <None Remove="Resources\Images\down.png" />
@@ -70,6 +71,7 @@
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\key.png" />
 	  <None Remove="Resources\Images\list.png" />
+	  <None Remove="Resources\Images\logo.png" />
 	  <None Remove="Resources\Images\logout.png" />
 	  <None Remove="Resources\Images\minus.png" />
 	  <None Remove="Resources\Images\more.png" />

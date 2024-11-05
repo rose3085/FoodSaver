@@ -24,6 +24,7 @@ namespace FoodSaverMaui
                     fonts.AddFont("Poppins-Bold", "PoppinsBold");
                     fonts.AddFont("Poppins-SemiBold", "PoppinsSemiBold");
                     fonts.AddFont("Poppins-Regular", "PoppinsRegular");
+                    fonts.AddFont("Solway-Bold.tff", "Solway");
                 });
 
             builder.Services.AddSingleton<IBiometric>(BiometricAuthenticationService.Default);
@@ -41,6 +42,7 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<HomePageViewModel>();
 
             builder.Services.AddSingleton<LandingPage>();
+            builder.Services.AddSingleton<LandingPageViewModel>();
 
             builder.Services.AddSingleton<UserProfile>();
             builder.Services.AddSingleton<UserProfileViewModel>();
@@ -55,8 +57,8 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<UpdateEmail>();
             builder.Services.AddSingleton<UpdateEmailViewModel>();
 
-            builder.Services.AddSingleton<FindFood>();
-            builder.Services.AddSingleton<FindFoodViewModel>();
+            builder.Services.AddTransient<FindFood>();
+            builder.Services.AddTransient<FindFoodViewModel>();
             builder.Services.AddSingleton<FoodService>();
 
             builder.Services.AddTransient<FoodDetail>();

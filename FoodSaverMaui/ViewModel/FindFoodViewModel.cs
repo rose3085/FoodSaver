@@ -20,19 +20,6 @@ namespace FoodSaverMaui.ViewModel
         public Command OnAddButtonClick { get; }
         public ObservableCollection<GetProductsResponse> Products { get; } = new();
 
-        //private IEnumerable<GetProductsResponse> _products;
-        //public IEnumerable<GetProductsResponse> Products
-        //{
-        //    get => _products;
-        //    set
-        //    {
-        //        _products = value;
-        //        OnPropertyChanged(nameof(Products));  // Notify UI about the change
-        //    }
-        //}
-
-       
-
         [ObservableProperty]
         private bool isPopupVisible;
         public Command OnSearchButtonPressed { get; }
