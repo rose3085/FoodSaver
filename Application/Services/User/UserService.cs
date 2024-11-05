@@ -243,7 +243,7 @@ namespace Application.Services.User
                         Message = "Couldn't create user!!",
                     };
                 }
-                if (userExists.IsDeleted == true && userExists.UserName == registerRequest.UserName)
+                if (userExists !=null && userExists.IsDeleted == true && userExists.UserName == registerRequest.UserName)
                 {
                     return new UserManagerResponse
                     {

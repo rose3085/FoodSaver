@@ -30,6 +30,9 @@ namespace FoodSaverMaui.ViewModel
         //        OnPropertyChanged(nameof(Products));  // Notify UI about the change
         //    }
         //}
+
+       
+
         [ObservableProperty]
         private bool isPopupVisible;
         public Command OnSearchButtonPressed { get; }

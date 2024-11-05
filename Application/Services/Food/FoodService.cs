@@ -173,10 +173,14 @@ namespace Application.Services.Food
 
         public async Task<IEnumerable<GetProductResponse>> GetProductsAsync()
         {
-            var result = await _uow.AsyncRepositories<FoodModel>().GetRandomAsync();
+            var includes = new Expression<Func<FoodModel, object>>[]
+                   {
+                        s => s.Seller,
+                   };
+            var result = await _uow.AsyncRepositories<FoodModel>().GetRandomWithIncludeAsync(includes);
 
 
-             var baseUrl = $"https://0886-2405-acc0-1504-9a1f-309f-9145-80de-4fc0.ngrok-free.app";
+             var baseUrl = $"https://1c7e-2405-acc0-1504-9a1f-fcee-6a30-8a4-92b7.ngrok-free.app";
             // var baseUrl = $"https://localhost:7293";
             var productResult =  result
                 .Where(product => product.IsBooked == false)
@@ -188,8 +192,8 @@ namespace Application.Services.Food
                PricePerKg = product.PricePerKg,
                Quantity = product.Quantity,
                IsBooked = product.IsBooked,
-
-               // image Url form ma return garne
+               UserName = product.Seller?.UserName,
+                // image Url form ma return garne
                 ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
             }).ToList();
            // var getResult = _mapper.Map<IEnumerable<GetProductResponse>>(productResult);

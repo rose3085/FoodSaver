@@ -59,22 +59,23 @@
                                 <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12">
                                     <Grid RowDefinitions="Auto,*,*,Auto,Auto" RowSpacing="10" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
 
-                                        <Label Grid.Row="0" Text="{Binding ProductName}" TextColor="#385897" FontSize="20" FontAttributes="Bold" />
-                                        <Image Grid.Row="1"  HeightRequest="200" Aspect="AspectFill" >
+                                        <Label Text="{Binding UserName}" Grid.Row="0" TextColor="Black" FontSize="20" FontAttributes="Bold" />
+                                        
+                                        
+                                        <Image Grid.Row="1"  HeightRequest="300" Aspect="AspectFill" >
                                             <Image.Source>
                                                 <UriImageSource Uri="{Binding ImageUrl}"   CacheValidity="2" CachingEnabled="True"/>
                                             </Image.Source>
                                         </Image>
 
+                                        <Label Grid.Row="2" Text="{Binding ProductName}" TextColor="#385897" FontSize="18" Padding="20,0,0,0" FontAttributes="Bold" />
 
-
-                                        <Label Grid.Row="2" Text="{Binding Description}" FontSize="14" />
                                         <Grid  Grid.Row="3" ColumnDefinitions="Auto,*" ColumnSpacing="20">
-                                            <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="10" Padding="20" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                                            <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="10" Padding="20,0,20,0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
                                                 <Label Grid.Row="0" TextColor="#385897"  Text="{Binding PricePerKg, StringFormat='Price: Rs {0}'}" FontAttributes="Bold" FontSize="14" />
                                                 <Label Grid.Row="1" TextColor="#385897"  Text="{Binding Quantity, StringFormat='Quantity: {0} kg'}" FontAttributes="Bold" FontSize="14"  />
                                             </Grid>
-                                            <Button Grid.Column="1" Text="Add Cart" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
+                                            <Button Grid.Column="1" Text="Details" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
