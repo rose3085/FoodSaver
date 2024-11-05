@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodSaverMaui.Views.FoodDetail"
+             Title="FoodDetail"
+            xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
+            x:DataType="viewmodel:FoodDetailViewModel">
+    <Frame BorderColor="Transparent" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+        <Border StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="1.5" StrokeDashOffset="12">
+            <Grid RowDefinitions="Auto,*,Auto" RowSpacing="10" Padding="5,20,3,20"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="180" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <Label Text="{Binding Product.UserName}" Grid.Column="0" TextColor="Gray" FontSize="22" Padding="20,0,0,0" FontAttributes="Bold" />
+                    <Grid Grid.Column="1" HorizontalOptions="EndAndExpand" ColumnDefinitions="Auto,Auto" ColumnSpacing="20">
+                        <Image Grid.Column="0" Source="dots.png" HeightRequest="22" HorizontalOptions="EndAndExpand"/>
+                        <Image  Grid.Column="1" Source="remove.png" HeightRequest="22" HorizontalOptions="EndAndExpand" >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnRemoveButtonPressed}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Grid>
+                </Grid>
+                <Frame Grid.Row="1" Padding="0" BorderColor="Transparent" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                    <Border StrokeShape="Rectangle " StrokeThickness="0.5" >
+                        <Grid  RowDefinitions="Auto,Auto,Auto,Auto" 
+                           Padding="0,10,0,10" >
+                            <Image Grid.Row="0"  HeightRequest="330" Aspect="AspectFill" >
+                                <Image.Source>
+                                    <UriImageSource Uri="{Binding Product.ImageUrl}"   CacheValidity="2" CachingEnabled="True"/>
+                                </Image.Source>
+                            </Image>
+
+                            <Label Grid.Row="1" Text="{Binding Product.ProductName}" TextColor="#385897" FontSize="20" Padding="20,0,0,0" FontAttributes="Bold" />
+
+
+                            <Label Grid.Row="2" Text="{Binding Product.Description}"  TextColor="Gray" FontSize="20" Padding="20,10,0,10"  />
+
+                            <Grid  Grid.Row="3" ColumnDefinitions="Auto,*" ColumnSpacing="70" Padding="20,0,20,0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                
+                                    <Label Grid.Column="0" TextColor="#385897"  Text="{Binding Product.PricePerKg, StringFormat='Price: Rs {0}'}" FontAttributes="Bold" FontSize="14" />
+                                    <Label Grid.Column="1" TextColor="#385897"  Text="{Binding Product.Quantity, StringFormat='Quantity: {0} kg'}" FontAttributes="Bold" FontSize="14"  />
+                                
+                                
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Frame>
+                <Button Grid.Row="2" HorizontalOptions="EndAndExpand" Margin="0,0,10,0" Text="Buy" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
+            </Grid>
+        </Border>
+    </Frame>
+</ContentPage>

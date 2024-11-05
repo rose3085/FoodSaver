@@ -57,26 +57,50 @@
                             <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
                                 <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12">
-                                    <Grid RowDefinitions="Auto,*,*,Auto,Auto" RowSpacing="10" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Grid RowDefinitions="Auto,*" RowSpacing="10" Padding="5,20,3,20"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
 
-                                        <Label Text="{Binding UserName}" Grid.Row="0" TextColor="Black" FontSize="20" FontAttributes="Bold" />
-                                        
-                                        
-                                        <Image Grid.Row="1"  HeightRequest="300" Aspect="AspectFill" >
-                                            <Image.Source>
-                                                <UriImageSource Uri="{Binding ImageUrl}"   CacheValidity="2" CachingEnabled="True"/>
-                                            </Image.Source>
-                                        </Image>
+                                        <Grid Grid.Row="0" RowDefinitions="Auto,Auto" RowSpacing="10" >
+                                            <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="220" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                            <Label Text="{Binding UserName}" Grid.Column="0" TextColor="Gray" FontSize="22" Padding="20,0,0,0" FontAttributes="Bold" />
+                                            
+                                                <Image  Grid.Column="1" Source="remove.png" HeightRequest="22" HorizontalOptions="EndAndExpand" >
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FindFoodViewModel}}, Path=OnRemoveButtonPressed}"
+                                                                              CommandParameter="{Binding .}"/>
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                           
+                                            </Grid>
+                                            <BoxView Grid.Row="1" HeightRequest="0.3" BackgroundColor="Gray" WidthRequest="300" VerticalOptions="End"/>
+                                            
+                                        </Grid>
 
-                                        <Label Grid.Row="2" Text="{Binding ProductName}" TextColor="#385897" FontSize="18" Padding="20,0,0,0" FontAttributes="Bold" />
+                                        <Frame Grid.Row="1" Padding="0" BorderColor="Transparent">
+                                            
+                                            <Grid  RowDefinitions="Auto,Auto,Auto,Auto" 
+                                                     >
+                                                    <Image Grid.Row="0"  HeightRequest="330" Aspect="AspectFill" >
+                                                        <Image.Source>
+                                                            <UriImageSource Uri="{Binding ImageUrl}"   CacheValidity="2" CachingEnabled="True"/>
+                                                        </Image.Source>
+                                                    </Image>
 
-                                        <Grid  Grid.Row="3" ColumnDefinitions="Auto,*" ColumnSpacing="20">
+                                                    <Label Grid.Row="1" Text="{Binding ProductName}" TextColor="#385897" FontSize="20" Padding="20,0,0,10" FontAttributes="Bold" />
+
+
+                                            <Grid  Grid.Row="2" ColumnDefinitions="Auto,*" ColumnSpacing="20">
                                             <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="10" Padding="20,0,20,0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
                                                 <Label Grid.Row="0" TextColor="#385897"  Text="{Binding PricePerKg, StringFormat='Price: Rs {0}'}" FontAttributes="Bold" FontSize="14" />
                                                 <Label Grid.Row="1" TextColor="#385897"  Text="{Binding Quantity, StringFormat='Quantity: {0} kg'}" FontAttributes="Bold" FontSize="14"  />
                                             </Grid>
-                                            <Button Grid.Column="1" Text="Details" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
+                                            <Button Grid.Column="1" Text="Details" 
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FindFoodViewModel}}, Path=OnDetailButtonClicked}"
+                                                    CommandParameter="{Binding .}"
+                                                    HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
                                         </Grid>
+                                                </Grid>
+                                           
+                                        </Frame>
                                     </Grid>
                                 </Border>
                             </Frame>

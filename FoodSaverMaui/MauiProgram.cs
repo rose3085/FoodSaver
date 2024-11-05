@@ -59,6 +59,9 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<FindFoodViewModel>();
             builder.Services.AddSingleton<FoodService>();
 
+            builder.Services.AddTransient<FoodDetail>();
+            builder.Services.AddTransient<FoodDetailViewModel>();
+
             builder.Services.AddTransient<UploadFood>();
             builder.Services.AddTransient<UploadFoodViewModel>();
 #if DEBUG

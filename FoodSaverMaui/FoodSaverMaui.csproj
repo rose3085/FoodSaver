@@ -61,6 +61,7 @@
 	  <None Remove="Resources\Fonts\Poppins-Regular.ttf" />
 	  <None Remove="Resources\Fonts\Poppins-SemiBold.ttf" />
 	  <None Remove="Resources\Images\addpost.png" />
+	  <None Remove="Resources\Images\dots.png" />
 	  <None Remove="Resources\Images\down.png" />
 	  <None Remove="Resources\Images\email.png" />
 	  <None Remove="Resources\Images\find.png" />
@@ -78,6 +79,7 @@
 	  <None Remove="Resources\Images\post.png" />
 	  <None Remove="Resources\Images\profile.png" />
 	  <None Remove="Resources\Images\question.png" />
+	  <None Remove="Resources\Images\remove.png" />
 	  <None Remove="Resources\Images\rightArrows.png" />
 	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\user.png" />
@@ -111,6 +113,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FindFood.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\FoodDetail.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\HomePage.xaml">

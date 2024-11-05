@@ -41,6 +41,10 @@ namespace FoodSaverMaui.ViewModel
 
         [ObservableProperty]
         bool isRefreshing;
+
+        public Command OnDetailButtonClicked { get; }
+        public Command OnRemoveButtonPressed { get; }
+
         public ICommand ShowPopupCommand => new Command(ShowPopup);
         public FindFoodViewModel(FoodService foodService)
         {
@@ -48,10 +52,30 @@ namespace FoodSaverMaui.ViewModel
             OnClickTapped = new Command(async() => await ClickTapped());
             OnAddButtonClick = new Command(async() => await AddButtonClick());
             OnSearchButtonPressed = new Command(async () => await SearchButtonPressed(SearchQuery));
+            OnDetailButtonClicked = new Command<GetProductsResponse>(async (selectedProduct) => await DetailButtonClicked(selectedProduct));
+            OnRemoveButtonPressed = new Command<GetProductsResponse>(async (product) => await RemoveButtonPressed(product));
             //Products = new ObservableCollection<GetProductsResponse>();
         }
 
-        
+        public async Task RemoveButtonPressed(GetProductsResponse product)
+        {
+            if (product != null && Products.Contains(product))
+            {
+                Products.Remove(product);
+            }
+        }
+
+        public async Task DetailButtonClicked(GetProductsResponse selectedProduct)
+        {
+            if(selectedProduct == null)
+                return;
+
+           await Shell.Current.GoToAsync(nameof(FoodDetail), true, new Dictionary<string, object>
+           {
+
+            {"Product", selectedProduct }
+           });
+        }
         public async void ShowPopup()
         {
             string action = await Shell.Current.DisplayActionSheet("Arrange Price?", "Cancel", null, "High to Low", "Low to High");
