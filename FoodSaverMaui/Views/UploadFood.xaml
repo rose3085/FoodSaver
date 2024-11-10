@@ -13,7 +13,151 @@
 
 
 
-    <Grid
+    <Frame BorderColor="Transparent" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+        <Border StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="1.5" StrokeDashOffset="12">
+            <Grid RowDefinitions="Auto,*,Auto" RowSpacing="10" Padding="5,20,5,20"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="180" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <Label Text="rose3085" Grid.Column="0" TextColor="Gray" FontSize="20" Padding="20,0,0,0" FontAttributes="Bold" />
+                    <Grid Grid.Column="1" HorizontalOptions="EndAndExpand" ColumnDefinitions="Auto,Auto" ColumnSpacing="10">
+                        <Image Grid.Column="0" Source="dots.png" HeightRequest="22" HorizontalOptions="EndAndExpand"/>
+                        <Image  Grid.Column="1" Source="remove.png" HeightRequest="22" HorizontalOptions="EndAndExpand" >
+                            <!--<Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnRemoveButtonPressed}"/>
+                            </Image.GestureRecognizers>-->
+                        </Image>
+                    </Grid>
+
+                </Grid>
+
+                <Frame Grid.Row="1" Padding="0" BorderColor="Transparent" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                    <Border StrokeShape="Rectangle " StrokeThickness="0.5" >
+                        <Grid  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="5"
+            Padding="5,10,10,10" >
+
+                            <Frame Grid.Row="0"
+                                BorderColor="Transparent"
+                                BackgroundColor="Transparent"
+                                Padding="10"
+                                HeightRequest="180"
+                                WidthRequest="300"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">   
+
+                                <ImageButton 
+           
+                                Source="{Binding PickedImage}"
+                                Command="{Binding OnFliePicked}" 
+                                Aspect="AspectFill"
+       
+    >
+
+                                    <ImageButton.Triggers>
+                                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="false">
+                                            <Setter Property="Source" Value="plus.png" />
+                                            <Setter Property="HeightRequest" Value="30"/>
+                                            <Setter Property="WidthRequest" Value="30 "/>
+
+
+
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="true">
+                                            <Setter Property="Source" Value="{Binding PickedImage}" />
+                                            <Setter Property="BackgroundColor" Value="Transparent" />
+                                            <Setter Property="HeightRequest" Value="180"/>
+                                            <Setter Property="WidthRequest" Value="290 "/>
+                                        </DataTrigger>
+                                    </ImageButton.Triggers>
+
+                                </ImageButton>
+                            </Frame>
+
+                            <Grid Grid.Row="1"  RowDefinitions="Auto,Auto" >
+                            
+                            <Label Grid.Row="0" Text="Title"
+                       FontSize="18" FontAttributes="Bold" TextColor="#385897"/>
+                       
+                        <Entry Grid.Row="1" Text="{Binding Food}" Placeholder="Enter Food Name" WidthRequest='320' />
+                            </Grid>
+
+                            <Grid Grid.Row="2"  RowDefinitions="Auto,Auto" >
+
+                                <Label Grid.Row="0" Text="Description"
+                                    FontSize="18" FontAttributes="Bold" TextColor="#385897"/>
+
+                                <Editor 
+                                    Grid.Row="1"
+                                    Placeholder="Enter description here..."
+                                    AutoSize="TextChanges"
+                                    MaxLength="250"  
+                                        Text="{Binding Description}"    
+                                    HeightRequest="80"
+       
+                                            WidthRequest="320"
+                                    BackgroundColor="Transparent"
+       
+                                            Margin="0,10,0,0"/>     
+                            </Grid>
+
+
+
+                            <Grid  Grid.Row="3" ColumnDefinitions="Auto,*" ColumnSpacing="70" Padding="5,0,20,0" HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand">
+
+                                <Grid Grid.Column="0"  RowDefinitions="Auto,Auto" >
+
+                                    <Label Grid.Row="0" TextColor="#385897"  Text="Price" FontAttributes="Bold" FontSize="14" />
+                                    <Entry Grid.Row="1" Text="{Binding Price}" Placeholder="Enter price" WidthRequest='120' />
+                                </Grid>
+                                <Grid Grid.Column="1"  RowDefinitions="Auto,Auto"  >
+
+                                    <Label Grid.Row="0" TextColor="#385897"  Text="Quantity" FontAttributes="Bold" FontSize="14" />
+                                    <Entry Grid.Row="1" Text="{Binding Price}" Placeholder="Enter quantity" WidthRequest='120' />
+                                </Grid>
+
+                            </Grid>
+                            <Grid  Grid.Row="4" ColumnDefinitions="Auto,*" ColumnSpacing="70" Padding="5,0,20,0" HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand">
+
+                                <Grid Grid.Column="0"  RowDefinitions="Auto,Auto" >
+
+                                    <Label Grid.Row="0" TextColor="#385897"  Text="Ward No." FontAttributes="Bold" FontSize="14" />
+                                    <Entry Grid.Row="1" Text="{Binding Price}" Placeholder="Enter ward no" WidthRequest='120' />
+                                </Grid>
+                                <Grid Grid.Column="1"  RowDefinitions="Auto,Auto"  >
+
+                                    <Label Grid.Row="0" TextColor="#385897"  Text="ToleName" FontAttributes="Bold" FontSize="14" />
+                                    <Entry Grid.Row="1" Text="{Binding Price}" Placeholder="Enter tolename" WidthRequest='120' />
+                                </Grid>
+
+                            </Grid>
+                            <Grid  Grid.Row="5" ColumnDefinitions="Auto,*" ColumnSpacing="70" Padding="5,0,20,0" HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand">
+
+                                <Grid Grid.Column="0"  RowDefinitions="Auto,Auto" >
+
+                                    <Label Grid.Row="0" TextColor="#385897"  Text="City Name" FontAttributes="Bold" FontSize="14" />
+                                    <Entry Grid.Row="1" Text="Butwal" Placeholder="Enter price" WidthRequest='120' />
+                                </Grid>
+                                <Grid Grid.Column="1"    >
+
+                                    <Button  HorizontalOptions="EndAndExpand" Margin="0,0,10,0" Text="Post" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
+                                </Grid>
+
+                            </Grid>
+                        </Grid>
+
+           
+                    </Border>
+                </Frame>
+
+
+
+
+            </Grid>
+        </Border>
+    </Frame>
+
+
+
+    <!--<Grid
          RowDefinitions="Auto,Auto,Auto,Auto,Auto,*"  HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"
             >
         <Grid Margin="15,20,0,0" HorizontalOptions="Center" VerticalOptions="Center">
@@ -194,5 +338,5 @@
 
             </Grid>
         </Grid>
-    </Grid>
+    </Grid>-->
 </ContentPage>
