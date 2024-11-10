@@ -15,6 +15,7 @@ namespace Application.Response.Food
         public double Quantity { get; set; }
         public bool IsBooked { get; set; }  
         public string UserName { get; set; }
+        public string CityName { get; set; }
         public string ImageUrl { get; set; }
     }
 }

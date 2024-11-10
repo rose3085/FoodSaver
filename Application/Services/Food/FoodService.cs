@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;
 using SixLabors.ImageSharp;
+using Domain.Entities.Location;
 
 
 namespace Application.Services.Food
@@ -69,6 +70,15 @@ namespace Application.Services.Food
                     string[] allowedFileExtentions = [".jpg", ".jpeg", ".png"];
                     string createdImageName = await SaveFileAsync(postFood.ImageFile, allowedFileExtentions);
                     var id = Guid.NewGuid().ToString();
+                    var addressId = Guid.NewGuid().ToString();
+                    var address = new AddressModel
+                    { 
+                        Id = addressId,
+                        WardNumber = postFood.WardNumber,
+                        ToleName = postFood.ToleName,
+                        CityName = postFood.CityName,
+                        
+                    };
                     var product = new FoodModel
                     {
                         Id = id,
@@ -78,6 +88,7 @@ namespace Application.Services.Food
                         Quantity = postFood.Quantity,
                         ProductImage = createdImageName,
                         Seller = userInfo,
+                        Address = address,
                     };
                     var createdProduct = await _uow.AsyncRepositories<FoodModel>().AddAsync(product);
                    
@@ -176,11 +187,12 @@ namespace Application.Services.Food
             var includes = new Expression<Func<FoodModel, object>>[]
                    {
                         s => s.Seller,
+                        s => s.Address,
                    };
             var result = await _uow.AsyncRepositories<FoodModel>().GetRandomWithIncludeAsync(includes);
 
 
-             var baseUrl = $"https://1c7e-2405-acc0-1504-9a1f-fcee-6a30-8a4-92b7.ngrok-free.app";
+             var baseUrl = $"https://d6c8-38-255-140-147.ngrok-free.app";
             // var baseUrl = $"https://localhost:7293";
             var productResult =  result
                 .Where(product => product.IsBooked == false)
@@ -193,6 +205,7 @@ namespace Application.Services.Food
                Quantity = product.Quantity,
                IsBooked = product.IsBooked,
                UserName = product.Seller?.UserName,
+               CityName = product.Address?.CityName,
                 // image Url form ma return garne
                 ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
             }).ToList();

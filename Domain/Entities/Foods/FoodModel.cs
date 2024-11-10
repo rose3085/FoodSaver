@@ -1,4 +1,5 @@
-﻿using Domain.Entities.User;
+﻿using Domain.Entities.Location;
+using Domain.Entities.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,10 @@ namespace Domain.Entities.Foods
         public string ProductImage { get; set; }
 
         public bool IsBooked { get; set; } = false;
+       
+       
+        public AddressModel Address { get; set; }
+
         public ApplicationUser Seller { get; set; }  //single seller
     }
 }

@@ -82,6 +82,35 @@ namespace Infrastructure.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Location.AddressModel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FoodId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ToleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WardNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodId")
+                        .IsUnique();
+
+                    b.ToTable("Address");
+                });
+
             modelBuilder.Entity("Domain.Entities.User.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -309,6 +338,17 @@ namespace Infrastructure.Migrations
                     b.Navigation("Food");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Location.AddressModel", b =>
+                {
+                    b.HasOne("Domain.Entities.Foods.FoodModel", "Food")
+                        .WithOne("Address")
+                        .HasForeignKey("Domain.Entities.Location.AddressModel", "FoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Food");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Domain.Entities.User.Role", null)
@@ -357,6 +397,12 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Foods.FoodModel", b =>
+                {
+                    b.Navigation("Address")
                         .IsRequired();
                 });
 

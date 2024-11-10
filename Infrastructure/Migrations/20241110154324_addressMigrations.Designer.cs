@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241025061638_firstMigration")]
-    partial class firstMigration
+    [Migration("20241110154324_addressMigrations")]
+    partial class addressMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,12 +51,12 @@ namespace Infrastructure.Migrations
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
 
-                    b.Property<string>("UsersId")
+                    b.Property<string>("SellerId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("SellerId");
 
                     b.ToTable("FoodModel");
                 });
@@ -69,12 +69,12 @@ namespace Infrastructure.Migrations
                     b.Property<string>("BuyerId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("FoodId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<double>("Quantity")
-                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -83,6 +83,35 @@ namespace Infrastructure.Migrations
                     b.HasIndex("FoodId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Location.AddressModel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FoodId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ToleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WardNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodId")
+                        .IsUnique();
+
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.ApplicationUser", b =>
@@ -102,6 +131,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -285,11 +317,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Foods.FoodModel", b =>
                 {
-                    b.HasOne("Domain.Entities.User.ApplicationUser", "Users")
+                    b.HasOne("Domain.Entities.User.ApplicationUser", "Seller")
                         .WithMany("Foods")
-                        .HasForeignKey("UsersId");
+                        .HasForeignKey("SellerId");
 
-                    b.Navigation("Users");
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("Domain.Entities.Foods.OrderModel", b =>
@@ -305,6 +337,17 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Buyer");
+
+                    b.Navigation("Food");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Location.AddressModel", b =>
+                {
+                    b.HasOne("Domain.Entities.Foods.FoodModel", "Food")
+                        .WithOne("Address")
+                        .HasForeignKey("Domain.Entities.Location.AddressModel", "FoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Food");
                 });
@@ -357,6 +400,12 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Foods.FoodModel", b =>
+                {
+                    b.Navigation("Address")
                         .IsRequired();
                 });
 
