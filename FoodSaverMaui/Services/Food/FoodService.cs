@@ -59,7 +59,7 @@ namespace FoodSaverMaui.Services.Food
 
 
 
-        public async Task<string> PostFood(string productName, string description, double pricePerKg, double quantity, byte[] imageData, string imageName)
+        public async Task<string> PostFood(string productName, string description, double pricePerKg, double quantity,string wardNumber, string toleName, string cityName, byte[] imageData, string imageName)
         {
 
             try
@@ -78,8 +78,12 @@ namespace FoodSaverMaui.Services.Food
                     formData.Add(new StringContent(description), "Description");
                     formData.Add(new StringContent(pricePerKg.ToString(CultureInfo.InvariantCulture)), "PricePerKg");
                     formData.Add(new StringContent(quantity.ToString(CultureInfo.InvariantCulture)), "Quantity");
-                   
-                   
+                    
+                    formData.Add(new StringContent(wardNumber), "WardNumber");
+                    formData.Add(new StringContent(toleName), "ToleName");
+                    formData.Add(new StringContent(cityName), "CityName");
+
+
                     if (imageData != null && imageData.Length > 0)
                     {
                         var fileContent = new ByteArrayContent(imageData);

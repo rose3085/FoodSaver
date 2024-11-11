@@ -24,6 +24,14 @@ namespace FoodSaverMaui.ViewModel
         [ObservableProperty]
         double price;
 
+        [ObservableProperty]
+        string wardNumber;
+
+        [ObservableProperty]
+        string toleName;
+
+        [ObservableProperty]
+        string cityName;
 
         private double _stepperValue;
 
@@ -81,9 +89,11 @@ namespace FoodSaverMaui.ViewModel
             {
                 IsBusy = true;
                 if (!string.IsNullOrEmpty(food) && !string.IsNullOrEmpty(description) && !double.IsNaN(price)
-                    && !double.IsNaN(_stepperValue) && !ImageSource.IsNullOrEmpty(_pickedImage) && !string.IsNullOrEmpty(PickedImageName))
+                    && !double.IsNaN(_stepperValue) && !ImageSource.IsNullOrEmpty(_pickedImage) && !string.IsNullOrEmpty(PickedImageName) && !string.IsNullOrEmpty(wardNumber) && !string.IsNullOrEmpty(toleName)
+                    && !string.IsNullOrEmpty(cityName)
+                    )
                 {
-                    var result = await _foodService.PostFood(food, description, price, _stepperValue, _imageData, PickedImageName);
+                    var result = await _foodService.PostFood(food, description, price, _stepperValue,wardNumber,toleName,cityName, _imageData, PickedImageName);
                     if (result != null)
                     {
 
