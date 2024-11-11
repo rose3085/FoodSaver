@@ -9,8 +9,20 @@
         <Border StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="1.5" StrokeDashOffset="12">
             <Grid RowDefinitions="Auto,*,Auto" RowSpacing="10" Padding="5,20,3,20"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
 
-                <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="180" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                    <Label Text="{Binding Product.UserName}" Grid.Column="0" TextColor="Gray" FontSize="22" Padding="20,0,0,0" FontAttributes="Bold" />
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                        <Grid Grid.Column="0" WidthRequest="220" RowDefinitions="Auto,Auto" ColumnSpacing="5" >
+                            <Label Text="{Binding Product.UserName}"  Grid.Row="0" TextColor="Gray" FontSize="22" Padding="15,0,0,0" FontAttributes="Bold" />
+
+                            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" Padding="20,0,0,0" ColumnSpacing="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <Image Grid.Column="0" Source="location.png" HeightRequest="12" />
+                                <Label Grid.Column="1" Text="{Binding Product.CityName}" FontSize="12" />
+
+                            </Grid>
+
+
+                        </Grid>
+                    </Grid>
                     <Grid Grid.Column="1" HorizontalOptions="EndAndExpand" ColumnDefinitions="Auto,Auto" ColumnSpacing="20">
                         <Image Grid.Column="0" Source="dots.png" HeightRequest="22" HorizontalOptions="EndAndExpand"/>
                         <Image  Grid.Column="1" Source="remove.png" HeightRequest="22" HorizontalOptions="EndAndExpand" >
@@ -23,8 +35,8 @@
                 <Frame Grid.Row="1" Padding="0" BorderColor="Transparent" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
                     <Border StrokeShape="Rectangle " StrokeThickness="0.5" >
                         <Grid  RowDefinitions="Auto,Auto,Auto,Auto" 
-                           Padding="0,10,0,10" >
-                            <Image Grid.Row="0"  HeightRequest="330" Aspect="AspectFill" >
+                           Padding="0,0,0,10" >
+                            <Image Grid.Row="0" WidthRequest="330"  HeightRequest="330" Aspect="AspectFill" >
                                 <Image.Source>
                                     <UriImageSource Uri="{Binding Product.ImageUrl}"   CacheValidity="2" CachingEnabled="True"/>
                                 </Image.Source>

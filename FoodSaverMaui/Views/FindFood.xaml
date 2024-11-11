@@ -60,9 +60,18 @@
                                     <Grid RowDefinitions="Auto,*" RowSpacing="10" Padding="5,20,3,20"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
 
                                         <Grid Grid.Row="0" RowDefinitions="Auto,Auto" RowSpacing="10" >
-                                            <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="220" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                            <Label Text="{Binding UserName}" Grid.Column="0" TextColor="Gray" FontSize="22" Padding="20,0,0,0" FontAttributes="Bold" />
-                                            
+                                            <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                <Grid Grid.Column="0" WidthRequest="280" RowDefinitions="Auto,Auto" ColumnSpacing="5" >
+                                                    <Label Text="{Binding UserName}"  Grid.Row="0" TextColor="Gray" FontSize="22" Padding="15,0,0,0" FontAttributes="Bold" />
+
+                                                    <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" Padding="20,0,0,0" ColumnSpacing="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                        <Image Grid.Column="0" Source="location.png" HeightRequest="12" />
+                                                        <Label Grid.Column="1" Text="{Binding CityName}" FontSize="12" />
+
+                                                    </Grid>
+
+
+                                                </Grid>
                                                 <Image  Grid.Column="1" Source="remove.png" HeightRequest="22" HorizontalOptions="EndAndExpand" >
                                                     <Image.GestureRecognizers>
                                                         <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FindFoodViewModel}}, Path=OnRemoveButtonPressed}"
@@ -71,7 +80,7 @@
                                                 </Image>
                                            
                                             </Grid>
-                                            <BoxView Grid.Row="1" HeightRequest="0.3" BackgroundColor="Gray" WidthRequest="300" VerticalOptions="End"/>
+                                            <BoxView Grid.Row="1" HeightRequest="0.3" BackgroundColor="Gray" WidthRequest="330" VerticalOptions="End"/>
                                             
                                         </Grid>
 
@@ -79,7 +88,7 @@
                                             
                                             <Grid  RowDefinitions="Auto,Auto,Auto,Auto" 
                                                      >
-                                                    <Image Grid.Row="0"  HeightRequest="330" Aspect="AspectFill" >
+                                                    <Image Grid.Row="0"  HeightRequest="320" Aspect="AspectFill" >
                                                         <Image.Source>
                                                             <UriImageSource Uri="{Binding ImageUrl}"   CacheValidity="2" CachingEnabled="True"/>
                                                         </Image.Source>
