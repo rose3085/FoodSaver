@@ -8,6 +8,7 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Model;
 using FoodSaverMaui.Services.Food;
+using FoodSaverMaui.Views;
 using Microsoft.Maui.Storage;
 
 namespace FoodSaverMaui.ViewModel
@@ -98,6 +99,14 @@ namespace FoodSaverMaui.ViewModel
                     {
 
                         //string resultError = "Enter Valid Credentials!!";
+                      
+
+                        if (result == "Product added successfully")
+                        {
+
+                            await Shell.Current.GoToAsync(nameof(PostSuccessfullPage));
+                        }  
+                        
                         var toast = Toast.Make($"{result}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
                         await toast.Show();
 

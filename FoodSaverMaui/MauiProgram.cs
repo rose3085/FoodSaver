@@ -66,6 +66,9 @@ namespace FoodSaverMaui
 
             builder.Services.AddTransient<UploadFood>();
             builder.Services.AddTransient<UploadFoodViewModel>();
+
+            builder.Services.AddTransient<PostSuccessfullPage>();
+            builder.Services.AddTransient<PostSuccessfullViewModel>();
 #if DEBUG
             builder.Logging.AddDebug();
 
