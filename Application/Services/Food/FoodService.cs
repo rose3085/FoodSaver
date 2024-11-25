@@ -79,7 +79,7 @@ namespace Application.Services.Food
                         CityName = postFood.CityName,
                         Latitude = postFood.Latitude,
                         Longitude = postFood.Longitude,
-                        
+                       
                     };
                     var product = new FoodModel
                     {

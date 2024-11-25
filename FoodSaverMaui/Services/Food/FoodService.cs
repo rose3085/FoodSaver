@@ -59,7 +59,7 @@ namespace FoodSaverMaui.Services.Food
 
 
 
-        public async Task<string> PostFood(string productName, string description, double pricePerKg, double quantity,string wardNumber, string toleName, string cityName, byte[] imageData, string imageName)
+        public async Task<string> PostFood(string productName, string description, double pricePerKg, double quantity,string wardNumber, string toleName, string cityName,double latitude,double longitude, byte[] imageData, string imageName)
         {
 
             try
@@ -82,6 +82,8 @@ namespace FoodSaverMaui.Services.Food
                     formData.Add(new StringContent(wardNumber), "WardNumber");
                     formData.Add(new StringContent(toleName), "ToleName");
                     formData.Add(new StringContent(cityName), "CityName");
+                    formData.Add(new StringContent(latitude.ToString(CultureInfo.InvariantCulture)), "Latitude");
+                    formData.Add(new StringContent(longitude.ToString(CultureInfo.InvariantCulture)), "Longitude");
 
 
                     if (imageData != null && imageData.Length > 0)
