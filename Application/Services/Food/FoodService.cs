@@ -208,6 +208,10 @@ namespace Application.Services.Food
                IsBooked = product.IsBooked,
                UserName = product.Seller?.UserName,
                CityName = product.Address?.CityName,
+               ToleName = product.Address?.ToleName,
+               Latitude = product.Address.Latitude,
+               Longitude = product.Address.Longitude,
+
                 // image Url form ma return garne
                 ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
             }).ToList();
