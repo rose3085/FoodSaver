@@ -16,8 +16,8 @@
     
     <ShellContent
        
-        ContentTemplate="{DataTemplate local:CreateAccount}"
-        Route="CreateAccount" />
+        ContentTemplate="{DataTemplate local:KhaltiPaymentView}"
+        Route="KhaltiPaymentView" />
 
     <ShellContent Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}" />
 

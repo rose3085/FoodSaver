@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodSaverMaui.Views.KhaltiPaymentView"
+               xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
+                x:DataType="viewmodel:KhaltiPaymentViewModel"
+             Title="KhaltiPayment">
+    <StackLayout>
+        <Button Text="Pay with Khalti"
+                Command="{Binding OnKhaltiPaymentButtonClicked}"/>
+    </StackLayout>
+</ContentPage>

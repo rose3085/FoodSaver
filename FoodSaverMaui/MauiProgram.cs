@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using FoodSaverMaui.Helper;
+using FoodSaverMaui.KhaltiServices;
 using FoodSaverMaui.Services.Food;
 using FoodSaverMaui.Services.User;
 using FoodSaverMaui.ViewModel;
@@ -69,6 +70,11 @@ namespace FoodSaverMaui
 
             builder.Services.AddTransient<PostSuccessfullPage>();
             builder.Services.AddTransient<PostSuccessfullViewModel>();
+
+
+            builder.Services.AddTransient<KhaltiPaymentView>();
+            builder.Services.AddTransient<KhaltiPaymentViewModel>();
+            builder.Services.AddSingleton<IKhaltiService,KhaltiService>();
 #if DEBUG
             builder.Logging.AddDebug();
 

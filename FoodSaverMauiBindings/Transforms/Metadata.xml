@@ -1,0 +1,18 @@
+﻿<metadata>
+  <!--
+  This sample removes the class: android.support.v4.content.AsyncTaskLoader.LoadTask:
+  <remove-node path="/api/package[@name='android.support.v4.content']/class[@name='AsyncTaskLoader.LoadTask']" />
+  
+  This sample removes the method: android.support.v4.content.CursorLoader.loadInBackground:
+  <remove-node path="/api/package[@name='android.support.v4.content']/class[@name='CursorLoader']/method[@name='loadInBackground']" />
+  -->
+	<method name="getConstantState" signature="()Landroid/graphics/drawable/Drawable$ConstantState;" return-type="android.graphics.drawable.Drawable$ConstantState" />
+	
+
+	<!-- Map the ConstantState property to the getConstantState() method -->
+	
+	<attr path="/api/package[@name='com.khalti']/class[@name='SomeClass']/method[@name='default']" name="managedName">DefaultMethod</attr>
+	<attr path="/api/package[@name='com.khalti']/class[@name='SomeClass']/method[@name='staticMethod']" name="managedName">StaticMethod</attr>
+	<remove-node path="/api/package[@name='com.khalti']/class[@name='KhaltiPayment']/method[@name='internalUseOnly']" />
+
+</metadata>

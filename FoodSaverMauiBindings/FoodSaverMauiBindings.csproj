@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  
+  
+  <ItemGroup>
+	  <EmbeddedJar Include="libs\materialProgressStyle.jar" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedJar Include="libs\library-1.4.2-javadoc.jar" />
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <EmbeddedJar Include="libs\material-ripple-1.0.2.aar" />
+  </ItemGroup>
+  <ItemGroup>
+	  <EmbeddedJar Include="libs\khalti-android-2.04.00.aar" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.9.1.1" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.9.0.3" />
+  </ItemGroup>
+</Project>
