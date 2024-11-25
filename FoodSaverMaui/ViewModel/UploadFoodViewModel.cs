@@ -91,9 +91,7 @@ namespace FoodSaverMaui.ViewModel
             if (!string.IsNullOrEmpty(wardNumber) && !string.IsNullOrEmpty(toleName)
                     && !string.IsNullOrEmpty(cityName))
             {
-                //var location = new Location(27.687361, 83.432335);
-                // IEnumerable<Location> location = await Geocoding.Default.GetLocationsAsync(address);
-
+                
                 var address = $"{cityName} {toleName}";
 
                 IEnumerable<Location> locations = await Geocoding.Default.GetLocationsAsync(address);
