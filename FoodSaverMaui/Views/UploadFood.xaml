@@ -244,9 +244,17 @@
                                             </Entry.Behaviors>
                                         </Entry>
                                     </Grid>
-                                    <Grid Grid.Column="1"    >
+                                    <Grid Grid.Column="1"  RowDefinitions="Auto,Auto"  >
 
-                                        <Button Command="{Binding OnPostTapped}" HorizontalOptions="EndAndExpand" Margin="0,0,10,0" Text="Post" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
+                                        <Label Grid.Row="0"  HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="Select Location" TextColor="#385897" FontAttributes="Bold" FontSize="14" />
+                                        <Image Grid.Row="1" Source="map.png" HeightRequest="30" >
+                                            <!--<Image.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="Gray" />
+                                            </Image.Behaviors>-->
+                                        </Image>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding OnPinLocationTapped}" />
+                                        </Grid.GestureRecognizers>
                                     </Grid>
 
                                 </Grid>
@@ -255,26 +263,17 @@
 
                         </Border>
                     </Frame>
-
-
-
-
+                    <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="50" Padding="15,0,0,10">
+                        <Button Grid.Column="0" Command="{Binding OnPostTapped}" HorizontalOptions="EndAndExpand" Margin="0,0,35,0" Text="Confirm Post" HeightRequest="40" WidthRequest="110" Background="#03b25a"/>
+                        <ActivityIndicator Grid.Column="1" IsRunning="{Binding IsBusy}" 
+                   IsVisible="{Binding IsBusy}" HorizontalOptions="EndAndExpand" 
+                           Color="#03b25a" />
+                    </Grid>
                 </Grid>
             </Border>
         </Frame>
 
 
-        <!--<Frame HeightRequest="40" 
-            
-          Grid.Row="1"
->
-
-            <ActivityIndicator IsRunning="{Binding IsBusy}" 
-                   IsVisible="{Binding IsBusy}"
-                                   Color="Green" />
-
-
-        </Frame>-->
 
 
 
@@ -283,186 +282,5 @@
     </Grid>
 
 
-    <!--<Grid
-         RowDefinitions="Auto,Auto,Auto,Auto,Auto,*"  HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"
-            >
-        <Grid Margin="15,20,0,0" HorizontalOptions="Center" VerticalOptions="Center">
-            <Frame
-            BorderColor="Gray"
-            BackgroundColor="WhiteSmoke"
-            Padding="10"
-            HeightRequest="200"
-            WidthRequest="330"
-            HorizontalOptions="Center"
-            VerticalOptions="Center">
 
-                <ImageButton 
-           
-                    Source="{Binding PickedImage}"
-                    Command="{Binding OnFliePicked}" 
-                    Aspect="AspectFill"
-                   
-                >
-
-                    <ImageButton.Triggers>
-                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="false">
-                            <Setter Property="Source" Value="plus.png" />
-                            <Setter Property="HeightRequest" Value="30"/>
-                            <Setter Property="WidthRequest" Value="30 "/>
-
-
-
-                        </DataTrigger>
-                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="true">
-                            <Setter Property="Source" Value="{Binding PickedImage}" />
-                            <Setter Property="BackgroundColor" Value="Transparent" />
-                            <Setter Property="HeightRequest" Value="180"/>
-                            <Setter Property="WidthRequest" Value="310 "/>
-                        </DataTrigger>
-                    </ImageButton.Triggers>
-
-                </ImageButton>
-            </Frame>
-        </Grid>
-
-        <Grid RowDefinitions="Auto,*" Grid.Row="1"  HorizontalOptions="Start" VerticalOptions="Start" Padding="30,10,0,20">
-
-            <Grid Grid.Row="0" ColumnSpacing="10" ColumnDefinitions="Auto,Auto" >
-                <BoxView Grid.ColumnSpan="0"
-                HeightRequest="10"
-                WidthRequest="10"
-                HorizontalOptions="Start"
-                VerticalOptions="Center"
-                Color="#03b25a"
-                                BackgroundColor="Transparent"
-                CornerRadius="25" >
-                    <BoxView.Shadow>
-                        <Shadow  Brush="Green"
-             Offset="0,10"
-            Opacity="0.3" />
-                    </BoxView.Shadow>
-                </BoxView>
-                <Label Grid.Column="1" Text="Title"
-                       FontSize="18" FontAttributes="Bold" TextColor="#385897"/>
-            </Grid>
-            <Entry Grid.Row="1" Text="{Binding Food}" Placeholder="Enter Food Name" WidthRequest='330' />
-
-        </Grid>
-        <Grid RowDefinitions="Auto,*" Grid.Row="2" HorizontalOptions="Start" VerticalOptions="Start" Padding="30,10,0,20">
-            <Grid Grid.Row="0" ColumnSpacing="10" ColumnDefinitions="Auto,Auto" >
-                <BoxView Grid.ColumnSpan="0"
-            HeightRequest="10"
-            WidthRequest="10"
-            HorizontalOptions="Start"
-            VerticalOptions="Center"
-            Color="#03b25a"
-                            BackgroundColor="Transparent"
-            CornerRadius="25" >
-                    <BoxView.Shadow>
-                        <Shadow  Brush="Green"
-             Offset="0,10"
-            Opacity="0.3" />
-                    </BoxView.Shadow>
-                </BoxView>
-                <Label Grid.Column="1" Text="Description" FontSize="18" FontAttributes="Bold" TextColor="#385897"/>
-            </Grid>
-            <Editor 
-            Grid.Row="1"
-            Placeholder="Enter description here..."
-            AutoSize="TextChanges"
-            MaxLength="250"  
-                Text="{Binding Description}"    
-            HeightRequest="130"
-                   
-                    WidthRequest="330"
-            BackgroundColor="WhiteSmoke"
-                   
-                    Margin="0,10,0,0"/>
-
-        </Grid>
-        <Grid Grid.Row="3" ColumnDefinitions="Auto,Auto" ColumnSpacing="25" >
-            <Grid RowDefinitions="Auto,*" Grid.Column="0"  HorizontalOptions="Start" VerticalOptions="Start" Padding="30,10,0,20">
-                <Grid Grid.Row="0" ColumnSpacing="5" ColumnDefinitions="Auto,Auto" >
-                    <BoxView Grid.ColumnSpan="0"
-                HeightRequest="10"
-                WidthRequest="10"
-                HorizontalOptions="Start"
-                VerticalOptions="Center"
-                Color="#03b25a"
-                                BackgroundColor="Transparent"
-                CornerRadius="25" >
-                        <BoxView.Shadow>
-                            <Shadow  Brush="Green"
-                 Offset="0,10"
-                Opacity="0.3" />
-                        </BoxView.Shadow>
-                    </BoxView>
-                    <Label Grid.Column="1" Text="Price/Kg" FontSize="18" FontAttributes="Bold" TextColor="#385897"/>
-                </Grid>
-                <Entry Grid.Row="1" Text="{Binding Price}" Placeholder="Enter price" WidthRequest='150' />
-
-            </Grid>
-            <Grid RowDefinitions="Auto,*" RowSpacing="15" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Padding="30,10,0,20">
-                <Grid Grid.Row="0" ColumnSpacing="5" ColumnDefinitions="Auto,Auto" >
-                    <BoxView Grid.ColumnSpan="0"
-                HeightRequest="10"
-                WidthRequest="10"
-                HorizontalOptions="Start"
-                VerticalOptions="Center"
-                Color="#03b25a"
-                                BackgroundColor="Transparent"
-                CornerRadius="25" >
-                        <BoxView.Shadow>
-                            <Shadow  Brush="Green"
-                 Offset="0,10"
-                Opacity="0.3" />
-                        </BoxView.Shadow>
-                    </BoxView>
-
-                    <Label Grid.Column="1" Text="Quantity" FontSize="18" FontAttributes="Bold" TextColor="#385897"/>
-                </Grid>
-                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="30" Grid.Row="1"  HorizontalOptions="Start" VerticalOptions="Start" >
-                    <ImageButton Grid.Column="0"
-            Source="minus.png"
-            WidthRequest="10"
-            HeightRequest="10"
-            Command="{Binding DecrementCommand}" />
-                    <Label Grid.Column="1" Text="{Binding StepperValue}" FontSize="18" FontAttributes="Bold" TextColor="#385897"/>
-
-                    <ImageButton  Grid.Column="2"
-          Source="plus.png"
-            WidthRequest="10"
-            HeightRequest="10"
-            Command="{Binding IncrementCommand}" />
-                </Grid>
-
-
-            </Grid>
-        </Grid>
-
-        <Grid Grid.Row="4" ColumnSpacing="15" ColumnDefinitions="*,Auto"  Padding="30,30,10,0">
-            <Button Text="Confirm" BackgroundColor="#03b25a" Grid.Column="0"  HorizontalOptions="Center"
-    WidthRequest="330" Command="{Binding OnPostTapped}"
-
-   
-     />
-
-        </Grid>
-        <Grid Grid.Row="5" RowDefinitions="*,Auto">
-            <Grid Grid.Row="0" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
-                <Frame HeightRequest="75" 
-            BackgroundColor="Transparent" 
-            BorderColor="Transparent"
->
-
-                    <ActivityIndicator IsRunning="{Binding IsBusy}" 
-                   IsVisible="{Binding IsBusy}"
-                                   Color="Black" />
-
-
-                </Frame>
-
-            </Grid>
-        </Grid>
-    </Grid>-->
 </ContentPage>

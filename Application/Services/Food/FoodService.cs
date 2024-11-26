@@ -77,7 +77,9 @@ namespace Application.Services.Food
                         WardNumber = postFood.WardNumber,
                         ToleName = postFood.ToleName,
                         CityName = postFood.CityName,
-                        
+                        Latitude = postFood.Latitude,
+                        Longitude = postFood.Longitude,
+                       
                     };
                     var product = new FoodModel
                     {
@@ -192,7 +194,7 @@ namespace Application.Services.Food
             var result = await _uow.AsyncRepositories<FoodModel>().GetRandomWithIncludeAsync(includes);
 
 
-             var baseUrl = $"https://a74f-2405-acc0-1504-9a1f-5cd0-73cd-a875-7303.ngrok-free.app";
+             var baseUrl = $"https://1b30-2405-acc0-1504-b3c0-bce9-5e05-9a37-a8ad.ngrok-free.app";
             // var baseUrl = $"https://localhost:7293";
             var productResult =  result
                 .Where(product => product.IsBooked == false)
@@ -206,6 +208,10 @@ namespace Application.Services.Food
                IsBooked = product.IsBooked,
                UserName = product.Seller?.UserName,
                CityName = product.Address?.CityName,
+               ToleName = product.Address?.ToleName,
+               Latitude = product.Address.Latitude,
+               Longitude = product.Address.Longitude,
+
                 // image Url form ma return garne
                 ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
             }).ToList();

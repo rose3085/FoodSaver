@@ -14,9 +14,10 @@
                         <Grid Grid.Column="0" WidthRequest="220" RowDefinitions="Auto,Auto" ColumnSpacing="5" >
                             <Label Text="{Binding Product.UserName}"  Grid.Row="0" TextColor="Gray" FontSize="22" Padding="15,0,0,0" FontAttributes="Bold" />
 
-                            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" Padding="20,0,0,0" ColumnSpacing="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,Auto" Padding="20,0,0,0" ColumnSpacing="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                 <Image Grid.Column="0" Source="location.png" HeightRequest="12" />
                                 <Label Grid.Column="1" Text="{Binding Product.CityName}" FontSize="12" />
+                                <Label Grid.Column="2" Text="{Binding Product.ToleName}" FontSize="12" />
 
                             </Grid>
 
@@ -48,16 +49,33 @@
                             <Label Grid.Row="2" Text="{Binding Product.Description}"  TextColor="Gray" FontSize="20" Padding="20,10,0,10"  />
 
                             <Grid  Grid.Row="3" ColumnDefinitions="Auto,*" ColumnSpacing="70" Padding="20,0,20,0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                
-                                    <Label Grid.Column="0" TextColor="#385897"  Text="{Binding Product.PricePerKg, StringFormat='Price: Rs {0}'}" FontAttributes="Bold" FontSize="14" />
-                                    <Label Grid.Column="1" TextColor="#385897"  Text="{Binding Product.Quantity, StringFormat='Quantity: {0} kg'}" FontAttributes="Bold" FontSize="14"  />
-                                
-                                
+                                <Grid Grid.Column="0" RowDefinitions="Auto,Auto" RowSpacing="10">
+
+                                    <Label Grid.Row="0" TextColor="#385897"  Text="{Binding Product.PricePerKg, StringFormat='Price: Rs {0}'}" FontAttributes="Bold" FontSize="14" />
+                                    <Label Grid.Row="1" TextColor="#385897"  Text="{Binding Product.Quantity, StringFormat='Quantity: {0} kg'}" FontAttributes="Bold" FontSize="14"  />
+                                </Grid>
+                                <Grid Grid.Column="1"  RowDefinitions="Auto,Auto"  >
+
+                                    <Label Grid.Row="0"  HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="View Location" TextColor="#385897" FontAttributes="Bold" FontSize="14" />
+                                    <Image Grid.Row="1" Source="map.png" HeightRequest="30" >
+
+                                    </Image>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OnPinLocationTapped}" />
+                                    </Grid.GestureRecognizers>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Border>
                 </Frame>
-                <Button Grid.Row="2" HorizontalOptions="EndAndExpand" Margin="0,0,10,0" Text="Buy" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
+                <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="20" Padding="10">
+                 
+
+                    <Button Grid.Column="0" HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="Buy" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
+                    <ActivityIndicator Grid.Column="1" IsRunning="{Binding IsBusy}" 
+                        IsVisible="{Binding IsBusy}" HorizontalOptions="EndAndExpand" 
+                             Color="#03b25a" />
+                </Grid>
             </Grid>
         </Border>
     </Frame>

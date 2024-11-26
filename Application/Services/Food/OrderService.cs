@@ -69,20 +69,7 @@ namespace Application.Services.Food
                             Message = "Please select a valid product!"
                         };
                     }
-                    else 
-                    {
-                        if (createOrderRequest.Quantity == checkProductExist.Quantity)
-                        {
-                            return new OrderResponse
-                            {
-                                IsSuccess = false,
-                                Message = "Please select a valid quantity!"
-                            };
-
-                        }
-                    
-                    
-                    }
+                   
                     var id = Guid.NewGuid().ToString();
                     var order =  new OrderModel
                     {
@@ -94,8 +81,11 @@ namespace Application.Services.Food
 
                     };
 
+                    checkProductExist.IsBooked = true;
+
                     //var request = _mapper.Map<OrderModel>(order);
                     var result = await _uow.AsyncRepositories<OrderModel>().AddAsync(order);
+                    await _uow.AsyncRepositories<FoodModel>().UpdateAsync(checkProductExist);
                     _uow.save();
 
                     return new OrderResponse

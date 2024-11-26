@@ -8,9 +8,9 @@ namespace Application.DTO.Foods
 {
     public class CreateOrderDto
     {
-        public string BuyerId {  get; set; }
+       
         public string ProductId { get; set; }
-        public double Quantity { get; set; }
+       
 
     }
 }

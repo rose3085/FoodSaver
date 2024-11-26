@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Domain.Entities.User;
 using Domain.Entities.Foods;
 using Domain.Entities.Location;
+using Domain.Entities.Payment;
 
 
 namespace Infrastructure.Data.DataContext
@@ -24,6 +25,7 @@ namespace Infrastructure.Data.DataContext
        // public DbSet<ApplicationUserFoodModel> ApplicationUserFoodModel { get; set; }
        public DbSet<OrderModel> Orders { get; set; }
         public DbSet<AddressModel> Address { get; set; }
+        public DbSet<PaymentModel> Payment { get; set; }
     }
 }
 

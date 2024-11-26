@@ -10,6 +10,7 @@ using FoodSaverMaui.Model;
 using FoodSaverMaui.Services.Food;
 using FoodSaverMaui.Views;
 using Microsoft.Maui.Storage;
+using Location = Microsoft.Maui.Devices.Sensors.Location;
 
 namespace FoodSaverMaui.ViewModel
 {
@@ -68,6 +69,7 @@ namespace FoodSaverMaui.ViewModel
         public Command IncrementCommand { get; }
 
         public Command OnPostTapped { get; }
+        public Command OnPinLocationTapped { get; }
         public Command DecrementCommand { get; }
         public UploadFoodViewModel(FoodService foodService)
         {
@@ -76,6 +78,7 @@ namespace FoodSaverMaui.ViewModel
             IncrementCommand = new Command(OnIncrement);
             DecrementCommand = new Command(OnDecrement);
             OnPostTapped = new Command(async () => await PostButtonTapped());
+            OnPinLocationTapped = new Command(async () => await PinLocationTapped());
 
         }
         public bool IsImageSelected => PickedImage != null;
@@ -83,7 +86,36 @@ namespace FoodSaverMaui.ViewModel
         public string PickedImageName;
 
 
+        public async Task PinLocationTapped()
+        {
+            if (!string.IsNullOrEmpty(wardNumber) && !string.IsNullOrEmpty(toleName)
+                    && !string.IsNullOrEmpty(cityName))
+            {
+                
+                var address = $"{cityName} {toleName}";
 
+                IEnumerable<Location> locations = await Geocoding.Default.GetLocationsAsync(address);
+                Location location = locations?.FirstOrDefault();
+
+                var options = new MapLaunchOptions { Name = "Butwal" };
+
+                try
+                {
+                    await Map.Default.OpenAsync(location, options);
+                }
+                catch (Exception ex)
+                {
+                    var toasts = Toast.Make($"Couldn't open GoogleMap", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                    await toasts.Show();
+
+                }
+            }
+            
+            var toast = Toast.Make($"Enter all address fields!", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+            await toast.Show();
+
+
+        }
         public async Task PostButtonTapped()
         {
             try
@@ -94,7 +126,16 @@ namespace FoodSaverMaui.ViewModel
                     && !string.IsNullOrEmpty(cityName)
                     )
                 {
-                    var result = await _foodService.PostFood(food, description, price, _stepperValue,wardNumber,toleName,cityName, _imageData, PickedImageName);
+                    var address = $"{cityName} {toleName}";
+
+                    IEnumerable<Location> locations = await Geocoding.Default.GetLocationsAsync(address);
+                    Location location = locations?.FirstOrDefault();
+            
+                    
+                        double latitude = location.Latitude;
+                        double longitude = location.Longitude;
+               
+                    var result = await _foodService.PostFood(food, description, price, _stepperValue,wardNumber,toleName,cityName,latitude,longitude, _imageData, PickedImageName);
                     if (result != null)
                     {
 
