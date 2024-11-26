@@ -89,7 +89,8 @@ namespace Application.Services.Food
                         Id=id,
                         Buyer = userInfo,
                         Food = checkProductExist,
-                        Quantity = createOrderRequest.Quantity,
+                        //
+                        //Quantity = createOrderRequest.Quantity,
 
                     };
 

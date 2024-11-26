@@ -9,61 +9,46 @@
              NavigationPage.HasNavigationBar="False">
 
 
-    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+    <!--<Grid RowDefinitions="Auto,Auto,*" RowSpacing="20" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
 
-      
 
-            <!--<Label Grid.Row="0" Text="My Profile" Padding="0" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Start"/>-->
- 
-            <!--<toolkit:Expander>
-                <toolkit:Expander.Header>
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15" BackgroundColor="AliceBlue">
-                        <Image Grid.Column="0" Source="user.png" HeightRequest="34" WidthRequest="34"  />
-                        <Label Grid.Column="1" Text="Account" 
-                   FontAttributes="Bold"
-                   FontSize="25" /></Grid>
-                    
-                </toolkit:Expander.Header>
-                <VerticalStackLayout Padding="10" Spacing="5" VerticalOptions="Center" HorizontalOptions="Center" >
-                    <Label Text="Update Username" FontSize="15" FontFamily="Poppins" />
-                    <Label Text="Update Email" FontSize="15" FontFamily="Poppins" />
-                    <Label Text="Forget Password" FontSize="15" FontFamily="Poppins"/>
-                    
-                </VerticalStackLayout>
-            </toolkit:Expander>-->
+   
+        <toolkit:Expander Direction="Down">
+            <toolkit:Expander.Header>
+                <Image  Source="user.png" HeightRequest="24" WidthRequest="24"  />
+            </toolkit:Expander.Header>
+            <VerticalStackLayout Background="AliceBlue"  Spacing="20" Padding="20">
 
-            <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="Center" Padding="0,30,0,0" >
-                <Image Grid.Column="0" Source="user.png" HeightRequest="84" WidthRequest="84"  />
-                <Grid  Grid.Column="1" RowDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                    <Label Grid.Row="0" Text="Rabina Sedhai" 
-                    FontAttributes="Bold"
-                    FontSize="25" />
-                    <Label Grid.Row="1" Text="rabinasedhai1@gmail.com" />
-                </Grid>
-            </Grid>
-        <VerticalStackLayout Grid.Row="1" BackgroundColor="WhiteSmoke" Spacing="10">
-
-            <Border StrokeShape="RoundRectangle 30,30,30,30" HeightRequest="50">
+          
                 <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
                     <Image Grid.Column="0" Source="user.png" HeightRequest="24" WidthRequest="24"  />
 
-                    <Label Grid.Column="1" Text="Edit Profile" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+                    <Label Grid.Column="1" Text="Profile" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
         
         FontSize="18" />
 
                 </Grid>
-            </Border>
-            <Border StrokeShape="RoundRectangle 30,30,30,30" HeightRequest="50">
+            <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
+                <Image Grid.Column="0" Source="email.png" HeightRequest="30" WidthRequest="30"  />
+
+                <Label Grid.Column="1" Text="Change Email" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+
+FontSize="18" />
+            </Grid>
+      
                 <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
                     <Image Grid.Column="0" Source="key.png" HeightRequest="24" WidthRequest="24"  />
 
                     <Label Grid.Column="1" Text="Change Password" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
 
 FontSize="18" />
-
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnChangePasswordTapped}" />
+                    </Grid.GestureRecognizers>
                 </Grid>
-            </Border>
-            <Border StrokeShape="RoundRectangle 30,30,30,30" HeightRequest="50">
+
+    
+
                 <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"   >
                     <Image Grid.Column="0" Source="fingerprint.png" HeightRequest="24" WidthRequest="24"  />
 
@@ -75,8 +60,7 @@ FontSize="18" />
                         <TapGestureRecognizer Command="{Binding OnEnableFingerprintTapped}" />
                     </Grid.GestureRecognizers>
                 </Grid>
-            </Border>
-            <Border StrokeShape="RoundRectangle 30,30,30,30" HeightRequest="50">
+
                 <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
                     <Image Grid.Column="0" Source="question.png" HeightRequest="24" WidthRequest="24"  />
 
@@ -84,19 +68,166 @@ FontSize="18" />
 
 FontSize="18" />
                 </Grid>
-            </Border>
-            <Border StrokeShape="RoundRectangle 30,30,30,30" HeightRequest="50">
-                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
-                    <Image Grid.Column="0" Source="logout.png" HeightRequest="24" WidthRequest="24"  />
+         
+        </VerticalStackLayout>
+        </toolkit:Expander>
 
-                    <Label Grid.Column="1" Text="Log Out" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+    </Grid>-->
+
+
+    <AbsoluteLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+        <!-- Main Content -->
+        <ContentView AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                 AbsoluteLayout.LayoutFlags="All"
+                 BackgroundColor="White">
+            <Label Text="Main Content Goes Here"
+               FontSize="Large"
+               HorizontalOptions="Center"
+               VerticalOptions="Center" />
+        </ContentView>
+
+        <!-- Side Navigation Expander -->
+        <toolkit:Expander HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"
+                         
+                     Direction="Down"
+                      IsExpanded="False"
+                      AbsoluteLayout.LayoutBounds="0, 0, 550, 1"
+                      AbsoluteLayout.LayoutFlags="HeightProportional"
+                      Background="GhostWhite">
+
+            
+            
+            
+            <toolkit:Expander.Header >
+                <Frame Background="Transparent" BorderColor="Transparent" HorizontalOptions="Start" VerticalOptions="Start" >
+                    <Image   Source="settings.png" HeightRequest="24" WidthRequest="24"  >
+                      
+                    </Image>
+                </Frame>
+                <!--<Image   Source="settings.png" HeightRequest="24" WidthRequest="24"  />-->
+            </toolkit:Expander.Header>
+
+            <VerticalStackLayout Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Background="GhostWhite" HeightRequest="750"  Spacing="10" Padding="10">
+
+                    
+                <!--<VerticalStackLayout.Shadow>
+                    <Shadow Brush="Black"
+ Offset="0,20"
+Opacity="0.8" />
+                </VerticalStackLayout.Shadow>-->
+
+                    <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="10" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
+
+
+                    <Label Grid.Column="0" Text="Account Settings" TextColor="#385897" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+        
+        FontSize="20" />
+
+
+                    </Grid>
+                    <BoxView BackgroundColor="Black" HeightRequest="1" />
+                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="15" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="20,0,0,0"  >
+                        <Image Grid.Column="1"  HorizontalOptions="End" VerticalOptions="Center" Source="rightarrows.png" HeightRequest="18" WidthRequest="18"  />
+
+                        <Label Grid.Column="0" Text="Edit Profile" TextColor="#A4A4A4" VerticalOptions="Center" HorizontalOptions="Start"
+
+                    FontSize="18" />
+                    </Grid>
+                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="15" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="20,0,0,0"  >
+                    <Image Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Source="rightarrows.png" HeightRequest="18" WidthRequest="18"  />
+
+                        <Label Grid.Column="0" Text="Change Email" TextColor="#A4A4A4" VerticalOptions="Center" HorizontalOptions="Start"
+
+                        FontSize="18" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnChangeEmailTapped}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="15" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="20,0,0,0"  >
+                    <Image Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Source="rightarrows.png" HeightRequest="18" WidthRequest="18"  />
+                        <Label Grid.Column="0" Text="Change Password" TextColor="#A4A4A4" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+
+                    FontSize="18" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OnChangePasswordTapped}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+
+                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="15" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="20,0,0,0"  >
+                    <Image Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Source="rightarrows.png" HeightRequest="18" WidthRequest="18"  />
+
+                        <Label Grid.Column="0" Text="Enable Biometric" TextColor="#A4A4A4" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+                           
+
+                        FontSize="18" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OnEnableFingerprintTapped}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="15" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="20,0,0,0"  >
+                    <Image Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Source="rightarrows.png" HeightRequest="18" WidthRequest="18"  />
+
+                        <Label Grid.Column="0" Text="Delete Account" TextColor="#A4A4A4" VerticalOptions="Center" HorizontalOptions="Start"
+
+         FontSize="18" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnDeleteUserTapped}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+
+
+                    <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="10" HorizontalOptions="StartAndExpand" Padding="20,20,0,0"  >
+
+
+                    <Label Grid.Column="0" Text="More" TextColor="#385897" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+        
+        FontSize="20" />
+                    </Grid>
+                    <BoxView BackgroundColor="Black" HeightRequest="1" />
+
+
+                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="15" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="20,0,0,0"  >
+                    <Image Grid.Column="1"  HorizontalOptions="End" VerticalOptions="Center" Source="rightarrows.png" HeightRequest="18" WidthRequest="18"  />
+
+                        <Label Grid.Column="0" Text="Help" TextColor="#A4A4A4" VerticalOptions="Center" HorizontalOptions="Start"
 
 FontSize="18" />
-                </Grid>
-            </Border>
-        </VerticalStackLayout>
+                    </Grid>
 
-    </Grid>
+
+                <Frame Margin="0,100,0,0" HorizontalOptions="Center" Background="Transparent" BorderColor="Transparent">
+
+                    <Border   StrokeShape="RoundRectangle 24,24,24,24"  Padding="20,10,20,10" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
+                        <Grid Grid.Row="1" ColumnDefinitions="Auto,*" HorizontalOptions="CenterAndExpand" >
+                            <Image Grid.Column="0" Source="logout.png" HeightRequest="24" WidthRequest="24"  />
+
+                            <Label Grid.Column="1" Text="Logout" TextColor="#385897" VerticalOptions="Center" HorizontalOptions="StartAndExpand" FontSize="18" />
+
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnLogoutTapped}" />
+                            </Grid.GestureRecognizers>
+
+
+                        </Grid>
+                        <Border.Shadow>
+
+                            <Shadow Brush="Green"
+                 Offset="0,20"
+                Opacity="0.3" />
+                        </Border.Shadow>
+                    </Border>
+                </Frame>
+
+
+
+                </VerticalStackLayout>
+                
+           
+
+        </toolkit:Expander>
+    </AbsoluteLayout>
+
 
 
 </ContentPage>

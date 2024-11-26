@@ -14,6 +14,11 @@ namespace Application.Response.Food
         public double PricePerKg { get; set; }
         public double Quantity { get; set; }
         public bool IsBooked { get; set; }  
+        public string UserName { get; set; }
+        public string CityName { get; set; }
+        public string ToleName { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }  
         public string ImageUrl { get; set; }
     }
 }

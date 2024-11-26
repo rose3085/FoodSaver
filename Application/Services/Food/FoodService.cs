@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;
 using SixLabors.ImageSharp;
+using Domain.Entities.Location;
 
 
 namespace Application.Services.Food
@@ -69,6 +70,17 @@ namespace Application.Services.Food
                     string[] allowedFileExtentions = [".jpg", ".jpeg", ".png"];
                     string createdImageName = await SaveFileAsync(postFood.ImageFile, allowedFileExtentions);
                     var id = Guid.NewGuid().ToString();
+                    var addressId = Guid.NewGuid().ToString();
+                    var address = new AddressModel
+                    { 
+                        Id = addressId,
+                        WardNumber = postFood.WardNumber,
+                        ToleName = postFood.ToleName,
+                        CityName = postFood.CityName,
+                        Latitude = postFood.Latitude,
+                        Longitude = postFood.Longitude,
+                       
+                    };
                     var product = new FoodModel
                     {
                         Id = id,
@@ -77,7 +89,8 @@ namespace Application.Services.Food
                         PricePerKg = postFood.PricePerKg,
                         Quantity = postFood.Quantity,
                         ProductImage = createdImageName,
-                        Users = new List<ApplicationUser> {userInfo },
+                        Seller = userInfo,
+                        Address = address,
                     };
                     var createdProduct = await _uow.AsyncRepositories<FoodModel>().AddAsync(product);
                    
@@ -119,7 +132,7 @@ namespace Application.Services.Food
             try {
                 var includes = new Expression<Func<FoodModel, object>>[]
                    {
-                        s => s.Users,
+                        s => s.Seller,
                    };
                 var seller = await _uow.AsyncRepositories<FoodModel>().GetWithIncludeAndId(foodId,includes);
                 if (seller == null)
@@ -136,7 +149,7 @@ namespace Application.Services.Food
 
                 var userInfo = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
 
-                if (!seller.Users.Contains(userInfo))
+                if (userInfo == null)
                 {
                     return new FoodServiceResponse()
                     {
@@ -173,7 +186,12 @@ namespace Application.Services.Food
 
         public async Task<IEnumerable<GetProductResponse>> GetProductsAsync()
         {
-            var result = await _uow.AsyncRepositories<FoodModel>().GetRandomAsync();
+            var includes = new Expression<Func<FoodModel, object>>[]
+                   {
+                        s => s.Seller,
+                        s => s.Address,
+                   };
+            var result = await _uow.AsyncRepositories<FoodModel>().GetRandomWithIncludeAsync(includes);
 
 
              var baseUrl = $"https://1b30-2405-acc0-1504-b3c0-bce9-5e05-9a37-a8ad.ngrok-free.app";
@@ -188,8 +206,13 @@ namespace Application.Services.Food
                PricePerKg = product.PricePerKg,
                Quantity = product.Quantity,
                IsBooked = product.IsBooked,
+               UserName = product.Seller?.UserName,
+               CityName = product.Address?.CityName,
+               ToleName = product.Address?.ToleName,
+               Latitude = product.Address.Latitude,
+               Longitude = product.Address.Longitude,
 
-               // image Url form ma return garne
+                // image Url form ma return garne
                 ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
             }).ToList();
            // var getResult = _mapper.Map<IEnumerable<GetProductResponse>>(productResult);
@@ -218,23 +241,7 @@ namespace Application.Services.Food
             var fileNameWithPath = Path.Combine(path, fileName);
             using var stream = new FileStream(fileNameWithPath, FileMode.Create);
             await imageFile.CopyToAsync(stream);
-            //using (var stream = new MemoryStream())
-            //{
-            //    await imageFile.CopyToAsync(stream);
-            //    stream.Position = 0; // Reset the stream position
-
-            //    using (var image = Image.Load(stream))
-            //    {
-            //        // Resize the image while maintaining the aspect ratio
-            //        image.Mutate(x => x.Resize(new ResizeOptions
-            //        {
-            //            Size = new Size(40, 40),
-            //            Mode = ResizeMode.Max // Maintain aspect ratio
-            //        }));
-
-            //        await image.SaveAsync(fileNameWithPath); // Save the image to the file path
-            //    }
-            //}
+          
             return fileName;
         }
     }

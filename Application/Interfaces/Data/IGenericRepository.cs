@@ -15,7 +15,7 @@ namespace Application.Interfaces.Data
         Task DeleteById<TPrimaryKey>(TPrimaryKey id);
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetById<TPrimaryKey>(TPrimaryKey id);
-        Task<IEnumerable<T>> GetRandomAsync();
+        Task<IEnumerable<T>> GetRandomWithIncludeAsync(Expression<Func<T, object>>[] children);
         Task<T> GetByName(Expression<Func<T, bool>> filter);
         Task<bool> EmailExists(Expression<Func<T, bool>> filter);
         Task<IEnumerable<T>> GetWithInclude(Expression<Func<T, object>>[] children);

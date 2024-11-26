@@ -16,6 +16,7 @@ using System.Text;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using FoodSaver.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -89,8 +90,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services
     .AddIdentity<ApplicationUser, Role>(options =>
     {
-        options.User.RequireUniqueEmail = true;
-
+        options.User.RequireUniqueEmail = false;
     }
 
     )
@@ -108,6 +108,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = true;
     options.SignIn.RequireConfirmedEmail = false;
+    
 });
 
 builder.Services
@@ -211,7 +212,7 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/Resources"
 });
 
-
+app.UseMiddleware<AccessTokenMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

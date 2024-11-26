@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities.User;
 using Domain.Entities.Foods;
+using Domain.Entities.Location;
 
 
 namespace Infrastructure.Data.DataContext
@@ -22,6 +23,7 @@ namespace Infrastructure.Data.DataContext
         public DbSet<FoodModel> FoodModel { get; set; }
        // public DbSet<ApplicationUserFoodModel> ApplicationUserFoodModel { get; set; }
        public DbSet<OrderModel> Orders { get; set; }
+        public DbSet<AddressModel> Address { get; set; }
     }
 }
 

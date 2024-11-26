@@ -18,6 +18,19 @@ namespace FoodSaverMaui.ViewModel
 {
     public partial class LoginViewModel : BaseViewModel
     {
+        private string _userName;
+        public string UserName
+        {
+            get => _userName;
+            set
+            {
+                _userName = value;
+                OnPropertyChanged(nameof(UserName));
+
+            }
+
+
+        }
 
         private string _email;
         public string Email
@@ -114,7 +127,7 @@ namespace FoodSaverMaui.ViewModel
         public async Task SignInTapped()
         {
             
-            if (!string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password))
+            if (!string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password))
             {
                 try
                 {
@@ -122,6 +135,7 @@ namespace FoodSaverMaui.ViewModel
                     IsBusy = true;
                     var requestModel = new UserLoginRequest
                     {
+                        UserName = UserName,
                         Email = Email,
                         Password = Password,
                     };

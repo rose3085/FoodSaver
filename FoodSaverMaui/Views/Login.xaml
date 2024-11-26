@@ -18,19 +18,48 @@
         </Style>
     </ContentPage.Resources>
 
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+
     <Grid RowDefinitions="Auto,Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
         <Grid Grid.Row="0" RowDefinitions="Auto" Padding="50,80,100,0" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand">
 
             <Label Grid.Row="0" Text="Login to your account!"
            FontSize="30" TextColor="#385897"
-           FontFamily="PoppinsBold"
+           FontFamily="PoppinsBold" FontAutoScalingEnabled="False"
            HorizontalOptions="Center"></Label>  
         </Grid>
 
-        <Grid Grid.Row="1" RowDefinitions="Auto,Auto,*" Padding="20" >
+        <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,*" Padding="20" >
+
 
             <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="0"
+    Margin="30,10,30,0">
+
+
+                <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+
+
+                    <Image  Source="email.png" WidthRequest="34" HeightRequest="34"
+Margin="10,0,0,0"
+                HorizontalOptions="Start"
+                VerticalOptions="Center" Grid.Column="0" />
+                    <Entry Placeholder="UserName" x:Name="UserName"
+               toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference Email}" ReturnType="Next"
+                       Text="{Binding UserName}"
+                       PlaceholderColor="Black"
+                   FontSize="18"
+                       Grid.Column="1" HorizontalOptions="Start"
+                   WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
+                     
+                    </Entry>
+                </Grid>
+            </Frame>
+
+
+            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="1"
                 Margin="30,10,30,0">
 
 
@@ -45,7 +74,7 @@
                            toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference Password}" ReturnType="Next"
                                    Text="{Binding Email}"
                                    PlaceholderColor="Black"
-                               FontSize="Medium"
+                               FontSize="18"
                                    Grid.Column="1" HorizontalOptions="Start"
                                WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
                         <Entry.Behaviors>
@@ -58,7 +87,7 @@
                 </Grid>
             </Frame>
 
-            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="1"
+            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="2"
            Margin="30,10,30,0">
 
 
@@ -70,7 +99,7 @@
                     <Entry Placeholder="Password" x:Name="Password"
                                    Text="{Binding Password}"
                                    PlaceholderColor="Black" IsPassword="True"
-                           FontSize="Medium" Grid.Column="1" HorizontalOptions="Start"
+                           FontSize="18" Grid.Column="1" HorizontalOptions="Start"
                              WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
                         <Entry.Behaviors>
                             <toolkit:CharactersValidationBehavior 
@@ -92,7 +121,7 @@
                 </Grid>
             </Frame>
 
-            <Grid Grid.Row="2" ColumnSpacing="15" ColumnDefinitions="*,Auto"  Padding="30,20,10,0">
+            <Grid Grid.Row="3" ColumnSpacing="15" ColumnDefinitions="*,Auto"  Padding="30,20,10,0">
                 <Button Text="Sign In" BackgroundColor="#03b25a" Grid.Column="0"  HorizontalOptions="Start"
                  WidthRequest="{OnIdiom Phone=240, Tablet=350}" 
                 
@@ -134,10 +163,10 @@
 
 
             <Grid Grid.Row="1" ColumnSpacing="15" ColumnDefinitions="Auto,*" Padding="10" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
-                <Label Grid.Column="0" Text="Don't have an account?"
-                  FontSize="Medium" VerticalOptions="Center"
+                <Label Grid.Column="0" Text="Don't have an account?" FontAutoScalingEnabled="False"
+                  FontSize="15" VerticalOptions="Center"
                   />
-                <Label Grid.Column="1" Text="Register"   FontSize="Medium"
+                <Label Grid.Column="1" Text="Register"   FontSize="15" FontAutoScalingEnabled="False"
                 TextColor="#385897">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OnRegisterTapped}" />

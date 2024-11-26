@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
+using FoodSaverMaui.Views;
 using Plugin.Maui.Biometric;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,41 @@ namespace FoodSaverMaui.ViewModel
    public partial class UserProfileViewModel : BaseViewModel
     {
         public Command OnEnableFingerprintTapped { get; }
+        public Command OnChangePasswordTapped { get; }
+        public Command OnDeleteUserTapped { get; }
+        public Command OnChangeEmailTapped { get; }
+        public Command OnLogoutTapped { get; }
         public UserProfileViewModel()
         {
             OnEnableFingerprintTapped = new Command(async () => await EnableFingerPrintTapped());
+            OnChangePasswordTapped = new Command(async () => await ChangePasswordTapped());
+            OnDeleteUserTapped = new Command(async () => await DeleteUserTapped());
+            OnChangeEmailTapped = new Command(async () => await ChangeEmailTapped());
+            OnLogoutTapped = new Command(async() => await LogoutTapped());
         }
+
+        public async Task ChangePasswordTapped()
+        {
+            await Shell.Current.GoToAsync(nameof(UpdatePassword));
+        
+        }
+
+        public async Task DeleteUserTapped()
+        {
+            await Shell.Current.GoToAsync(nameof(DeleteUser));
+
+        }
+        public async Task ChangeEmailTapped()
+        {
+            await Shell.Current.GoToAsync(nameof(UpdateEmail));
+
+        }
+        public async Task LogoutTapped()
+        {
+            await Shell.Current.GoToAsync(nameof(Login));
+
+        }
+
 
         public async Task EnableFingerPrintTapped()
         {

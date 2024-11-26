@@ -24,6 +24,7 @@ namespace FoodSaverMaui
                     fonts.AddFont("Poppins-Bold", "PoppinsBold");
                     fonts.AddFont("Poppins-SemiBold", "PoppinsSemiBold");
                     fonts.AddFont("Poppins-Regular", "PoppinsRegular");
+                    fonts.AddFont("Solway-Bold.tff", "Solway");
                 });
 
             builder.Services.AddSingleton<IBiometric>(BiometricAuthenticationService.Default);
@@ -34,23 +35,40 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<UserServices>();
 
 
-            builder.Services.AddSingleton<Login>();
-            builder.Services.AddSingleton<LoginViewModel>();
+            builder.Services.AddTransient<Login>();
+            builder.Services.AddTransient<LoginViewModel>();
 
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<HomePageViewModel>();
 
             builder.Services.AddSingleton<LandingPage>();
+            builder.Services.AddSingleton<LandingPageViewModel>();
 
             builder.Services.AddSingleton<UserProfile>();
             builder.Services.AddSingleton<UserProfileViewModel>();
+            builder.Services.AddSingleton<UserProfileService>();
 
-            builder.Services.AddSingleton<FindFood>();
-            builder.Services.AddSingleton<FindFoodViewModel>();
+            builder.Services.AddSingleton<UpdatePassword>();
+            builder.Services.AddSingleton<UpdatePasswordViewModel>();
+
+            builder.Services.AddSingleton<DeleteUser>();
+            builder.Services.AddSingleton<DeleteUserViewModel>();
+
+            builder.Services.AddSingleton<UpdateEmail>();
+            builder.Services.AddSingleton<UpdateEmailViewModel>();
+
+            builder.Services.AddTransient<FindFood>();
+            builder.Services.AddTransient<FindFoodViewModel>();
             builder.Services.AddSingleton<FoodService>();
 
-            builder.Services.AddSingleton<UploadFood>();
-            builder.Services.AddSingleton<UploadFoodViewModel>();
+            builder.Services.AddTransient<FoodDetail>();
+            builder.Services.AddTransient<FoodDetailViewModel>();
+
+            builder.Services.AddTransient<UploadFood>();
+            builder.Services.AddTransient<UploadFoodViewModel>();
+
+            builder.Services.AddTransient<PostSuccessfullPage>();
+            builder.Services.AddTransient<PostSuccessfullViewModel>();
 #if DEBUG
             builder.Logging.AddDebug();
 

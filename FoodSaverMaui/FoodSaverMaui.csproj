@@ -40,10 +40,9 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<!--<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />-->
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -57,10 +56,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\AppIcon\appicon.png" />
 	  <None Remove="Resources\Fonts\Poppins-Bold.ttf" />
 	  <None Remove="Resources\Fonts\Poppins-Regular.ttf" />
 	  <None Remove="Resources\Fonts\Poppins-SemiBold.ttf" />
+	  <None Remove="Resources\Fonts\Solway-Bold.ttf" />
 	  <None Remove="Resources\Images\addpost.png" />
+	  <None Remove="Resources\Images\checked.png" />
+	  <None Remove="Resources\Images\dots.png" />
 	  <None Remove="Resources\Images\down.png" />
 	  <None Remove="Resources\Images\email.png" />
 	  <None Remove="Resources\Images\find.png" />
@@ -68,13 +71,32 @@
 	  <None Remove="Resources\Images\finger_print.png" />
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\key.png" />
+	  <None Remove="Resources\Images\list.png" />
+	  <None Remove="Resources\Images\location.png" />
+	  <None Remove="Resources\Images\logo.png" />
 	  <None Remove="Resources\Images\logout.png" />
+	  <None Remove="Resources\Images\map.png" />
 	  <None Remove="Resources\Images\minus.png" />
+	  <None Remove="Resources\Images\more.png" />
 	  <None Remove="Resources\Images\phone.png" />
+	  <None Remove="Resources\Images\picture.png" />
 	  <None Remove="Resources\Images\plus.png" />
+	  <None Remove="Resources\Images\post.png" />
 	  <None Remove="Resources\Images\profile.png" />
 	  <None Remove="Resources\Images\question.png" />
+	  <None Remove="Resources\Images\remove.png" />
+	  <None Remove="Resources\Images\rightArrows.png" />
+	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\user.png" />
+	  <None Remove="Resources\Splash\splash.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiIcon Include="Resources\AppIcon\appicon.png" Color="Transparent" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiSplashScreen Include="Resources\Splash\splash.png" Color="White" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -84,6 +106,8 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="9.0.10" />
+		<PackageReference Include="Microsoft.Maui.Maps" Version="9.0.10" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Plugin.Maui.Biometric" Version="0.0.2" />
 	</ItemGroup>
@@ -92,7 +116,13 @@
 	  <MauiXaml Update="Views\CreateAccount.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\DeleteUser.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\FindFood.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\FoodDetail.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\HomePage.xaml">
@@ -102,6 +132,15 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Login.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PostSuccessfullPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UpdateEmail.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UpdatePassword.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\UploadFood.xaml">
