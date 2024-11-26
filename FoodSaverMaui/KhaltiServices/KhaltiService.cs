@@ -17,12 +17,12 @@ namespace FoodSaverMaui.KhaltiServices
         {
             _httpClient = httpClient;
         }
-        public async Task<bool> KhaltiLaunch()
+        public async Task<string> KhaltiLaunch()
         {
             var initiateUrl = $"https://a.khalti.com/api/v2/epayment/initiate/";
             var payload = new
             {
-                return_url = "https://example.com",
+                return_url = $"{App.Settings.ApiBaseUrl}/PaymentReturn/ReturnUrl",
                 website_url = "https://pay.khalti.com",
                 amount = "1000",
                 purchase_order_id = "Order01",
@@ -50,10 +50,11 @@ namespace FoodSaverMaui.KhaltiServices
                     var khaltiResponse = JsonConvert.DeserializeObject<KhaltiResponse>(result);
                     var paymentUrl = khaltiResponse.payment_url;
                     //var responseContent = await response.Content.ReadAsStringAsync();
-                    if (paymentUrl != null)
-                    {
-                        await Launcher.OpenAsync($"{paymentUrl}");
-                    }
+                    //if (paymentUrl != null)
+                    //{
+                    //    await Launcher.OpenAsync($"{paymentUrl}");
+                    //}
+                    return paymentUrl;
                 }
             }
 
@@ -69,7 +70,7 @@ namespace FoodSaverMaui.KhaltiServices
             //    // No map application available to open
             //}
 
-            return true;
+            return null;
         }
     
 

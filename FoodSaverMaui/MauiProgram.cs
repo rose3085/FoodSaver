@@ -75,6 +75,12 @@ namespace FoodSaverMaui
             builder.Services.AddTransient<KhaltiPaymentView>();
             builder.Services.AddTransient<KhaltiPaymentViewModel>();
             builder.Services.AddSingleton<IKhaltiService,KhaltiService>();
+
+
+            builder.Services.AddTransient<PaymentUrl>();
+            builder.Services.AddTransient<PaymentUrlViewModel>();
+
+
 #if DEBUG
             builder.Logging.AddDebug();
 

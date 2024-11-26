@@ -1,5 +1,5 @@
 ﻿using FoodSaverMaui.KhaltiServices;
-
+using FoodSaverMaui.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +20,12 @@ namespace FoodSaverMaui.ViewModel
 
         public async Task KhaltiPaymentButton()
         {
-            bool pay = await _khaltiServices.KhaltiLaunch();
+            string pay = await _khaltiServices.KhaltiLaunch();
+            if (pay != null)
+            {
+                // await Shell.Current.GoToAsync($"{nameof(PaymentUrl)}?url={Uri.EscapeDataString(pay)}");
+                await Shell.Current.GoToAsync($"{nameof(PaymentUrl)}?url={Uri.EscapeDataString(pay)}");
+            }
         }
     }
 }
