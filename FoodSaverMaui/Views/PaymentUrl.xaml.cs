@@ -30,8 +30,19 @@ public partial class PaymentUrl : ContentPage
 
         if (currentUrl.StartsWith(baseUrl))
         {
-            await Task.Delay(3000);
-            await Shell.Current.GoToAsync("..");
+            Uri currentUri = new Uri(currentUrl);
+            var queryParams = System.Web.HttpUtility.ParseQueryString(currentUri.Query);
+            string status = queryParams["status"];
+            if (status == "Completed")
+            {
+                await Task.Delay(1000);
+                await Shell.Current.GoToAsync(nameof(PostSuccessfullPage));
+            }
+            if(status == "User canceled")
+                  {
+                await Task.Delay(1000);
+                await Shell.Current.GoToAsync("..");
+            }
         }
     }
 

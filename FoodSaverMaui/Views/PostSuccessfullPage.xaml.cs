@@ -9,4 +9,17 @@ public partial class PostSuccessfullPage : ContentPage
 		InitializeComponent();
 		BindingContext = vm;
 	}
+
+   
+
+
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+        await Task.Delay(1000);
+        await Shell.Current.GoToAsync("//HomePage");
+
+    }
+
+
 }
