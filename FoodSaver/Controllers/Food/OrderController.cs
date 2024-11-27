@@ -1,5 +1,6 @@
 ﻿using Application.DTO.Foods;
-using Application.Interfaces.Food;
+using Application.DTO.Payment;
+using Application.Interfaces.Payment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,11 +22,11 @@ namespace FoodSaver.Controllers.Food
         [HttpPost]
         [Route("CreateOrder")]
         [Authorize]
-        public async Task<IActionResult> PlaceOrder(CreateOrderDto createOrderRequest)
+        public async Task<IActionResult> PlaceOrder(CreateOrderDto createOrderRequest,PaymentRequestDto paymentRequest)
         {
             if (ModelState.IsValid)
             {
-                var result = await _orderService.CreateOrder(createOrderRequest);
+                var result = await _orderService.CreateOrder(createOrderRequest,paymentRequest);
                 return Ok(result);
 
             }

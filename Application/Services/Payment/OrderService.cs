@@ -1,6 +1,7 @@
 ﻿using Application.DTO.Foods;
+using Application.DTO.Payment;
 using Application.Interfaces.Data;
-using Application.Interfaces.Food;
+using Application.Interfaces.Payment;
 using Application.Response.Food;
 using AutoMapper;
 using Domain.Entities.Foods;
@@ -13,42 +14,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Services.Food
+namespace Application.Services.Payment
 {
     public class OrderService : IOrderService
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IPaymentService _paymentService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public OrderService(IMapper mapper, UserManager<ApplicationUser> userManager, IUnitOfWork uow,
-             IHttpContextAccessor httpContextAccessor)
+             IHttpContextAccessor httpContextAccessor, IPaymentService paymentService)
         {
             _uow = uow;
             _mapper = mapper;
             _userManager = userManager;
+            _paymentService = paymentService;
             _httpContextAccessor = httpContextAccessor;
         }
 
-    //    try { }
-    //        catch (Exception ex) {
+        //    try { }
+        //        catch (Exception ex) {
 
-    //            return new OrderResponse
-    //            {
-    //                IsSuccess = false,
-    //                Error = ex.Message
-    //};
+        //            return new OrderResponse
+        //            {
+        //                IsSuccess = false,
+        //                Error = ex.Message
+        //};
 
-        public async Task<OrderResponse> CreateOrder(CreateOrderDto createOrderRequest)
+        public async Task<OrderResponse> CreateOrder(CreateOrderDto createOrderRequest, PaymentRequestDto paymentRequest)
         {
-            try {
+            try
+            {
 
                 var userInfo = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
                 if (userInfo != null)
                 {
                     var userId = userInfo?.Id;
-                    
+
 
                     var userRole = await _userManager.GetRolesAsync(userInfo);
                     if (!userRole.Contains("Buyer"))
@@ -69,32 +73,44 @@ namespace Application.Services.Food
                             Message = "Please select a valid product!"
                         };
                     }
-                   
-                    var id = Guid.NewGuid().ToString();
-                    var order =  new OrderModel
+                    var createPayment =await _paymentService.AddPaymentInfoAsync(paymentRequest);
+                    if (createPayment != null)
                     {
-                        Id=id,
-                        Buyer = userInfo,
-                        Food = checkProductExist,
-                        //
-                        //Quantity = createOrderRequest.Quantity,
 
-                    };
 
-                    checkProductExist.IsBooked = true;
+                        var id = Guid.NewGuid().ToString();
+                        var order = new OrderModel
+                        {
+                            Id = id,
+                            Buyer = userInfo,
+                            Food = checkProductExist,
+                            Payment = createPayment,
+                            CreatedTime = DateTime.UtcNow,
 
-                    //var request = _mapper.Map<OrderModel>(order);
-                    var result = await _uow.AsyncRepositories<OrderModel>().AddAsync(order);
-                    await _uow.AsyncRepositories<FoodModel>().UpdateAsync(checkProductExist);
-                    _uow.save();
+                        };
 
-                    return new OrderResponse
+                        checkProductExist.IsBooked = true;
+
+                        //var request = _mapper.Map<OrderModel>(order);
+                        var result = await _uow.AsyncRepositories<OrderModel>().AddAsync(order);
+                        await _uow.AsyncRepositories<FoodModel>().UpdateAsync(checkProductExist);
+                        _uow.save();
+
+                        return new OrderResponse
+                        {
+                            IsSuccess = true,
+                            Message = "Order placed Successfully"
+                        };
+
+                    }
+                    else
                     {
-                        IsSuccess = true,
-                        Message = "Order placed Successfully"
-                    };
-
-
+                        return new OrderResponse
+                        {
+                            IsSuccess = false,
+                            Message = "Payment Unsuccessful! "
+                        };
+                    }
                 }
                 else
                 {
@@ -105,7 +121,8 @@ namespace Application.Services.Food
                     };
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 
                 return new OrderResponse
                 {

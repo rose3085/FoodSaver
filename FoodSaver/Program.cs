@@ -17,6 +17,8 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using FoodSaver.Middlewares;
+using Application.Services.Payment;
+using Application.Interfaces.Payment;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,6 +70,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 
 //builder.Services.AddAutoMapper(typeof(Program));
