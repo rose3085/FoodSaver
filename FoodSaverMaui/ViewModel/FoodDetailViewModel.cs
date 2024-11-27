@@ -41,7 +41,7 @@ namespace FoodSaverMaui.ViewModel
         }
         public async Task BuyButtonPressed()
         {
-            await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}?Amount={product.PricePerKg}");
+            await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}?Amount={product.PricePerKg}&ProductId={product.Id}");
         }
 
         public async Task PinLocationTapped()

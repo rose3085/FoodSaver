@@ -11,6 +11,6 @@ namespace Application.Interfaces.Payment
 {
     public interface IOrderService
     {
-        Task<OrderResponse> CreateOrder(CreateOrderDto createOrderRequest, PaymentRequestDto paymentRequest);
+        Task<OrderResponse> CreateOrder(CreateOrderDto createOrderRequest);
     }
 }

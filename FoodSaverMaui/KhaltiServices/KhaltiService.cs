@@ -1,4 +1,5 @@
-﻿using FoodSaverMaui.Response;
+﻿using FoodSaverMaui.Helper;
+using FoodSaverMaui.Response;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,27 +13,53 @@ namespace FoodSaverMaui.KhaltiServices
     public partial class KhaltiService : IKhaltiService
     {
         private readonly HttpClient _httpClient;
+        private readonly IJwtHelper _jwtHelper;
 
-        public KhaltiService(HttpClient httpClient)
+        public KhaltiService(HttpClient httpClient, IJwtHelper jwtHelper)
         {
             _httpClient = httpClient;
+            _jwtHelper = jwtHelper;
         }
-        public async Task<string> KhaltiLaunch()
+        public async Task<string> KhaltiLaunch(string amount, string productId)
         {
+            var buyerToken = await SecureStorage.GetAsync("token");
+            var buyer =  _jwtHelper.ExtractUserInfo(buyerToken);
+            if (buyer == null)
+            {
+                return null;
+            }
+            var amountPaid = int.Parse(amount);
+            
             var initiateUrl = $"https://a.khalti.com/api/v2/epayment/initiate/";
+            //var payload = new
+            //{
+            //    return_url = $"{App.Settings.ApiBaseUrl}/PaymentReturn/ReturnUrl",
+            //    website_url = "https://pay.khalti.com",
+            //    amount = amountPaid,
+            //    purchase_order_id =productId,
+            //    purchase_order_name = "test",
+            //    customer_info = new
+            //    {
+            //        name = "Ram Bahadur",
+            //        email = "rabinasedhai1@gmail.com",
+            //        phone = "9800000001"
+            //    },
+
+            //};
             var payload = new
             {
                 return_url = $"{App.Settings.ApiBaseUrl}/PaymentReturn/ReturnUrl",
                 website_url = "https://pay.khalti.com",
-                amount = "1000",
-                purchase_order_id = "Order01",
-                purchase_order_name = "test",
+                amount = 1000,
+                purchase_order_id = productId,
+                purchase_order_name = buyer,
                 customer_info = new
                 {
                     name = "Ram Bahadur",
                     email = "rabinasedhai1@gmail.com",
                     phone = "9800000001"
-                }
+                },
+
             };
             var jsonPayload = JsonConvert.SerializeObject(payload);
             var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");

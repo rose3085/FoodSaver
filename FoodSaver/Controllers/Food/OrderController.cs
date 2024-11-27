@@ -20,13 +20,13 @@ namespace FoodSaver.Controllers.Food
 
 
         [HttpPost]
-        [Route("CreateOrder")]
-        [Authorize]
-        public async Task<IActionResult> PlaceOrder(CreateOrderDto createOrderRequest,PaymentRequestDto paymentRequest)
+       
+       
+        public async Task<IActionResult> PlaceOrder([FromBody]CreateOrderDto createOrderRequest)
         {
             if (ModelState.IsValid)
             {
-                var result = await _orderService.CreateOrder(createOrderRequest,paymentRequest);
+                var result = await _orderService.CreateOrder(createOrderRequest);
                 return Ok(result);
 
             }

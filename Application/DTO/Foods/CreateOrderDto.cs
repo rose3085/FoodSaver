@@ -10,7 +10,10 @@ namespace Application.DTO.Foods
     {
        
         public string ProductId { get; set; }
-       
+        public string BuyerName { get; set; }
+        public string PidX { get; set; }
+        public double Amount { get; set; }
+
 
     }
 }

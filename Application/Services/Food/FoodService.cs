@@ -194,7 +194,7 @@ namespace Application.Services.Food
             var result = await _uow.AsyncRepositories<FoodModel>().GetRandomWithIncludeAsync(includes);
 
 
-             var baseUrl = $"https://9409-2405-acc0-1504-b3c0-d44c-7b26-1c02-fbc5.ngrok-free.app";
+             var baseUrl = $"https://0b9f-2405-acc0-1504-b3c0-d44c-7b26-1c02-fbc5.ngrok-free.app";
             // var baseUrl = $"https://localhost:7293";
             var productResult =  result
                 .Where(product => product.IsBooked == false)

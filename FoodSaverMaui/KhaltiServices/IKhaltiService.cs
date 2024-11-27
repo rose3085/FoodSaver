@@ -8,6 +8,6 @@ namespace FoodSaverMaui.KhaltiServices
 {
     public interface IKhaltiService
     {
-        Task<string> KhaltiLaunch();
+        Task<string> KhaltiLaunch(string amount, string productId);
     }
 }

@@ -43,12 +43,24 @@ namespace Application.Services.Payment
         //                Error = ex.Message
         //};
 
-        public async Task<OrderResponse> CreateOrder(CreateOrderDto createOrderRequest, PaymentRequestDto paymentRequest)
+        public async Task<OrderResponse> CreateOrder(CreateOrderDto createOrderRequest)
         {
+            //try
+            //{
+            //    var productInfo = await _uow.AsyncRepositories<FoodModel>().GetById(createOrderRequest.ProductId);
+
+            //    return new OrderResponse
+            //    {
+            //        IsSuccess = false,
+            //        Message = "Please select a valid product!"
+            //    };
+            //}
+
+
             try
             {
 
-                var userInfo = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
+                var userInfo = await _userManager.FindByNameAsync(createOrderRequest.BuyerName);
                 if (userInfo != null)
                 {
                     var userId = userInfo?.Id;
@@ -73,7 +85,12 @@ namespace Application.Services.Payment
                             Message = "Please select a valid product!"
                         };
                     }
-                    var createPayment =await _paymentService.AddPaymentInfoAsync(paymentRequest);
+                    var paymentRequest = new PaymentRequestDto
+                    {
+                        Amount = checkProductExist.PricePerKg,
+                        PidX = createOrderRequest.ProductId,
+                    };
+                    var createPayment = await _paymentService.AddPaymentInfoAsync(paymentRequest);
                     if (createPayment != null)
                     {
 

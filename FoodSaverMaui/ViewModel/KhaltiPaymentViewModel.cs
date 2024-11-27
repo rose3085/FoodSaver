@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace FoodSaverMaui.ViewModel
 {
     [QueryProperty(nameof(Amount), "Amount")]
+    [QueryProperty(nameof(ProductId), "ProductId")]
     public partial class KhaltiPaymentViewModel : BaseViewModel
     {
         private string _amount;
@@ -26,6 +27,20 @@ namespace FoodSaverMaui.ViewModel
             }
         }
 
+        private string _productId;
+
+        public string ProductId
+        {
+            get => _productId;
+            set
+            {
+                if (_productId != value)
+                {
+                    _productId = value;
+                    OnPropertyChanged(nameof(ProductId));
+                }
+            }
+        }
 
 
         private readonly IKhaltiService _khaltiServices;
@@ -38,7 +53,8 @@ namespace FoodSaverMaui.ViewModel
 
         public async Task KhaltiPaymentButton()
         {
-            string pay = await _khaltiServices.KhaltiLaunch();
+           
+            string pay = await _khaltiServices.KhaltiLaunch(Amount,ProductId);
             if (pay != null)
             {
                 // await Shell.Current.GoToAsync($"{nameof(PaymentUrl)}?url={Uri.EscapeDataString(pay)}");
