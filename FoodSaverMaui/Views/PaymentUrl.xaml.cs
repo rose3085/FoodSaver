@@ -26,7 +26,7 @@ public partial class PaymentUrl : ContentPage
         var currentUrl = e.Url;
         await SecureStorage.SetAsync("khaltiReturnUrl",currentUrl);
         // Define the URL you want to detect
-        string baseUrl = "https://1b30-2405-acc0-1504-b3c0-bce9-5e05-9a37-a8ad.ngrok-free.app/PaymentReturn/ReturnUrl";
+        string baseUrl = $"{App.Settings.ApiBaseUrl}/PaymentReturn/ReturnUrl";
 
         if (currentUrl.StartsWith(baseUrl))
         {

@@ -69,9 +69,9 @@
                     </Border>
                 </Frame>
                 <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="20" Padding="10">
-                 
 
-                    <Button Grid.Column="0" HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="Buy" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
+
+                    <Button Command="{Binding OnBuyButtonPressed}"  Grid.Column="0" HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="Buy" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
                     <ActivityIndicator Grid.Column="1" IsRunning="{Binding IsBusy}" 
                         IsVisible="{Binding IsBusy}" HorizontalOptions="EndAndExpand" 
                              Color="#03b25a" />

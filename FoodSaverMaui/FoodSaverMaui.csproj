@@ -78,6 +78,7 @@
 	  <None Remove="Resources\Images\map.png" />
 	  <None Remove="Resources\Images\minus.png" />
 	  <None Remove="Resources\Images\more.png" />
+	  <None Remove="Resources\Images\payment.png" />
 	  <None Remove="Resources\Images\phone.png" />
 	  <None Remove="Resources\Images\picture.png" />
 	  <None Remove="Resources\Images\plus.png" />

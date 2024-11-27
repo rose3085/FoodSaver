@@ -8,8 +8,26 @@ using System.Threading.Tasks;
 
 namespace FoodSaverMaui.ViewModel
 {
+    [QueryProperty(nameof(Amount), "Amount")]
     public partial class KhaltiPaymentViewModel : BaseViewModel
     {
+        private string _amount;
+
+        public string Amount
+        {
+            get => _amount;
+            set
+            {
+                if (_amount != value)
+                {
+                    _amount = value;
+                    OnPropertyChanged(nameof(Amount)); 
+                }
+            }
+        }
+
+
+
         private readonly IKhaltiService _khaltiServices;
         public Command OnKhaltiPaymentButtonClicked { get; }
         public KhaltiPaymentViewModel(IKhaltiService khaltiServices)

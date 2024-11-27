@@ -4,9 +4,38 @@
              x:Class="FoodSaverMaui.Views.KhaltiPaymentView"
                xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
                 x:DataType="viewmodel:KhaltiPaymentViewModel"
-             Title="KhaltiPayment">
-    <StackLayout>
+             >
+    <!--<StackLayout>
         <Button Text="Pay with Khalti"
                 Command="{Binding OnKhaltiPaymentButtonClicked}"/>
-    </StackLayout>
+    </StackLayout>-->
+
+    <Frame BorderColor="Transparent" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <Border StrokeShape="RoundRectangle 35,35,35,35" StrokeThickness="1.5" StrokeDashOffset="12">
+            <Grid RowDefinitions="Auto,Auto,*" RowSpacing="20" Padding="50"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+
+                <Frame Grid.Row="0" Padding="0" BorderColor="Transparent" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                    <Border StrokeShape="Rectangle " StrokeThickness="0" >
+                        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="10" Padding="10">
+                            <Label Grid.Row="0"  HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="Amount to be paid :" TextColor="#385897" FontAttributes="Bold" FontSize="20" />
+                            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" HorizontalOptions="CenterAndExpand" ColumnSpacing="5">
+                                <Label Grid.Column="0" Text="RS"  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,0,0" TextColor="Gray" FontAttributes="Bold" FontSize="16" />
+                                <Label Grid.Column="1"  HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="{Binding Amount}" TextColor="Gray" FontAttributes="Bold" FontSize="18" />
+                            </Grid>
+                            <BoxView Grid.Row="2" HeightRequest="0.2"/>
+                        </Grid>
+                    </Border>
+                </Frame>
+
+                <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" HorizontalOptions="CenterAndExpand" ColumnSpacing="15">
+                    <Image Grid.Column="0" Source="payment.png" HeightRequest="22" HorizontalOptions="CenterAndExpand"/>
+                   <Label Grid.Column="1"  HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="Pay with Khalti" TextColor="Gray" FontAttributes="Bold" FontSize="14" />
+                    <!--<Label Grid.Row="1"  HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="{Binding Amount}" TextColor="Gray" FontAttributes="Bold" FontSize="18" />-->
+
+                </Grid>
+                <Button Text="Confirm Payment" Grid.Row="2" BackgroundColor="#03b25a"
+         Command="{Binding OnKhaltiPaymentButtonClicked}"/>
+            </Grid>
+        </Border>
+    </Frame>
 </ContentPage>

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Response;
+using FoodSaverMaui.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,17 +26,22 @@ namespace FoodSaverMaui.ViewModel
 
         public Command OnRemoveButtonPressed { get; }
         public Command OnPinLocationTapped { get; }
+        public Command OnBuyButtonPressed { get; }
 
         public FoodDetailViewModel()
         {
             OnRemoveButtonPressed = new Command(async() => await RemoveButtonPressed());
             OnPinLocationTapped = new Command(async () => await PinLocationTapped());
-
+            OnBuyButtonPressed = new Command(async () => await BuyButtonPressed());
         }
 
         public async Task RemoveButtonPressed()
         {
             await Shell.Current.GoToAsync("..");
+        }
+        public async Task BuyButtonPressed()
+        {
+            await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}?Amount={product.PricePerKg}");
         }
 
         public async Task PinLocationTapped()

@@ -33,7 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Content Update="wwwroot\images\splash.png">
+      <Color>White</Color>
+    </Content>
   </ItemGroup>
 
 </Project>

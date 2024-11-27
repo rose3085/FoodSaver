@@ -18,6 +18,8 @@ namespace FoodSaverMaui
             Routing.RegisterRoute(nameof(FoodDetail), typeof(FoodDetail));
             Routing.RegisterRoute(nameof(PostSuccessfullPage), typeof(PostSuccessfullPage));
             Routing.RegisterRoute(nameof(PaymentUrl), typeof(PaymentUrl));
+            Routing.RegisterRoute(nameof(KhaltiPaymentView), typeof(KhaltiPaymentView));
+
         }
     }
 }
