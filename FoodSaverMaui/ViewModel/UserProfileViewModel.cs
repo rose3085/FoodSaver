@@ -1,23 +1,46 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FoodSaverMaui.Response;
 using FoodSaverMaui.Views;
 using Plugin.Maui.Biometric;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+//using static Microsoft.Maui.Controls.Device;
 
 namespace FoodSaverMaui.ViewModel
 {
-   public partial class UserProfileViewModel : BaseViewModel
+    
+    public partial class UserProfileViewModel : BaseViewModel
     {
+        public ObservableCollection<GetProductsResponse> Products { get; } = new();
+
+        private bool _isComponent1Visible = true;
+
+        public bool IsComponent1Visible
+        {
+            get => _isComponent1Visible;
+            set => SetProperty(ref _isComponent1Visible, value);
+        }
+
+        private bool _isComponent2Visible;
+
+        public bool IsComponent2Visible
+        {
+            get => _isComponent2Visible;
+            set => SetProperty(ref _isComponent2Visible, value);
+        }
+
         public Command OnEnableFingerprintTapped { get; }
         public Command OnChangePasswordTapped { get; }
         public Command OnDeleteUserTapped { get; }
         public Command OnChangeEmailTapped { get; }
         public Command OnLogoutTapped { get; }
+        public Command ToggleCommand { get; }
         public UserProfileViewModel()
         {
             OnEnableFingerprintTapped = new Command(async () => await EnableFingerPrintTapped());
@@ -25,7 +48,23 @@ namespace FoodSaverMaui.ViewModel
             OnDeleteUserTapped = new Command(async () => await DeleteUserTapped());
             OnChangeEmailTapped = new Command(async () => await ChangeEmailTapped());
             OnLogoutTapped = new Command(async() => await LogoutTapped());
+            ToggleCommand = new Command(async () => await OnToggleCommand());
+            IsComponent1Visible = true;
+            IsComponent2Visible = false;
         }
+
+
+
+
+        public async Task OnToggleCommand()
+        {
+            IsComponent1Visible = !IsComponent1Visible;
+            IsComponent2Visible = !IsComponent2Visible;
+
+            // Optional: Simulate some asynchronous behavior
+            await Task.Delay(100);
+    }
+
 
         public async Task ChangePasswordTapped()
         {

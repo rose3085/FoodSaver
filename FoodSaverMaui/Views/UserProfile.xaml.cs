@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Layouts;
 using FoodSaverMaui.ViewModel;
 
 namespace FoodSaverMaui.Views;
@@ -8,7 +9,8 @@ public partial class UserProfile : ContentPage
 	{
 		InitializeComponent();
 		BindingContext=vm;
-	}
+    
+    }
     
     
 }

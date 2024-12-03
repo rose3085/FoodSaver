@@ -5,74 +5,11 @@
                xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
  x:DataType="viewmodel:UserProfileViewModel"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-            
+             xmlns:model="clr-namespace:FoodSaverMaui.Response"
              NavigationPage.HasNavigationBar="False">
 
 
-    <!--<Grid RowDefinitions="Auto,Auto,*" RowSpacing="20" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
 
-
-   
-        <toolkit:Expander Direction="Down">
-            <toolkit:Expander.Header>
-                <Image  Source="user.png" HeightRequest="24" WidthRequest="24"  />
-            </toolkit:Expander.Header>
-            <VerticalStackLayout Background="AliceBlue"  Spacing="20" Padding="20">
-
-          
-                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
-                    <Image Grid.Column="0" Source="user.png" HeightRequest="24" WidthRequest="24"  />
-
-                    <Label Grid.Column="1" Text="Profile" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
-        
-        FontSize="18" />
-
-                </Grid>
-            <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
-                <Image Grid.Column="0" Source="email.png" HeightRequest="30" WidthRequest="30"  />
-
-                <Label Grid.Column="1" Text="Change Email" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
-
-FontSize="18" />
-            </Grid>
-      
-                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
-                    <Image Grid.Column="0" Source="key.png" HeightRequest="24" WidthRequest="24"  />
-
-                    <Label Grid.Column="1" Text="Change Password" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
-
-FontSize="18" />
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OnChangePasswordTapped}" />
-                    </Grid.GestureRecognizers>
-                </Grid>
-
-    
-
-                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"   >
-                    <Image Grid.Column="0" Source="fingerprint.png" HeightRequest="24" WidthRequest="24"  />
-
-                    <Label Grid.Column="1" Text="Enable Biometric" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
-                           
-
-FontSize="18" />
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OnEnableFingerprintTapped}" />
-                    </Grid.GestureRecognizers>
-                </Grid>
-
-                <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="25" HorizontalOptions="StartAndExpand" Padding="20,0,0,0"  >
-                    <Image Grid.Column="0" Source="question.png" HeightRequest="24" WidthRequest="24"  />
-
-                    <Label Grid.Column="1" Text="Help" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
-
-FontSize="18" />
-                </Grid>
-         
-        </VerticalStackLayout>
-        </toolkit:Expander>
-
-    </Grid>-->
 
 
     <AbsoluteLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
@@ -80,10 +17,183 @@ FontSize="18" />
         <ContentView AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
                  AbsoluteLayout.LayoutFlags="All"
                  BackgroundColor="White">
-            <Label Text="Main Content Goes Here"
-               FontSize="Large"
-               HorizontalOptions="Center"
-               VerticalOptions="Center" />
+            <!--<VerticalStackLayout>
+            <HorizontalStackLayout>
+                <Button Text="Show Component 1"
+                        Command="{Binding ToggleCommand}"
+                        CommandParameter="1" />
+                <Button Text="Show Component 2"
+                        Command="{Binding ToggleCommand}"
+                        CommandParameter="2" />
+            </HorizontalStackLayout>
+            
+
+                --><!-- Components with visibility toggling --><!--
+            
+            <Grid>
+                <VerticalStackLayout IsVisible="{Binding IsComponent1Visible}">
+                    <Label Text="This is Component 1" FontSize="Large" />
+                    <BoxView HeightRequest="100" BackgroundColor="LightBlue" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout IsVisible="{Binding IsComponent2Visible}">
+                    <Label Text="This is Component 2" FontSize="Large" />
+                    <BoxView HeightRequest="100" BackgroundColor="LightGreen" />
+                </VerticalStackLayout>
+            </Grid>
+
+            </VerticalStackLayout>-->
+
+            <Grid RowDefinitions="Auto,*" RowSpacing="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Grid Grid.Row="0" HeightRequest="65" BackgroundColor="#f4f4f4" Padding="0,0,0,0" >
+                    <Label Text="rose3085" TextColor="Gray" FontAttributes="Bold" FontSize="20" FontAutoScalingEnabled="False" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                </Grid>
+                <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto" RowSpacing="5">
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="5" Padding="15,0,0,0">
+                        <Button Grid.Column="0" Text="Posts" FontSize="15" FontAttributes="Bold"
+                             Command="{Binding ToggleCommand}"
+                             CommandParameter="1" >
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroupList>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="Transparent" />
+                                                <Setter Property="TextColor" Value="Gray"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="Grey" />
+                                                <Setter Property="TextColor" Value="#385897"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOver" />
+                                    </VisualStateGroup>
+                                </VisualStateGroupList>
+                            </VisualStateManager.VisualStateGroups>
+                        </Button>
+                        <Button Grid.Column="1" Text="History"  FontSize="15" FontAttributes="Bold"
+                             Command="{Binding ToggleCommand}"
+                             CommandParameter="2"  >
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroupList>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="Transparent" />
+                                                <Setter Property="TextColor" Value="Gray"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="Grey" />
+                                                <Setter Property="TextColor" Value="#385897"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOver" />
+                                    </VisualStateGroup>
+                                </VisualStateGroupList>
+                            </VisualStateManager.VisualStateGroups>
+                        </Button>
+                    </Grid>
+                    <!--<BoxView Grid.Row="1" HeightRequest="1"/>-->
+                    <Grid Grid.Row="1">
+                        <!--<VerticalStackLayout IsVisible="{Binding IsComponent1Visible}">
+                            <Label Text="This is Component 1" FontSize="Large" />
+                            <BoxView HeightRequest="100" BackgroundColor="LightBlue" />
+                        </VerticalStackLayout>-->
+
+
+
+                        <ScrollView IsVisible="{Binding IsComponent1Visible}">
+
+
+
+                            <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:GetProductsResponse">
+                                        <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+                                            <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12">
+                                                <Grid RowDefinitions="Auto,*" RowSpacing="10" Padding="5,20,3,20"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+
+                                                    <Grid Grid.Row="0" RowDefinitions="Auto,Auto" RowSpacing="10" >
+                                                        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                            <Grid Grid.Column="0" WidthRequest="280" RowDefinitions="Auto,Auto" ColumnSpacing="5" >
+                                                                <Label Text="{Binding UserName}"  Grid.Row="0" TextColor="Gray" FontSize="22" Padding="15,0,0,0" FontAttributes="Bold" />
+
+                                                                <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,Auto" Padding="20,0,0,0" ColumnSpacing="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                                    <Image Grid.Column="0" Source="location.png" HeightRequest="12" />
+                                                                    <Label Grid.Column="1" Text="{Binding CityName}" FontSize="12" />
+                                                                    <Label Grid.Column="2" Text="{Binding ToleName}" FontSize="12" />
+
+                                                                </Grid>
+
+
+                                                            </Grid>
+                                                            <Image  Grid.Column="1" Source="remove.png" HeightRequest="22" HorizontalOptions="EndAndExpand" >
+                                                                <Image.GestureRecognizers>
+                                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FindFoodViewModel}}, Path=OnRemoveButtonPressed}"
+                                                                   CommandParameter="{Binding .}"/>
+                                                                </Image.GestureRecognizers>
+                                                            </Image>
+
+                                                        </Grid>
+                                                        <BoxView Grid.Row="1" HeightRequest="0.3" BackgroundColor="Gray" WidthRequest="330" VerticalOptions="End"/>
+
+                                                    </Grid>
+
+                                                    <Frame Grid.Row="1" Padding="0" BorderColor="Transparent">
+
+                                                        <Grid  RowDefinitions="Auto,Auto,Auto,Auto" 
+                                          >
+                                                            <Image Grid.Row="0"  HeightRequest="320" Aspect="AspectFill" >
+                                                                <Image.Source>
+                                                                    <UriImageSource Uri="{Binding ImageUrl}"   CacheValidity="2" CachingEnabled="True"/>
+                                                                </Image.Source>
+                                                            </Image>
+
+                                                            <Label Grid.Row="1" Text="{Binding ProductName}" TextColor="#385897" FontSize="20" Padding="20,0,0,10" FontAttributes="Bold" />
+
+
+                                                            <Grid  Grid.Row="2" ColumnDefinitions="Auto,*" ColumnSpacing="20">
+                                                                <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="10" Padding="20,0,20,0" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                                                                    <Label Grid.Row="0" TextColor="#385897"  Text="{Binding PricePerKg, StringFormat='Price: Rs {0}'}" FontAttributes="Bold" FontSize="14" />
+                                                                    <Label Grid.Row="1" TextColor="#385897"  Text="{Binding Quantity, StringFormat='Quantity: {0} kg'}" FontAttributes="Bold" FontSize="14"  />
+                                                                </Grid>
+                                                                <Button Grid.Column="1" Text="Details" 
+                                         
+                                         HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
+                                                            </Grid>
+                                                        </Grid>
+
+                                                    </Frame>
+                                                </Grid>
+                                            </Border>
+                                        </Frame>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </ScrollView>
+
+
+
+                        <!--Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FindFoodViewModel}}, Path=OnDetailButtonClicked}"
+CommandParameter="{Binding .}"-->
+
+
+                        <!--<VerticalStackLayout IsVisible="{Binding IsComponent2Visible}">
+                            <Label Text="This is Component 2" FontSize="Large" />
+                            <BoxView HeightRequest="100" BackgroundColor="LightGreen" />
+                        </VerticalStackLayout>-->
+                    </Grid>
+
+                </Grid>
+
+            </Grid>
+
+
         </ContentView>
 
         <!-- Side Navigation Expander -->
@@ -93,21 +203,23 @@ FontSize="18" />
                       IsExpanded="False"
                       AbsoluteLayout.LayoutBounds="0, 0, 550, 1"
                       AbsoluteLayout.LayoutFlags="HeightProportional"
-                      Background="GhostWhite">
+                      Background="#f4f4f4"
+                          >
 
             
             
             
             <toolkit:Expander.Header >
-                <Frame Background="Transparent" BorderColor="Transparent" HorizontalOptions="Start" VerticalOptions="Start" >
+                <Frame Background="Transparent"  BorderColor="Transparent" HorizontalOptions="Start" VerticalOptions="Start" >
                     <Image   Source="settings.png" HeightRequest="24" WidthRequest="24"  >
                       
                     </Image>
                 </Frame>
-                <!--<Image   Source="settings.png" HeightRequest="24" WidthRequest="24"  />-->
+               
             </toolkit:Expander.Header>
+            
 
-            <VerticalStackLayout Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Background="GhostWhite" HeightRequest="750"  Spacing="10" Padding="10">
+            <VerticalStackLayout Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  Background="#f4f4f4" HeightRequest="750"  Spacing="10" Padding="10">
 
                     
                 <!--<VerticalStackLayout.Shadow>

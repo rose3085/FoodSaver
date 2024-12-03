@@ -96,9 +96,7 @@ namespace FoodSaverMaui.ViewModel
                     await Shell.Current.GoToAsync("//HomePage");
 
                 }
-
                 else
-
                 {
                     var errorMsg = result.ErrorMsg;
                     var remove = "code:";
