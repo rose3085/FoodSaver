@@ -27,6 +27,16 @@ namespace FoodSaver.Controllers.Food
             return Ok(products);
         }
 
+
+        [HttpGet]
+        [Route("GetUserFood")]
+
+        public async Task<IActionResult> GetUserProducts()
+        {
+            var products = await _foodService.GetUsersProduct();
+            return Ok(products);
+        }
+
         [HttpPost]
         [Route("AddFood")]
         [Authorize]

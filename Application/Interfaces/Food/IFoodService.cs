@@ -18,5 +18,6 @@ namespace Application.Interfaces.Food
         Task<IEnumerable<GetProductResponse>> GetProductsAsync();
 
         Task<FoodServiceResponse> DeleteFood(string foodId);
+        Task<IEnumerable<GetProductResponse>> GetUsersProduct();
     }
 }

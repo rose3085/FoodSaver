@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;
 using SixLabors.ImageSharp;
 using Domain.Entities.Location;
+using System.Security.Claims;
 
 
 namespace Application.Services.Food
@@ -194,7 +195,7 @@ namespace Application.Services.Food
             var result = await _uow.AsyncRepositories<FoodModel>().GetRandomWithIncludeAsync(includes);
 
 
-             var baseUrl = $"https://0b9f-2405-acc0-1504-b3c0-d44c-7b26-1c02-fbc5.ngrok-free.app";
+             var baseUrl = $"https://586c-2405-acc0-1504-b3c0-2098-36e6-9bd9-5c1c.ngrok-free.app";
             // var baseUrl = $"https://localhost:7293";
             var productResult =  result
                 .Where(product => product.IsBooked == false)
@@ -217,6 +218,43 @@ namespace Application.Services.Food
             }).ToList();
            // var getResult = _mapper.Map<IEnumerable<GetProductResponse>>(productResult);
             return productResult;
+        }
+
+        public async Task<IEnumerable<GetProductResponse>> GetUsersProduct()
+        {
+            try {
+
+                var userInfo = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
+                if (userInfo != null)
+                {
+                    var userNameContext = userInfo.UserName;
+                    var getProduct = await GetProductsAsync();
+                    if (getProduct != null)
+                    {
+                        var resultProduct = getProduct
+                                    .Where(result => result.UserName == userNameContext).ToList();
+                        if (resultProduct != null)
+                        {
+                            return resultProduct;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else {
+                    return null;
+                }
+            }
+            catch 
+            {
+                return null;
+            }
         }
 
         public async Task<string> SaveFileAsync(IFormFile imageFile, string[] allowedFileExtensions)
