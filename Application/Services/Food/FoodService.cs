@@ -44,7 +44,7 @@ namespace Application.Services.Food
                 if (userInfo != null)
                 {
                     var userId = userInfo?.Id;
-
+                  
                     var userRole = await _userManager.GetRolesAsync(userInfo);
 
                     if (!userRole.Contains("Seller"))
@@ -56,6 +56,16 @@ namespace Application.Services.Food
                             Message = "You must be Seller to add food.",
 
                         };
+                    }
+                    if (userInfo.CanPost == false)
+                    {
+                        return new FoodServiceResponse()
+                        {
+                            IsSuccess = false,
+                            Message = "Daily Limit reached! Please pay to continue posting.",
+
+                        };
+
                     }
 
 

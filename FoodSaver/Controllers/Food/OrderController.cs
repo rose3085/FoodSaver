@@ -20,7 +20,7 @@ namespace FoodSaver.Controllers.Food
 
 
         [HttpPost]
-       
+        [Authorize]
        
         public async Task<IActionResult> PlaceOrder([FromBody]CreateOrderDto createOrderRequest)
         {
