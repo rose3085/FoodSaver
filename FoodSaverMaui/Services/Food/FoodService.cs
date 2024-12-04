@@ -57,6 +57,39 @@ namespace FoodSaverMaui.Services.Food
             
         }
 
+        public async Task<IEnumerable<GetProductsResponse>> GetUserProducts()
+        {
+            try
+            {
+                var jwtToken = await SecureStorage.GetAsync("token");
+                if (string.IsNullOrEmpty(jwtToken))
+                {
+                    throw new InvalidOperationException("Token not found.");
+                }
+                var url = $"{App.Settings.ApiBaseUrl}/api/Food/GetUserFood";
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                var response = await _httpClient.GetAsync(url, CancellationToken.None);
+                Console.WriteLine($"s Code: {(int)response.StatusCode}");
+                if (response.IsSuccessStatusCode)
+                {
+
+                    var result = await response.Content.ReadFromJsonAsync<IEnumerable<GetProductsResponse>>();
+                    return result;
+
+                }
+                else
+                {
+
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
 
 
         public async Task<string> PostFood(string productName, string description, double pricePerKg, double quantity,string wardNumber, string toleName, string cityName,double latitude,double longitude, byte[] imageData, string imageName)

@@ -1,3 +1,4 @@
+
 using CommunityToolkit.Maui.Layouts;
 using FoodSaverMaui.ViewModel;
 
@@ -11,6 +12,25 @@ public partial class UserProfile : ContentPage
 		BindingContext=vm;
     
     }
-    
-    
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (BindingContext is UserProfileViewModel viewModel)
+        {
+            // Check and execute OnPostTapped command
+            if (viewModel.OnPostTapped.CanExecute(null))
+            {
+                 viewModel.OnPostTapped.Execute(null);
+            }
+
+            //// Check and execute OnGetUserName command
+            //if (viewModel.OnGetUserName.CanExecute(null))
+            //{
+            //    viewModel.OnGetUserName.Execute(null);
+            //}
+        }
+    }
+
+
 }

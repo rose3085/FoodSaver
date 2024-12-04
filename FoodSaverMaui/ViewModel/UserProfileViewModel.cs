@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FoodSaverMaui.Helper;
 using FoodSaverMaui.Response;
+using FoodSaverMaui.Services.Food;
 using FoodSaverMaui.Views;
 using Plugin.Maui.Biometric;
 using System;
@@ -17,6 +19,10 @@ namespace FoodSaverMaui.ViewModel
     
     public partial class UserProfileViewModel : BaseViewModel
     {
+        [ObservableProperty]
+        public string userName;
+
+
         public ObservableCollection<GetProductsResponse> Products { get; } = new();
 
         private bool _isComponent1Visible = true;
@@ -35,31 +41,83 @@ namespace FoodSaverMaui.ViewModel
             set => SetProperty(ref _isComponent2Visible, value);
         }
 
+        private readonly FoodService _foodService;
+        private readonly IJwtHelper _jwtHelper;
+
         public Command OnEnableFingerprintTapped { get; }
         public Command OnChangePasswordTapped { get; }
         public Command OnDeleteUserTapped { get; }
         public Command OnChangeEmailTapped { get; }
         public Command OnLogoutTapped { get; }
         public Command ToggleCommand { get; }
-        public UserProfileViewModel()
+        public Command OnGetUserName { get; }
+        public Command OnPostTapped { get; }
+        public UserProfileViewModel(FoodService foodService,IJwtHelper jwtHelper)
         {
+            _foodService = foodService;
+            _jwtHelper = jwtHelper;
             OnEnableFingerprintTapped = new Command(async () => await EnableFingerPrintTapped());
+            OnPostTapped = new Command(async () => await PostTapped());
             OnChangePasswordTapped = new Command(async () => await ChangePasswordTapped());
             OnDeleteUserTapped = new Command(async () => await DeleteUserTapped());
             OnChangeEmailTapped = new Command(async () => await ChangeEmailTapped());
             OnLogoutTapped = new Command(async() => await LogoutTapped());
             ToggleCommand = new Command(async () => await OnToggleCommand());
+            OnGetUserName = new Command(async () => await GetUserName());
             IsComponent1Visible = true;
             IsComponent2Visible = false;
         }
 
+        public async Task GetUserName()
+        {
+            var token = await SecureStorage.GetAsync("token");
+            var userName =  _jwtHelper.ExtractUserInfo(token);
+        }
 
+
+        public async Task PostTapped()
+        {
+            try
+            {
+
+                IsBusy = true;
+                var request = await _foodService.GetUserProducts();
+                if (request != null)
+                {
+                    Products.Clear();
+                    foreach (var product in request)
+                    {
+                        Products.Add(product);
+                    }
+                    OnPropertyChanged(nameof(Products));
+
+                    OnToggleCommand();
+                }
+                else
+                {
+
+                    await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
+                }
+            }
+            finally
+            {
+                IsBusy = false;
+              
+            }
+
+        }
 
 
         public async Task OnToggleCommand()
         {
             IsComponent1Visible = !IsComponent1Visible;
             IsComponent2Visible = !IsComponent2Visible;
+
+
+
+
+
+
 
             // Optional: Simulate some asynchronous behavior
             await Task.Delay(100);

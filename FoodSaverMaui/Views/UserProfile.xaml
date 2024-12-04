@@ -17,41 +17,14 @@
         <ContentView AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
                  AbsoluteLayout.LayoutFlags="All"
                  BackgroundColor="White">
-            <!--<VerticalStackLayout>
-            <HorizontalStackLayout>
-                <Button Text="Show Component 1"
-                        Command="{Binding ToggleCommand}"
-                        CommandParameter="1" />
-                <Button Text="Show Component 2"
-                        Command="{Binding ToggleCommand}"
-                        CommandParameter="2" />
-            </HorizontalStackLayout>
-            
-
-                --><!-- Components with visibility toggling --><!--
-            
-            <Grid>
-                <VerticalStackLayout IsVisible="{Binding IsComponent1Visible}">
-                    <Label Text="This is Component 1" FontSize="Large" />
-                    <BoxView HeightRequest="100" BackgroundColor="LightBlue" />
-                </VerticalStackLayout>
-
-                <VerticalStackLayout IsVisible="{Binding IsComponent2Visible}">
-                    <Label Text="This is Component 2" FontSize="Large" />
-                    <BoxView HeightRequest="100" BackgroundColor="LightGreen" />
-                </VerticalStackLayout>
-            </Grid>
-
-            </VerticalStackLayout>-->
-
-            <Grid RowDefinitions="Auto,*" RowSpacing="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+             <Grid RowDefinitions="Auto,*" RowSpacing="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                 <Grid Grid.Row="0" HeightRequest="65" BackgroundColor="#f4f4f4" Padding="0,0,0,0" >
-                    <Label Text="rose3085" TextColor="Gray" FontAttributes="Bold" FontSize="20" FontAutoScalingEnabled="False" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <Label Text="{Binding UserName}" TextColor="Gray" FontAttributes="Bold" FontSize="20" FontAutoScalingEnabled="False" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                 </Grid>
-                <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto" RowSpacing="5">
+                <Grid Grid.Row="1" RowDefinitions="Auto,*,Auto" RowSpacing="5">
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="5" Padding="15,0,0,0">
                         <Button Grid.Column="0" Text="Posts" FontSize="15" FontAttributes="Bold"
-                             Command="{Binding ToggleCommand}"
+                             Command="{Binding OnPostTapped}"
                              CommandParameter="1" >
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroupList>
@@ -99,18 +72,12 @@
                     </Grid>
                     <!--<BoxView Grid.Row="1" HeightRequest="1"/>-->
                     <Grid Grid.Row="1">
-                        <!--<VerticalStackLayout IsVisible="{Binding IsComponent1Visible}">
-                            <Label Text="This is Component 1" FontSize="Large" />
-                            <BoxView HeightRequest="100" BackgroundColor="LightBlue" />
-                        </VerticalStackLayout>-->
+
+                        <ScrollView >
 
 
 
-                        <ScrollView IsVisible="{Binding IsComponent1Visible}">
-
-
-
-                            <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single">
+                            <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single" IsVisible="{Binding IsComponent1Visible}">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="model:GetProductsResponse">
                                         <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -132,7 +99,7 @@
 
 
                                                             </Grid>
-                                                            <Image  Grid.Column="1" Source="remove.png" HeightRequest="22" HorizontalOptions="EndAndExpand" >
+                                                            <Image  Grid.Column="1" Source="dots.png" HeightRequest="22" HorizontalOptions="EndAndExpand" >
                                                                 <Image.GestureRecognizers>
                                                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FindFoodViewModel}}, Path=OnRemoveButtonPressed}"
                                                                    CommandParameter="{Binding .}"/>
@@ -176,17 +143,6 @@
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
                         </ScrollView>
-
-
-
-                        <!--Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FindFoodViewModel}}, Path=OnDetailButtonClicked}"
-CommandParameter="{Binding .}"-->
-
-
-                        <!--<VerticalStackLayout IsVisible="{Binding IsComponent2Visible}">
-                            <Label Text="This is Component 2" FontSize="Large" />
-                            <BoxView HeightRequest="100" BackgroundColor="LightGreen" />
-                        </VerticalStackLayout>-->
                     </Grid>
 
                 </Grid>
