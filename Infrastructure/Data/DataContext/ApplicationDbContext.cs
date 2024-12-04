@@ -26,6 +26,7 @@ namespace Infrastructure.Data.DataContext
        public DbSet<OrderModel> Orders { get; set; }
         public DbSet<AddressModel> Address { get; set; }
         public DbSet<PaymentModel> Payment { get; set; }
+        public DbSet<SellerPostLimit> SellerPostLimit { get; set; }
     }
 }
 

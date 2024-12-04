@@ -13,6 +13,7 @@ namespace Domain.Entities.User
         // using Microsoft.AspNet.Identity; doesn't allow Generic identityUser 
 
         public bool IsDeleted { get; set; } = false;
+        public bool CanPost { get; set; } = true;
         public ICollection<FoodModel> Foods { get; set; }
 
     }
