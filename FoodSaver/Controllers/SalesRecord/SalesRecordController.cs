@@ -18,11 +18,11 @@ namespace FoodSaver.Controllers.SalesRecord
 
         [HttpGet]
         [Route("GetSingleRecord")]
-        public async Task<IActionResult> GetSingleRecord(string sellerId)
+        public async Task<IActionResult> GetSingleRecord(string userName)
         {
             if (ModelState.IsValid)
             {
-                var request = await _salesRecordService.GetSingleRecord(sellerId);
+                var request = await _salesRecordService.GetSingleRecord(userName);
                 return Ok(request);
             }
             else 

@@ -2,6 +2,7 @@
 using Application.Interfaces.Data;
 using Application.Interfaces.SalesRecord;
 using Application.Response.Food;
+using Azure.Core;
 using Domain.Entities.SalesRecord;
 using Domain.Entities.User;
 using Microsoft.AspNetCore.Identity;
@@ -32,13 +33,29 @@ namespace Application.Services.SalesRecord
             { return null; }
         }
 
-        public async Task<SalesRecordModel> GetSingleRecord(string sellerId)
+        public async Task<SalesRecordModel> GetSingleRecord(string userName)
         {
-            var result = await _uow.AsyncRepositories<SalesRecordModel>().GetById(sellerId);
-            if (result != null)
-            { return result; }
+            var user = await _userManager.FindByNameAsync(userName);
+            var sellerId = user?.Id;
+            // var result = await _uow.AsyncRepositories<SalesRecordModel>().GetById(sellerId);
+            var checkNewSellerId = await GetAllRecord();
+            if (checkNewSellerId != null)
+            { 
+                foreach (var idExists in checkNewSellerId)
+
+                {
+                    if (idExists.Seller.Id == sellerId)
+                    {
+                        return idExists;
+                    }
+
+                    else
+                    { return null; }
+                }
+        }
             else
             { return null; }
+            return null;
         }
 
         public async Task<FoodServiceResponse> PostAmountUpdate(PostSalesRecordDto request)

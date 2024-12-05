@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Helper;
 using FoodSaverMaui.Response;
 using FoodSaverMaui.Services.Food;
+using FoodSaverMaui.Services.SalesRecord;
 using FoodSaverMaui.Views;
 using Plugin.Maui.Biometric;
 using System;
@@ -23,9 +24,17 @@ namespace FoodSaverMaui.ViewModel
         public string userName;
 
 
+
+        private double _percentage;
+
+        public double Percentage
+        {
+            get => _percentage;
+            set => SetProperty(ref _percentage, value);
+        }
         public ObservableCollection<GetProductsResponse> Products { get; } = new();
 
-        private bool _isComponent1Visible = true;
+        private bool _isComponent1Visible ;
 
         public bool IsComponent1Visible
         {
@@ -42,6 +51,7 @@ namespace FoodSaverMaui.ViewModel
         }
 
         private readonly FoodService _foodService;
+        private readonly SalesRecordServices _salesRecordService;
         private readonly IJwtHelper _jwtHelper;
 
         public Command OnEnableFingerprintTapped { get; }
@@ -52,26 +62,40 @@ namespace FoodSaverMaui.ViewModel
         public Command ToggleCommand { get; }
         public Command OnGetUserName { get; }
         public Command OnPostTapped { get; }
-        public UserProfileViewModel(FoodService foodService,IJwtHelper jwtHelper)
+        public Command OnHistoryTapped { get; }
+        public UserProfileViewModel(FoodService foodService,IJwtHelper jwtHelper,SalesRecordServices salesRecordServices)
         {
             _foodService = foodService;
+            _salesRecordService = salesRecordServices;
             _jwtHelper = jwtHelper;
             OnEnableFingerprintTapped = new Command(async () => await EnableFingerPrintTapped());
             OnPostTapped = new Command(async () => await PostTapped());
+            OnHistoryTapped = new Command(async () => await HistoryTapped());
             OnChangePasswordTapped = new Command(async () => await ChangePasswordTapped());
             OnDeleteUserTapped = new Command(async () => await DeleteUserTapped());
             OnChangeEmailTapped = new Command(async () => await ChangeEmailTapped());
             OnLogoutTapped = new Command(async() => await LogoutTapped());
             ToggleCommand = new Command(async () => await OnToggleCommand());
             OnGetUserName = new Command(async () => await GetUserName());
-            IsComponent1Visible = true;
-            IsComponent2Visible = false;
+            IsComponent1Visible = false;
+            IsComponent2Visible = true;
         }
 
         public async Task GetUserName()
         {
             var token = await SecureStorage.GetAsync("token");
             var userName =  _jwtHelper.ExtractUserInfo(token);
+        }
+        public async Task HistoryTapped()
+        {
+            var newAmount = await _salesRecordService.GetSalesRecord();
+
+            double maxLimit = 200;
+            _percentage = newAmount / maxLimit;
+            if (_percentage > 1.0)
+            { _percentage = 0.8; }
+            OnToggleCommand();
+
         }
 
 

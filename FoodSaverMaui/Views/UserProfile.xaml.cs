@@ -12,7 +12,7 @@ public partial class UserProfile : ContentPage
 		BindingContext=vm;
     
     }
-    protected override async void OnAppearing()
+    protected override void OnAppearing()
     {
         base.OnAppearing();
 
