@@ -19,7 +19,7 @@
                            SearchCommand="{Binding OnSearchButtonPressed}"
                            />
             </Border>
-            <Button Grid.Column="1" Background="Transparent" Padding="0" HeightRequest="28" ImageSource="more.png" Command="{Binding OnAddButtonClick}"/>
+            <Button  Grid.Column="1" Background="Transparent" Padding="0" HeightRequest="28" ImageSource="more.png" Command="{Binding OnAddButtonClick}"/>
 
 
             <Button Grid.Column="2" Background="Transparent" Padding="0" HeightRequest="28" ImageSource="list.png" Command="{Binding ShowPopupCommand}"/>

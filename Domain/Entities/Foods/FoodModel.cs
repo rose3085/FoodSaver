@@ -19,7 +19,7 @@ namespace Domain.Entities.Foods
         public string ProductImage { get; set; }
 
         public bool IsBooked { get; set; } = false;
-        public DateOnly Date { get; set; }
+        public DateTime Date { get; set; } 
        
         public AddressModel Address { get; set; }
 

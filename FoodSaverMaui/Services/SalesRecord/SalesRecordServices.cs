@@ -21,7 +21,7 @@ namespace FoodSaverMaui.Services.SalesRecord
             _jwtHelper = jwtHelper;
         }
 
-        public async Task<double> GetSalesRecord()
+        public async Task<GetSalesRecordResponse> GetSalesRecord()
         {
             try
             {
@@ -39,13 +39,13 @@ namespace FoodSaverMaui.Services.SalesRecord
                 {
 
                     var result = await response.Content.ReadFromJsonAsync<GetSalesRecordResponse>();
-                    return result.newAmount;
+                    return result;
 
                 }
                 else
                 {
 
-                    return 0;
+                    return null;
                 }
             }
             catch (Exception ex)

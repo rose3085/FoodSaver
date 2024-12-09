@@ -82,7 +82,21 @@ namespace FoodSaverMaui.ViewModel
 
         public async Task AddButtonClick()
         {
-            await Shell.Current.GoToAsync(nameof(UploadFood));
+            var limitReached = await SecureStorage.GetAsync("dailyLimitReached");
+            if (limitReached == "True")
+            {
+                await Shell.Current.DisplayAlert("Sales limit reached!!", "Confirm Payment to upgrade your sales limit.", "Ok!");
+                //var action = await Shell.Current.DisplayActionSheet("Sales limit reached!!", "Cancel", null, "Confirm Payment to upgrade your sales limit.");
+                //if (action == "Confirm Payment to upgrade your sales limit.")
+                //{
+
+                //    await Shell.Current.GoToAsync(nameof(UserProfile));
+                //}
+            }
+            else
+            {
+                await Shell.Current.GoToAsync(nameof(UploadFood));
+            }
         
         }
 
@@ -137,6 +151,11 @@ namespace FoodSaverMaui.ViewModel
                 var request = await _foodService.GetAllProducts();
                 if (request != null)
                 {
+                    
+                    if (request.Count() == 0)
+                    {
+                        await Shell.Current.DisplayAlert("No product to display", "Please try again later", "Ok!");
+                    }
                     Products.Clear();
                     foreach (var product in request)
                     {

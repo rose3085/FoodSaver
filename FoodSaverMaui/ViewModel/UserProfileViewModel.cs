@@ -23,15 +23,20 @@ namespace FoodSaverMaui.ViewModel
         [ObservableProperty]
         public string userName;
 
+        [ObservableProperty]
+        public double percentage;
+        [ObservableProperty]
+        public double totalsales;
+        [ObservableProperty]
+        public double remainingLimit;
 
+        //private double _percentage;
 
-        private double _percentage;
-
-        public double Percentage
-        {
-            get => _percentage;
-            set => SetProperty(ref _percentage, value);
-        }
+        //public double Percentage
+        //{
+        //    get => _percentage;
+        //    set => SetProperty(ref _percentage, value);
+        //}
         public ObservableCollection<GetProductsResponse> Products { get; } = new();
 
         private bool _isComponent1Visible ;
@@ -77,24 +82,51 @@ namespace FoodSaverMaui.ViewModel
             OnLogoutTapped = new Command(async() => await LogoutTapped());
             ToggleCommand = new Command(async () => await OnToggleCommand());
             OnGetUserName = new Command(async () => await GetUserName());
-            IsComponent1Visible = false;
-            IsComponent2Visible = true;
+            IsComponent1Visible = true;
+            IsComponent2Visible = false;
         }
 
         public async Task GetUserName()
         {
             var token = await SecureStorage.GetAsync("token");
-            var userName =  _jwtHelper.ExtractUserInfo(token);
+            UserName =  _jwtHelper.ExtractUserInfo(token);
         }
         public async Task HistoryTapped()
         {
-            var newAmount = await _salesRecordService.GetSalesRecord();
+            try
+            {
+                var request = await _salesRecordService.GetSalesRecord();
+                if (request != null)
+                {
+                    string limitReached = request.dailyLimitReached.ToString();
+                    await SecureStorage.SetAsync("dailyLimitReached",request.dailyLimitReached.ToString());
+                    var newAmount = request.newAmount;
+                    Totalsales = newAmount + request.totalPreviousAmount;
+                    double maxLimit = 200;
+                    RemainingLimit = maxLimit - newAmount;
+                    if (RemainingLimit <= 0)
+                    {
+                        RemainingLimit = 0;
+                        isSalesLimitReached = true;
 
-            double maxLimit = 200;
-            _percentage = newAmount / maxLimit;
-            if (_percentage > 1.0)
-            { _percentage = 0.8; }
-            OnToggleCommand();
+                    }
+                    Percentage = newAmount / maxLimit;
+
+                    if (Percentage > 1.0)
+                    { Percentage = 1.0; }
+                    IsComponent1Visible = false;
+                    IsComponent2Visible = true;
+                }
+                else 
+                {
+                    await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
+                }
+            }
+            catch
+            {
+
+                await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
+            }
 
         }
 
@@ -103,7 +135,8 @@ namespace FoodSaverMaui.ViewModel
         {
             try
             {
-
+                //var token = await SecureStorage.GetAsync("token");
+                //UserName = _jwtHelper.ExtractUserInfo(token);
                 IsBusy = true;
                 var request = await _foodService.GetUserProducts();
                 if (request != null)
@@ -115,7 +148,8 @@ namespace FoodSaverMaui.ViewModel
                     }
                     OnPropertyChanged(nameof(Products));
 
-                    OnToggleCommand();
+                    IsComponent1Visible = true;
+                    IsComponent2Visible = false;
                 }
                 else
                 {
@@ -123,6 +157,12 @@ namespace FoodSaverMaui.ViewModel
                     await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
                 }
             }
+            catch
+            {
+
+                await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
+            }
+
             finally
             {
                 IsBusy = false;

@@ -28,5 +28,9 @@ namespace FoodSaverMaui.ViewModel
        
         bool isFingerPrintEnabled;
 
+        [ObservableProperty]
+
+       public bool isSalesLimitReached;
+
     }
 }

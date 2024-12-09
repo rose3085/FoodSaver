@@ -185,11 +185,6 @@ Flags="ValidateOnValueChanged"
 CharacterType="Alphanumeric"
 MinimumCharacterTypeCount="6" />
 
-                            <toolkit:UserStoppedTypingBehavior 
-        Command="{Binding Source={x:Reference CreateAccountPage}, Path=BindingContext.SearchCommand}"
-        StoppedTypingTimeThreshold="10"
-        MinimumLengthThreshold="3"
-        ShouldDismissKeyboardAutomatically="True" />
 
                         </Entry.Behaviors>
                     </Entry>
