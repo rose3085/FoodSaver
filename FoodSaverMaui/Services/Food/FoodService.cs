@@ -143,7 +143,40 @@ namespace FoodSaverMaui.Services.Food
 
         }
 
+        public async Task<ResponseManager> BuyFood(BuyFoodModel buyFoodRequest)
+        {
+            try
+            {
+                var jwtToken = await SecureStorage.GetAsync("token");
+                if (jwtToken == null)
+                {
 
-       
-    }
+                    return null;
+                }
+
+                var url = $"{App.Settings.ApiBaseUrl}/api/Order";
+                var json = JsonConvert.SerializeObject(buyFoodRequest);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(url, content);
+                Console.WriteLine($"s Code: {(int)response.StatusCode}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<ResponseManager>();
+                    return result;
+                }
+                else 
+                {
+
+                    return null;
+                }
+                }
+            catch (Exception ex)
+            {
+                return null;
+
+            }
+
+        }
+        }
 }
