@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FoodSaverMaui.Helper;
 using FoodSaverMaui.Model;
 using FoodSaverMaui.Services.Food;
 using FoodSaverMaui.Views;
@@ -34,6 +35,8 @@ namespace FoodSaverMaui.ViewModel
 
         [ObservableProperty]
         string cityName;
+        [ObservableProperty]
+        public string userName;
 
         private double _stepperValue;
 
@@ -64,6 +67,7 @@ namespace FoodSaverMaui.ViewModel
         }
 
         private readonly FoodService _foodService;
+        private readonly IJwtHelper _jwtHelper;
 
         public Command OnFliePicked { get; }
         public Command IncrementCommand { get; }
@@ -71,20 +75,27 @@ namespace FoodSaverMaui.ViewModel
         public Command OnPostTapped { get; }
         public Command OnPinLocationTapped { get; }
         public Command DecrementCommand { get; }
-        public UploadFoodViewModel(FoodService foodService)
+        public Command OnGetUserName { get; }
+        public UploadFoodViewModel(FoodService foodService, IJwtHelper jwtHelper)
         {
             _foodService = foodService;
+            _jwtHelper = jwtHelper;
             OnFliePicked = new Command(async() => await ImagePicked());
             IncrementCommand = new Command(OnIncrement);
             DecrementCommand = new Command(OnDecrement);
             OnPostTapped = new Command(async () => await PostButtonTapped());
             OnPinLocationTapped = new Command(async () => await PinLocationTapped());
-
+            OnGetUserName = new Command(async () => await GetUserName());
         }
         public bool IsImageSelected => PickedImage != null;
         private byte[] _imageData;
         public string PickedImageName;
 
+        public async Task GetUserName()
+        {
+            var token = await SecureStorage.GetAsync("token");
+            UserName = _jwtHelper.ExtractUserInfo(token);
+        }
 
         public async Task PinLocationTapped()
         {

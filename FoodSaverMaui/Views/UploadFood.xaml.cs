@@ -18,6 +18,26 @@ public partial class UploadFood : ContentPage
         
        // _viewModel.DisposeImage(); // Call Dispose method in ViewModel
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (BindingContext is UploadFoodViewModel viewModel)
+        {
+            // Check and execute OnPostTapped command
+            if (viewModel.OnGetUserName.CanExecute(null))
+            {
+                viewModel.OnGetUserName.Execute(null);
+            }
+
+            //// Check and execute OnGetUserName command
+            //if (viewModel.OnGetUserName.CanExecute(null))
+            //{
+            //    viewModel.OnGetUserName.Execute(null);
+            //}
+        }
+    }
     //protected override async void OnAppearing()
     //{
     //    base.OnAppearing();

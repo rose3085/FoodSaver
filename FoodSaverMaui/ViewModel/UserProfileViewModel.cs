@@ -96,8 +96,7 @@ namespace FoodSaverMaui.ViewModel
             try
             {
                 var request = await _salesRecordService.GetSalesRecord();
-                if (request != null)
-                {
+            
                     string limitReached = request.dailyLimitReached.ToString();
                     await SecureStorage.SetAsync("dailyLimitReached",request.dailyLimitReached.ToString());
                     var newAmount = request.newAmount;
@@ -116,11 +115,7 @@ namespace FoodSaverMaui.ViewModel
                     { Percentage = 1.0; }
                     IsComponent1Visible = false;
                     IsComponent2Visible = true;
-                }
-                else 
-                {
-                    await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
-                }
+             
             }
             catch
             {

@@ -27,7 +27,7 @@
                 <Grid RowDefinitions="Auto,*,Auto" RowSpacing="10" Padding="5,20,5,5"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
 
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="180" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                        <Label Text="rose3085" Grid.Column="0" TextColor="Gray" FontSize="20" Padding="20,0,0,0" FontAttributes="Bold" />
+                        <Label Text="" Grid.Column="0" TextColor="Gray" FontSize="20" Padding="20,0,0,0" FontAttributes="Bold" />
                         <Grid Grid.Column="1" HorizontalOptions="EndAndExpand" ColumnDefinitions="Auto,Auto" ColumnSpacing="10">
                             <Image Grid.Column="0" Source="dots.png" HeightRequest="22" HorizontalOptions="EndAndExpand"/>
                             <Image  Grid.Column="1" Source="remove.png" HeightRequest="22" HorizontalOptions="EndAndExpand" >
