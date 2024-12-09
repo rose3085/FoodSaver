@@ -76,6 +76,8 @@ namespace FoodSaverMaui.KhaltiServices
                 {
                     var khaltiResponse = JsonConvert.DeserializeObject<KhaltiResponse>(result);
                     var paymentUrl = khaltiResponse.payment_url;
+                    await SecureStorage.SetAsync("pidx",khaltiResponse.pidx);
+
                     //var responseContent = await response.Content.ReadAsStringAsync();
                     //if (paymentUrl != null)
                     //{

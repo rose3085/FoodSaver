@@ -53,7 +53,8 @@ namespace FoodSaverMaui.ViewModel
 
         public async Task KhaltiPaymentButton()
         {
-           
+            await SecureStorage.SetAsync("amount",Amount);
+            await SecureStorage.SetAsync("productId",ProductId);
             string pay = await _khaltiServices.KhaltiLaunch(Amount,ProductId);
             if (pay != null)
             {
