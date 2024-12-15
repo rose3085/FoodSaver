@@ -156,7 +156,7 @@ namespace FoodSaverMaui.ViewModel
                         if (result == "Product added successfully")
                         {
 
-                            await Shell.Current.GoToAsync(nameof(PostSuccessfullPage));
+                            await Shell.Current.GoToAsync(nameof(UploadPostSucessfull));
                         }  
                         
                         var toast = Toast.Make($"{result}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);

@@ -37,7 +37,13 @@ namespace FoodSaverMaui.ViewModel
                 BuyerName = userName,
             };
             var request = await _foodService.BuyFood(requestModel);
-           
+            if (request.IsSuccess == true)
+            {
+
+                 SecureStorage.Remove("pidx");
+                SecureStorage.Remove("amount");
+                SecureStorage.Remove("productId");
+            }
             
         }
     }

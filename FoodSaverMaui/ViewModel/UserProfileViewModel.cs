@@ -30,6 +30,9 @@ namespace FoodSaverMaui.ViewModel
         [ObservableProperty]
         public double remainingLimit;
 
+        [ObservableProperty]
+        public bool showSalesLimitReachedMessage;
+
         //private double _percentage;
 
         //public double Percentage
@@ -84,6 +87,7 @@ namespace FoodSaverMaui.ViewModel
             OnGetUserName = new Command(async () => await GetUserName());
             IsComponent1Visible = true;
             IsComponent2Visible = false;
+            ShowSalesLimitReachedMessage = false;
         }
 
         public async Task GetUserName()
@@ -107,6 +111,7 @@ namespace FoodSaverMaui.ViewModel
                     {
                         RemainingLimit = 0;
                         isSalesLimitReached = true;
+                        ShowSalesLimitReachedMessage = true;
 
                     }
                     Percentage = newAmount / maxLimit;

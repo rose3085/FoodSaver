@@ -58,30 +58,97 @@ namespace Application.Services.SalesRecord
             return null;
         }
 
+
+        public async Task<FoodServiceResponse> AddNewRecord(PostSalesRecordDto request)
+        {
+            var id = Guid.NewGuid().ToString();
+            var requestModel = new SalesRecordModel()
+            {
+                Id = id,
+                TotalPreviousAmount = 0,
+                NewAmount = request.NewAmount,
+                Seller = request.SellerId,
+                DailyLimitReached = false,
+                CommissionPaid = true,
+
+            };
+            var result = await _uow.AsyncRepositories<SalesRecordModel>().AddAsync(requestModel);
+            _uow.save();
+            if (request != null)
+            {
+                return new FoodServiceResponse()
+                {
+                    Message = "Sales record Updated sucessfully!",
+                    IsSuccess = true,
+                };
+
+            }
+            else 
+            {
+                return new FoodServiceResponse()
+                {
+                    Message = "Sales record couldn't be Updated!",
+                    IsSuccess = false,
+                };
+            }
+        }
+
+
         public async Task<FoodServiceResponse> PostAmountUpdate(PostSalesRecordDto request)
         {
             try {
                 var checkNewSellerId = await GetAllRecord();
-                foreach (var idExists in checkNewSellerId)
-
+                if (checkNewSellerId.Count() == 0)
                 {
-                    if (idExists.Seller == request.SellerId)
-                    {
-                        var id = Guid.NewGuid().ToString();
-                        var requestModel = new SalesRecordModel()
-                        {
-                            Id = id,
-                            TotalPreviousAmount = 0,
-                            NewAmount = request.NewAmount,
-                            Seller = request.SellerId,
-                            DailyLimitReached = false,
-                            CommissionPaid = true,
+                    AddNewRecord(request);
+                }
+                else
+                {
+                    foreach (var idExists in checkNewSellerId)
 
-                        };
-                        var result = await _uow.AsyncRepositories<SalesRecordModel>().AddAsync(requestModel);
-                        _uow.save();
-                        if (request != null)
+                    {
+                        if (idExists.Seller == request.SellerId)
                         {
+                            var id = Guid.NewGuid().ToString();
+                            var requestModel = new SalesRecordModel()
+                            {
+                                Id = id,
+                                TotalPreviousAmount = 0,
+                                NewAmount = request.NewAmount,
+                                Seller = request.SellerId,
+                                DailyLimitReached = false,
+                                CommissionPaid = true,
+
+                            };
+                            var result = await _uow.AsyncRepositories<SalesRecordModel>().AddAsync(requestModel);
+                            _uow.save();
+                            if (request != null)
+                            {
+                                return new FoodServiceResponse()
+                                {
+                                    Message = "Sales record Updated sucessfully!",
+                                    IsSuccess = true,
+                                };
+
+                            }
+
+                        }
+                        else
+                        {
+                            idExists.NewAmount += request.NewAmount;
+                            if (idExists.NewAmount >= 200)
+                            {
+                                idExists.DailyLimitReached = true;
+                                idExists.CommissionPaid = false;
+                                var getSeller = await _userManager.FindByIdAsync(request.SellerId.Id);
+                                getSeller.CanPost = false;
+                                await _userManager.UpdateAsync(getSeller);
+
+                            }
+
+                            await _uow.AsyncRepositories<SalesRecordModel>().UpdateAsync(idExists);
+
+                            _uow.save();
                             return new FoodServiceResponse()
                             {
                                 Message = "Sales record Updated sucessfully!",
@@ -89,36 +156,13 @@ namespace Application.Services.SalesRecord
                             };
 
                         }
-
                     }
-                    else
-                    {
-                        idExists.NewAmount += request.NewAmount;
-                        if (idExists.NewAmount >= 200)
-                        {
-                            idExists.DailyLimitReached = true;
-                            idExists.CommissionPaid = false;
-                            var getSeller = await _userManager.FindByIdAsync(request.SellerId.Id);
-                            getSeller.CanPost = false;
-                            await _userManager.UpdateAsync(getSeller);
 
-                        }
-                        
-                        await _uow.AsyncRepositories<SalesRecordModel>().UpdateAsync(idExists);
-                        
-                        _uow.save();
-                        return new FoodServiceResponse()
-                        {
-                            Message = "Sales record Updated sucessfully!",
-                            IsSuccess = true,
-                        };
-
-                    }
                 }
                 return new FoodServiceResponse()
                 {
-                    Message = "Sales record couldn't be Updated!",
-                    IsSuccess = false,
+                    Message = "Sales record  Updated!",
+                    IsSuccess = true,
                 };
 
             }

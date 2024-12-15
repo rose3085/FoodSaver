@@ -16,9 +16,9 @@ public partial class FindFood : ContentPage
         // Execute the command directly
         if (BindingContext is FindFoodViewModel viewModel)
         {
-            if (viewModel.OnClickTapped.CanExecute(null)) // Check if the command can be executed
+            if (viewModel.OnClickTapped.CanExecute(null)) 
             {
-                viewModel.OnClickTapped.Execute(null); // Execute the command
+                viewModel.OnClickTapped.Execute(null); 
             }
         }
     }

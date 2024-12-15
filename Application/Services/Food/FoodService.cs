@@ -69,12 +69,12 @@ namespace Application.Services.Food
                     }
 
 
-                    if (postFood.ImageFile?.Length > 1 * 1024 * 1024)
+                    if (postFood.ImageFile?.Length > 5 * 1024 * 1024)
                     {
                         return new FoodServiceResponse()
                         {
                             IsSuccess = false,
-                            Message = "File size shouldn't exist 1MB.",
+                            Message = "File size shouldn't exist 5MB.",
 
                         };
                     }
@@ -206,7 +206,7 @@ namespace Application.Services.Food
             var result = await _uow.AsyncRepositories<FoodModel>().GetRandomWithIncludeAsync(includes);
 
 
-             var baseUrl = $"https://fe60-2405-acc0-1504-cce4-c5f-136b-e0bb-ad3a.ngrok-free.app";
+             var baseUrl = $"https://2a9a-202-79-53-218.ngrok-free.app";
             // var baseUrl = $"https://localhost:7293";
             var productResult =  result
                 .Where(product => product.IsBooked == false)
