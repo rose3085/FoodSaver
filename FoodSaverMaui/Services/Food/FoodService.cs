@@ -211,5 +211,50 @@ namespace FoodSaverMaui.Services.Food
             }
 
         }
+
+
+        public async Task<bool> DeleteFood(string id)
+        {
+            try
+            {
+                if (id != null)
+                {
+                    var jwtToken = await SecureStorage.GetAsync("token");
+                    if (jwtToken == null)
+                    {
+
+                        return false;
+                    }
+                    var url = $"{App.Settings.ApiBaseUrl}/api/Food/DeleteFood?id={id}";
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                    var response = await _httpClient.DeleteAsync(url);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = await response.Content.ReadFromJsonAsync<ResponseManager>();
+                        if (result.IsSuccess == true)
+                        {
+                            return true;
+                        }
+                    }
+                            return false;
+                }
+                else
+                {
+
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+
+            }
+
+
         }
+
+    }
+
+
+    
 }

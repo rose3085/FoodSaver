@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FoodSaverMaui.Views.UserProfile"
                xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
- x:DataType="viewmodel:UserProfileViewModel"
+            x:DataType="viewmodel:UserProfileViewModel"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:model="clr-namespace:FoodSaverMaui.Response"
              NavigationPage.HasNavigationBar="False"
@@ -89,12 +89,15 @@
                                                     <Grid Grid.Row="0" RowDefinitions="Auto,Auto" RowSpacing="10" >
                                                         <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                                             <Grid Grid.Column="0" WidthRequest="280" RowDefinitions="Auto,Auto" ColumnSpacing="5" >
-                                                                <Label Text="{Binding UserName}"  Grid.Row="0" TextColor="Gray" FontSize="22" Padding="15,0,0,0" FontAttributes="Bold" />
-
-                                                                <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,Auto" Padding="20,0,0,0" ColumnSpacing="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                                <Grid Grid.Row="0" ColumnSpacing="10" ColumnDefinitions="Auto,Auto" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                                    <Label Text="{Binding UserName}"  Grid.Column="0" TextColor="Gray" FontSize="22" Padding="15,0,0,0" FontAttributes="Bold" />
+                                                                    <Label Grid.Column="1" Text="{Binding Date}" FontSize="14" VerticalOptions="CenterAndExpand"/>
+                                                                </Grid>
+                                                                <Grid  Grid.Row="1" ColumnDefinitions="Auto,Auto,Auto,Auto" Padding="20,0,0,0" ColumnSpacing="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                                                     <Image Grid.Column="0" Source="location.png" HeightRequest="12" />
                                                                     <Label Grid.Column="1" Text="{Binding CityName}" FontSize="12" />
-                                                                    <Label Grid.Column="2" Text="{Binding ToleName}" FontSize="12" />
+                                                                    <Label Grid.Column="2" Text="," FontSize="12" />
+                                                                    <Label Grid.Column="3" Text="{Binding ToleName}" FontSize="12" />
 
                                                                 </Grid>
 
@@ -102,7 +105,7 @@
                                                             </Grid>
                                                             <Image  Grid.Column="1" Source="dots.png" HeightRequest="22" HorizontalOptions="EndAndExpand" >
                                                                 <Image.GestureRecognizers>
-                                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FindFoodViewModel}}, Path=OnRemoveButtonPressed}"
+                                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UserProfileViewModel}}, Path=OnDotsTapped}"
                                                                    CommandParameter="{Binding .}"/>
                                                                 </Image.GestureRecognizers>
                                                             </Image>
@@ -263,7 +266,10 @@ Opacity="0.8" />
                         <Label Grid.Column="0" Text="Edit Profile" TextColor="#A4A4A4" VerticalOptions="Center" HorizontalOptions="Start"
 
                     FontSize="18" />
-                    </Grid>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnEditProfileTapped}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
                 <Grid  ColumnDefinitions="Auto,*" ColumnSpacing="15" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="20,0,0,0"  >
                     <Image Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Source="rightarrows.png" HeightRequest="18" WidthRequest="18"  />
 

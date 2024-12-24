@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Helper;
 using FoodSaverMaui.Response;
@@ -12,7 +13,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Threading;
+
 //using static Microsoft.Maui.Controls.Device;
 
 namespace FoodSaverMaui.ViewModel
@@ -70,6 +72,8 @@ namespace FoodSaverMaui.ViewModel
         public Command ToggleCommand { get; }
         public Command OnGetUserName { get; }
         public Command OnPostTapped { get; }
+        public Command OnEditProfileTapped { get; }
+        public Command OnDotsTapped { get; }
         public Command OnHistoryTapped { get; }
         public UserProfileViewModel(FoodService foodService,IJwtHelper jwtHelper,SalesRecordServices salesRecordServices)
         {
@@ -85,11 +89,38 @@ namespace FoodSaverMaui.ViewModel
             OnLogoutTapped = new Command(async() => await LogoutTapped());
             ToggleCommand = new Command(async () => await OnToggleCommand());
             OnGetUserName = new Command(async () => await GetUserName());
+            OnEditProfileTapped = new Command(async() => await EditProfileTapped());
+            OnDotsTapped = new Command<GetProductsResponse>(async (selectedProduct) => await DotsTapped(selectedProduct));
             IsComponent1Visible = true;
             IsComponent2Visible = false;
             ShowSalesLimitReachedMessage = false;
         }
 
+        public async Task DotsTapped(GetProductsResponse selectedProduct)
+        {
+
+
+           bool answer = await Shell.Current.DisplayAlert("Delete Product","Do you want to delete the product ?","Ok","Cancel");
+            if (answer == true)
+            {
+             var id = selectedProduct.Id;
+                if (id != null)
+                { 
+                    var result = await _foodService.DeleteFood(id);
+                    if (result == true)
+                    { await Shell.Current.DisplayAlert("Delete Product successful", "gffdhf", "Ok");
+                        if (Products.Contains(selectedProduct))
+                        {
+                            Products.Remove(selectedProduct);
+                        }
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlert("Delete Product unSuccessful", "gffdhf", "Ok");
+                    }
+                }
+            }
+        }
         public async Task GetUserName()
         {
             var token = await SecureStorage.GetAsync("token");
@@ -188,6 +219,11 @@ namespace FoodSaverMaui.ViewModel
     }
 
 
+        public async Task EditProfileTapped()
+        {
+            await Shell.Current.GoToAsync(nameof(EditProfile));
+
+        }
         public async Task ChangePasswordTapped()
         {
             await Shell.Current.GoToAsync(nameof(UpdatePassword));
