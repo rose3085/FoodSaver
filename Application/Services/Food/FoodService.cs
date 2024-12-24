@@ -196,6 +196,29 @@ namespace Application.Services.Food
 
         }
 
+
+
+        public async Task<string> CalculateTime(DateTime dateTime)
+        {
+            var currentTime = DateTime.Now;
+            var timeDifference = currentTime - dateTime;
+            if (timeDifference.TotalMinutes < 60)
+            {
+                return $"{(int)timeDifference.TotalMinutes}m";
+
+            }
+            else if (timeDifference.TotalHours < 24)
+            {
+                return $"{(int)timeDifference.TotalHours}h";
+
+            }
+            else 
+            {
+                return $"{(int)timeDifference.TotalDays}d";
+            }
+
+        }
+
         public async Task<IEnumerable<GetProductResponse>> GetProductsAsync()
         {
             var includes = new Expression<Func<FoodModel, object>>[]
@@ -210,25 +233,30 @@ namespace Application.Services.Food
             // var baseUrl = $"https://localhost:7293";
             var productResult =  result
                 .Where(product => product.IsBooked == false)
-                .Select(product => new GetProductResponse
+                .Select(async product => 
             {
-               Id= product.Id,
-               ProductName= product.FoodName,
-               Description= product.Description,
-               PricePerKg = product.PricePerKg,
-               Quantity = product.Quantity,
-               IsBooked = product.IsBooked,
-               UserName = product.Seller?.UserName,
-               CityName = product.Address?.CityName,
-               ToleName = product.Address?.ToleName,
-               Latitude = product.Address.Latitude,
-               Longitude = product.Address.Longitude,
-
-                // image Url form ma return garne
-                ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
+                var timeDifference = await CalculateTime(product.Date);
+                return new GetProductResponse
+                {
+                    Id = product.Id,
+                    ProductName = product.FoodName,
+                    Description = product.Description,
+                    PricePerKg = product.PricePerKg,
+                    Quantity = product.Quantity,
+                    IsBooked = product.IsBooked,
+                    UserName = product.Seller?.UserName,
+                    CityName = product.Address?.CityName,
+                    ToleName = product.Address?.ToleName,
+                    Latitude = product.Address.Latitude,
+                    Longitude = product.Address.Longitude,
+                    Date = timeDifference,
+                    // image Url form ma return garne
+                    ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
+                };
             }).ToList();
-           // var getResult = _mapper.Map<IEnumerable<GetProductResponse>>(productResult);
-            return productResult;
+            // var getResult = _mapper.Map<IEnumerable<GetProductResponse>>(productResult);
+            var finalResult = await Task.WhenAll(productResult);
+            return finalResult;
         }
 
         public async Task<IEnumerable<GetProductResponse>> GetUsersProduct()
