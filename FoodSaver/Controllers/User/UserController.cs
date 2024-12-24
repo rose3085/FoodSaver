@@ -107,5 +107,34 @@ namespace FoodSaver.Controllers.User
             return BadRequest(ModelState);
 
         }
+
+
+        [HttpGet]
+        [Route("GetUserByName")]
+        public async Task<IActionResult> GetUserByName(string userName)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.GetUserByName(userName);
+                return Ok(result);
+
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpPost]
+        [Route("UpdateUser")]
+        [Authorize]
+        public async Task<IActionResult> UpdateUser(UpdateUser updateUser)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.UpdateUser(updateUser);
+                return Ok(result);
+
+            }
+            return BadRequest(ModelState);
+
+        }
     }
 }

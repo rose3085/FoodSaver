@@ -1,5 +1,6 @@
 ﻿using Application.DTO.User;
 using Application.Response;
+using Domain.Entities.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,11 @@ namespace Application.Interfaces.User
         Task<UserManagerResponse> DeleteUser(UserLoginRequest deleteRequest);
         Task<UserManagerResponse> UpdatePassword(UpdatePasswordDto updatePasswordRequest);
         Task<UserManagerResponse> UpdateEmail(UpdateEmailDto updateEmailRequest);
+
+        Task<ApplicationUser> GetUserByName(string name);
+
+        Task<UserManagerResponse> UpdateUser(UpdateUser user);
+
+        //Task<IEnumerable<ApplicationUser>> GetAllUser();
     }
 }

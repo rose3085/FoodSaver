@@ -1,4 +1,5 @@
 ﻿using Application.DTO.User;
+using Application.Interfaces.Data;
 using Application.Interfaces.User;
 using Application.Response;
 using AutoMapper;
@@ -28,9 +29,12 @@ namespace Application.Services.User
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _uow;
+        private readonly IRoleService _roleService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         public UserService(UserManager<ApplicationUser> userManager, RoleManager<Role> roleManager , SignInManager<ApplicationUser> signInManager,
-                            IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IMapper mapper)
+                            IConfiguration configuration, IHttpContextAccessor httpContextAccessor,
+                            IUnitOfWork uow, IMapper mapper,IRoleService roleService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -38,6 +42,8 @@ namespace Application.Services.User
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
+            _uow = uow;
+            _roleService = roleService;
         }
 
         public async Task<UserManagerResponse> DeleteUser(UserLoginRequest deleteRequest)
@@ -97,6 +103,27 @@ namespace Application.Services.User
                 };
             }
         }
+
+    
+
+        public async Task<ApplicationUser> GetUserByName(string name)
+        {
+            try { 
+                    var result = await _userManager.FindByNameAsync(name);
+                if (result != null)
+                {
+                    return result;
+                }
+                else 
+                {
+                    return null;
+                }
+            
+            }
+            catch (Exception ex) { return null; }
+        }
+
+
 
         public async Task<UserLoginResponse> LoginUser(UserLoginRequest loginRequest)
         {
@@ -462,6 +489,91 @@ namespace Application.Services.User
 
             }
 
+        }
+
+        public async Task<UserManagerResponse> UpdateUser(UpdateUser user)
+        {
+            //var request = await _userManager.UpdateAsync();
+
+            try
+            {
+
+                var userInfo = await _userManager.FindByEmailAsync(user.Email);
+                if (userInfo == null)
+                {
+                    return new UserManagerResponse
+                    {
+                        IsSuccess = false,
+                       Message = "user doesn't exist!"
+                    };
+                }
+
+                var checkPassword = await _userManager.CheckPasswordAsync(userInfo,user.Password);
+                if (checkPassword == false)
+                {
+                    return new UserManagerResponse
+                    {
+                        IsSuccess = false,
+                        Message = "invalid credentials"
+                    };
+
+                }
+                if (user.UserName != "" )
+                {
+                    userInfo.UserName = user.UserName;
+                }
+                if (user.PhoneNumber !="")
+                {
+                    userInfo.PhoneNumber = user.PhoneNumber;
+                }
+                if( user.Role != "")
+                {
+                    var userRoles = await _userManager.GetRolesAsync(userInfo);
+                    if (!userRoles.Contains(user.Role))
+                    {
+                        var addRole = await _userManager.AddToRoleAsync(userInfo, user.Role);
+                        if (addRole == null)
+                        {
+                            return new UserManagerResponse
+                            {
+                                IsSuccess = false,
+                                Message = "invalid role"
+                            };
+                        }
+                    }
+                }
+
+                var updateResult = await _userManager.UpdateAsync(userInfo);
+                if (updateResult != null)
+                {
+                    return new UserManagerResponse
+                    {
+                        IsSuccess = true,
+                        Message = "user updated sucessfully"
+                    };
+
+                }
+                else 
+                
+                {
+                    return new UserManagerResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Couldn't update user!"
+                    };
+                }
+
+            
+            }
+            catch (Exception ex)
+            {
+
+                return new UserManagerResponse
+                {
+                    IsSuccess = false,
+                    Error = ex.Message
+                };
+            }
         }
 
         private string GenerateNewJsonWebToken(List<Claim> claims)
