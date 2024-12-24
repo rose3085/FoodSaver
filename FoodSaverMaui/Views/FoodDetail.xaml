@@ -12,12 +12,15 @@
                 <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                         <Grid Grid.Column="0" WidthRequest="220" RowDefinitions="Auto,Auto" ColumnSpacing="5" >
-                            <Label Text="{Binding Product.UserName}"  Grid.Row="0" TextColor="Gray" FontSize="22" Padding="15,0,0,0" FontAttributes="Bold" />
-
-                            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,Auto" Padding="20,0,0,0" ColumnSpacing="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Grid Grid.Row="0" ColumnSpacing="10" ColumnDefinitions="Auto,Auto" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Label Text="{Binding Product.UserName}"  Grid.Column="0" TextColor="Gray" FontSize="22" Padding="15,0,0,0" FontAttributes="Bold" />
+                                <Label Grid.Column="1" Text="{Binding Product.Date}" FontSize="14" VerticalOptions="CenterAndExpand"/>
+                            </Grid>
+                            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,Auto,Auto" Padding="20,0,0,0" ColumnSpacing="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                 <Image Grid.Column="0" Source="location.png" HeightRequest="12" />
                                 <Label Grid.Column="1" Text="{Binding Product.CityName}" FontSize="12" />
-                                <Label Grid.Column="2" Text="{Binding Product.ToleName}" FontSize="12" />
+                                <Label Grid.Column="2" Text="," FontSize="12" />
+                                <Label Grid.Column="3" Text="{Binding Product.ToleName}" FontSize="12" />
 
                             </Grid>
 
