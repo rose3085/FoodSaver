@@ -267,19 +267,42 @@ namespace Application.Services.Food
                 if (userInfo != null)
                 {
                     var userNameContext = userInfo.UserName;
-                    var getProduct = await GetProductsAsync();
+                    var includes = new Expression<Func<FoodModel, object>>[]
+                  {
+                        s => s.Seller,
+                        s => s.Address,
+                  };
+                    var result = await _uow.AsyncRepositories<FoodModel>().GetWithInclude(includes);
+                    var baseUrl = $"https://7112-2405-acc0-1504-cce4-9534-963d-17f3-f208.ngrok-free.app";
+                    //var getProduct = await GetProductsAsync();
+                    var getProduct = result
+                        .Where(product => product.Seller == userInfo)
+                        .OrderByDescending(product => product.Date)
+                               .Select(async product =>
+                               {
+                                   var timeDifference = await CalculateTime(product.Date);
+                                   return new GetProductResponse
+                                   {
+                                       Id = product.Id,
+                                       ProductName = product.FoodName,
+                                       Description = product.Description,
+                                       PricePerKg = product.PricePerKg,
+                                       Quantity = product.Quantity,
+                                       IsBooked = product.IsBooked,
+                                       UserName = product.Seller?.UserName,
+                                       CityName = product.Address?.CityName,
+                                       ToleName = product.Address?.ToleName,
+                                       Latitude = product.Address.Latitude,
+                                       Longitude = product.Address.Longitude,
+                                       Date = timeDifference,
+                                       // image Url form ma return garne
+                                       ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
+                                   };
+                               }).ToList();
                     if (getProduct != null)
                     {
-                        var resultProduct = getProduct
-                                    .Where(result => result.UserName == userNameContext).ToList();
-                        if (resultProduct != null)
-                        {
-                            return resultProduct;
-                        }
-                        else
-                        {
-                            return null;
-                        }
+                        var finalResult = await Task.WhenAll(getProduct);
+                        return finalResult;
                     }
                     else
                     {
