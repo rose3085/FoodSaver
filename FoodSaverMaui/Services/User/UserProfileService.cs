@@ -1,5 +1,7 @@
-﻿using FoodSaverMaui.Model;
+﻿using FoodSaverMaui.Helper;
+using FoodSaverMaui.Model;
 using FoodSaverMaui.Response;
+using FoodSaverMaui.Response.User;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -15,12 +17,36 @@ namespace FoodSaverMaui.Services.User
     public class UserProfileService
     {
         private readonly HttpClient _httpClient;
+        private readonly IJwtHelper _jwtHelper;
 
-        public UserProfileService(HttpClient httpClient)
+        public UserProfileService(HttpClient httpClient, IJwtHelper jwtHelper)
         {
             _httpClient = httpClient;
+            _jwtHelper = jwtHelper;
         }
 
+        public async Task<ApplicationUser> GetUserByName()
+        {
+            var jwtToken = await SecureStorage.GetAsync("token");
+            if (jwtToken == null)
+            {
+
+                return null;
+            }
+            var userName = _jwtHelper.ExtractUserInfo(jwtToken);
+            var url = $"{App.Settings.ApiBaseUrl}/api/User/GetUserByName?userName={userName}";
+            //var json = JsonConvert.SerializeObject(request);
+            // var content = new StringContent(json, Encoding.UTF8, "application/json");
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+            var response = await _httpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<ApplicationUser>();
+                return result;
+
+            }
+            else { return null; }
+        }
         public async Task<string> UpdatePassword(UpdatePasswordRequest request)
         {
             try
