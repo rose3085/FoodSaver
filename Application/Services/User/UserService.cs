@@ -518,15 +518,15 @@ namespace Application.Services.User
                     };
 
                 }
-                if (user.UserName != "" )
+                if (user.UserName != "string" )
                 {
                     userInfo.UserName = user.UserName;
                 }
-                if (user.PhoneNumber !="")
+                if (user.PhoneNumber !="string")
                 {
                     userInfo.PhoneNumber = user.PhoneNumber;
                 }
-                if( user.Role != "")
+                if( user.Role != "string")
                 {
                     var userRoles = await _userManager.GetRolesAsync(userInfo);
                     if (!userRoles.Contains(user.Role))
@@ -549,7 +549,7 @@ namespace Application.Services.User
                     return new UserManagerResponse
                     {
                         IsSuccess = true,
-                        Message = "user updated sucessfully"
+                        Message = "User updated sucessfully"
                     };
 
                 }

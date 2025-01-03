@@ -47,6 +47,71 @@ namespace FoodSaverMaui.Services.User
             }
             else { return null; }
         }
+
+
+        public async Task<string> GetUserRoles()
+        {
+            var jwtToken = await SecureStorage.GetAsync("token");
+            if (jwtToken == null)
+            {
+
+                return null;
+            }
+            var url = $"{App.Settings.ApiBaseUrl}/api/Role/GetUserRole";
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+            var response = await _httpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                return result;
+
+            }
+            else { return null; }
+        }
+
+
+        public async Task<string> UpdateUser(UpdateUserRequest request)
+        {
+            try
+            {
+                var jwtToken = await SecureStorage.GetAsync("token");
+                if (jwtToken == null)
+                {
+
+                    return null;
+                }
+                var url = $"{App.Settings.ApiBaseUrl}/api/User/UpdateUser";
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                var response = await _httpClient.PostAsync(url, content);
+                Console.WriteLine($"s Code: {(int)response.StatusCode}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<UserManagerResponse>();
+                    if (result.IsSuccess == true)
+                    {
+
+                       
+                        return result.Message;
+                    }
+
+                    else
+                    {
+                        return result.Message;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+        }
         public async Task<string> UpdatePassword(UpdatePasswordRequest request)
         {
             try

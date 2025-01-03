@@ -35,7 +35,7 @@
 
                         <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" ColumnSpacing="1" >
                             <Label Grid.Column="0" Text="{Binding Email}"  Padding="3,0,0,0" />
-                            <ImageButton Grid.Column="1" Source="rightarrows.png" Padding="0,0,0,0"  HeightRequest="18" />
+                            <!--<ImageButton Grid.Column="1" Source="rightarrows.png" Padding="0,0,0,0"  HeightRequest="18" />-->
                         </Grid>
                         <BoxView Grid.Row="2" HeightRequest="0.5" />
                     </Grid>
@@ -44,8 +44,12 @@
                         <Label Grid.Row="0" Text="Role" FontSize="14" FontAttributes="Bold" TextColor="#888888"/>
 
                         <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" ColumnSpacing="1" >
-                            <Label Grid.Column="0" Text="Rabina" Padding="3,0,0,0" />
-                            <ImageButton Grid.Column="1" Source="rightarrows.png" Padding="0,0,0,0"  HeightRequest="18" />
+                            <Label Grid.Column="0" Text="{Binding Role}" Padding="3,0,0,0" WidthRequest="42"/>
+                            <ImageButton Grid.Column="1" Source="rightarrows.png" Padding="0,0,0,0"  HeightRequest="18" >
+                                <ImageButton.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OnUpdateRoleTapped}" />
+                                </ImageButton.GestureRecognizers>
+                            </ImageButton>
                         </Grid>
                         <BoxView Grid.Row="2" HeightRequest="0.5" />
                     </Grid>
@@ -58,7 +62,7 @@
 
 
                 <Grid Grid.Row="2" HorizontalOptions="EndAndExpand" VerticalOptions="End" Padding="0,30,30,0">
-                    <Button Text="Save" Padding="20,0,20,0"   BackgroundColor="#03b25a" />
+                    <Button Text="Save" Padding="20,0,20,0"   BackgroundColor="#03b25a" Command="{Binding OnSaveButtonClicked}" />
                 </Grid>
             </Grid>
         </Border>
