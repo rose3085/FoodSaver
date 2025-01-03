@@ -16,5 +16,7 @@ namespace Application.Interfaces.User
         Task<RoleManagerResponse> DeleteRole(RoleDto role);
         Task<RoleManagerResponse> UpdateRole(string newName, RoleDto role);
 
+        Task<IList<string>> GetUserRole();
+
     }
 }

@@ -3,6 +3,7 @@ using Application.Interfaces.User;
 using Application.Response;
 using AutoMapper;
 using Domain.Entities.User;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,17 @@ namespace Application.Services.User
     public class RoleService : IRoleService
     {
         private readonly RoleManager<Role> _roleManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RoleService(RoleManager<Role> roleManager, IMapper mapper)
+        public RoleService(RoleManager<Role> roleManager,
+            IHttpContextAccessor httpContextAccessor,IMapper mapper,UserManager<ApplicationUser> userManager)
         {
             _roleManager = roleManager;
             _mapper = mapper;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
 
@@ -138,6 +144,37 @@ namespace Application.Services.User
                  Message ="Role deletion unsuccessful!",
                  Error= ex.Message,
                 };
+            }
+        }
+
+        public async Task<IList<string>> GetUserRole()
+        {
+            try
+            {
+               
+                var userInfo = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
+                if (userInfo != null)
+                {
+                    //var applicationUser = await _userManager.FindByNameAsync(user);
+                    var roles = await _userManager.GetRolesAsync(userInfo);
+                    if (roles.Count > 0)
+                    {
+                        return roles;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
 

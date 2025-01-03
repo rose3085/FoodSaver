@@ -2,6 +2,7 @@
 using Application.Interfaces.User;
 using Application.Services.User;
 using Domain.Entities.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -59,6 +60,25 @@ namespace FoodSaver.Controllers.User
             {
                 var result = await _roleService.UpdateRole(newName,role);   
                 return Ok(result);
+
+            }
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("GetUserRole")]
+        [Authorize]
+        public async Task<IActionResult> GetUserRole()
+        {
+
+
+            if (ModelState.IsValid)
+            {
+                var result = await _roleService.GetUserRole();
+                if (result != null)
+                {
+                    return Ok(result);
+                }
 
             }
             return BadRequest();
