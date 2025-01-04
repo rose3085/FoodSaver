@@ -22,6 +22,9 @@ using Application.Interfaces.Payment;
 using FoodSaver.Controllers.Food;
 using Application.Interfaces.SalesRecord;
 using Application.Services.SalesRecord;
+using Application.Hubs;
+using Application.NotificationBackgroundService;
+using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,6 +68,11 @@ builder.Services.AddSwaggerGen(option =>
     );
 });
 
+
+builder.Services.AddSingleton<INotificationSink, NotificationService>();
+builder.Services.AddHostedService(sp => (NotificationService)sp.GetService<INotificationSink>());
+builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>();
+builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -226,5 +234,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapDefaultControllerRoute();
-
+app.MapHub<NotificationHub>("/notificationHub");
 app.Run();
