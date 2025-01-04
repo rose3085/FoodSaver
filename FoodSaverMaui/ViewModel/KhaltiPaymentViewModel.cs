@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.KhaltiServices;
+using FoodSaverMaui.Model;
 using FoodSaverMaui.Views;
 using System;
 using System.Collections.Generic;
@@ -9,19 +10,82 @@ using System.Threading.Tasks;
 
 namespace FoodSaverMaui.ViewModel
 {
-    [QueryProperty(nameof(Amount), "Amount")]
-    [QueryProperty(nameof(ProductId), "ProductId")]
+    //[QueryProperty(nameof(Amount), "Amount")]
+    //[QueryProperty(nameof(ProductId), "ProductId")]
+    //[QueryProperty(nameof(CityName), "CityName")]
+    //[QueryProperty(nameof(WardNumber), "WardNumber")]
+    //[QueryProperty(nameof(ToleName), "ToleName")]
+   
+
+    [QueryProperty(nameof(BuyFoodModel), "PurchaseDetail")]
     public partial class KhaltiPaymentViewModel : BaseViewModel
     {
 
-        [ObservableProperty]
-        string wardNumber;
+        private BuyFoodModel buyFoodModel;
 
-        [ObservableProperty]
-        string toleName;
+        public BuyFoodModel BuyFoodModel
+        {
+            get => buyFoodModel;
+            set
+            {
+                if (buyFoodModel != value)
+                {
+                    buyFoodModel = value;
 
-        [ObservableProperty]
-        string cityName;
+
+                    CityName = buyFoodModel?.CityName;
+                    WardNumber = buyFoodModel?.WardNumber;
+                    ToleName = buyFoodModel?.ToleName;
+                    Amount = buyFoodModel.Amount.ToString();
+                    ProductId = buyFoodModel?.ProductId;
+
+                    OnPropertyChanged(nameof(BuyFoodModel));
+                }
+            }
+        }
+
+
+        private string cityName;
+        public string CityName
+        {
+            get => cityName;
+            set
+            {
+                if (cityName != value)
+                {
+                    cityName = value;
+                    OnPropertyChanged(nameof(CityName));
+                }
+            }
+        }
+
+        private string toleName;
+        public string ToleName
+        {
+            get => toleName;
+            set
+            {
+                if (toleName != value)
+                {
+                    toleName = value;
+                    OnPropertyChanged(nameof(ToleName));
+                }
+            }
+        }
+        private string wardNumber;
+        public string WardNumber
+        {
+            get => wardNumber;
+            set
+            {
+                if (wardNumber != value)
+                {
+                    wardNumber = value;
+                    OnPropertyChanged(nameof(WardNumber));
+                }
+            }
+        }
+
 
         private string _amount;
 
@@ -33,7 +97,7 @@ namespace FoodSaverMaui.ViewModel
                 if (_amount != value)
                 {
                     _amount = value;
-                    OnPropertyChanged(nameof(Amount)); 
+                    OnPropertyChanged(nameof(Amount));
                 }
             }
         }
@@ -54,19 +118,29 @@ namespace FoodSaverMaui.ViewModel
         }
 
 
+       
+
+
+       
         private readonly IKhaltiService _khaltiServices;
         public Command OnKhaltiPaymentButtonClicked { get; }
         public KhaltiPaymentViewModel(IKhaltiService khaltiServices)
         {
             _khaltiServices = khaltiServices;
             OnKhaltiPaymentButtonClicked = new Command(async() => await KhaltiPaymentButton());
+           
         }
+
+       
 
         public async Task KhaltiPaymentButton()
         {
-            await SecureStorage.SetAsync("amount",Amount);
-            await SecureStorage.SetAsync("productId",ProductId);
-            string pay = await _khaltiServices.KhaltiLaunch(Amount,ProductId);
+            await SecureStorage.SetAsync("amount", _amount);
+            await SecureStorage.SetAsync("productId", _productId);
+            await SecureStorage.SetAsync("cityName", cityName);
+            await SecureStorage.SetAsync("toleName", toleName);
+            await SecureStorage.SetAsync("wardNumber", wardNumber);
+            string pay = await _khaltiServices.KhaltiLaunch(_amount,_productId);
             if (pay != null)
             {
                 // await Shell.Current.GoToAsync($"{nameof(PaymentUrl)}?url={Uri.EscapeDataString(pay)}");

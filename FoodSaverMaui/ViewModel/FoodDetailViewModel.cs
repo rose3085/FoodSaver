@@ -1,13 +1,10 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FoodSaverMaui.Model;
 using FoodSaverMaui.Response;
 using FoodSaverMaui.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
+
+
 
 namespace FoodSaverMaui.ViewModel
 {
@@ -23,6 +20,11 @@ namespace FoodSaverMaui.ViewModel
             get => product;
             set => SetProperty(ref product, value); // Use SetProperty to notify change
         }
+
+
+        [ObservableProperty]
+        public BuyFoodModel purchaseDetail = new();
+
 
         public Command OnRemoveButtonPressed { get; }
         public Command OnPinLocationTapped { get; }
@@ -46,12 +48,36 @@ namespace FoodSaverMaui.ViewModel
             {
                 IsBusy = false;
             }
-            await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}?Amount={product.PricePerKg}&ProductId={product.Id}");
+            string cityName = await Shell.Current.DisplayPromptAsync("Delivery Address","Enter your city name ?");
+            string wardNumber = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your ward number ?",maxLength:2,keyboard:Keyboard.Numeric);
+            string toleName = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your tole name ?");
+
+            if (cityName != null && wardNumber != null && toleName != null && product.PricePerKg != null && product.Id != null)
+            {
+                 purchaseDetail = new BuyFoodModel
+                {
+                    CityName = cityName,
+                    WardNumber = wardNumber,
+                    ToleName = toleName,
+                    Amount = product.PricePerKg,
+                    ProductId = product.Id
+                };
+                var navigationParameter = new Dictionary<string, object>
+                {
+                    { "PurchaseDetail",purchaseDetail }
+                };
+                await Shell.Current.GoToAsync(nameof(KhaltiPaymentView), navigationParameter);
+                //await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}&Amount={product.PricePerKg}&ProductId={product.Id}&CityName=Uri.EscapeDataString({cityName})&WardNumber={wardNumber}&ToleName=Uri.EscapeDataString({toleName}");
+            }
+            else 
+            {
+                return;
+            }
         }
 
         public async Task PinLocationTapped()
         {
-            var location = new Location(product.Latitude,product.Longitude);
+            var location = new Microsoft.Maui.Devices.Sensors.Location(product.Latitude,product.Longitude);
             var options = new MapLaunchOptions { Name = "Butwal" };
 
             try

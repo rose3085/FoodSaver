@@ -13,7 +13,9 @@ namespace FoodSaverMaui.Model
         public string BuyerName { get; set; }
         public string PidX { get; set; }
         public double Amount { get; set; }
-
+        public string WardNumber { get; set; }
+        public string ToleName { get; set; }
+        public string CityName { get; set; }
 
 
     }

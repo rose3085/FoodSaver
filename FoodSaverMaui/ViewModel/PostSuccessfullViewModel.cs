@@ -28,6 +28,9 @@ namespace FoodSaverMaui.ViewModel
             var amount = await SecureStorage.GetAsync("amount");
             var productId = await SecureStorage.GetAsync("productId");
             var token = await SecureStorage.GetAsync("token");
+            var cityName = await SecureStorage.GetAsync("cityName");
+            var wardNumber = await SecureStorage.GetAsync("wardNumber");
+            var toleName = await SecureStorage.GetAsync("toleName");
             var userName = _jwtHelper.ExtractUserInfo(token);
             var requestModel = new BuyFoodModel()
             {
@@ -35,12 +38,17 @@ namespace FoodSaverMaui.ViewModel
                 Amount = double.Parse(amount),
                 ProductId = productId,
                 BuyerName = userName,
+                ToleName = toleName,
+                CityName = cityName,
+                WardNumber = wardNumber,
             };
             var request = await _foodService.BuyFood(requestModel);
             if (request.IsSuccess == true)
             {
-
-                 SecureStorage.Remove("pidx");
+                SecureStorage.Remove("cityName");
+                SecureStorage.Remove("wardNumber");
+                SecureStorage.Remove("toleName");
+                SecureStorage.Remove("pidx");
                 SecureStorage.Remove("amount");
                 SecureStorage.Remove("productId");
             }
