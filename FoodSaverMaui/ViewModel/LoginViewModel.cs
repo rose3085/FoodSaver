@@ -117,8 +117,9 @@ namespace FoodSaverMaui.ViewModel
         public async Task RegisterTapped()
 
         {
-            await Shell.Current.GoToAsync("..");
-
+            //await Shell.Current.GoToAsync(nameof(CreateAccount));
+            //CreateAccount
+            await Shell.Current.GoToAsync("//CreateAccount");
         }
 
 
@@ -142,7 +143,7 @@ namespace FoodSaverMaui.ViewModel
                     if (request == true)
                     {
                         //await Shell.Current.DisplayAlert("Success", "User login successful", "Ok!");
-                        await Shell.Current.GoToAsync("//HomePage");
+                        await Shell.Current.GoToAsync("//HomePage", true);
 
                     }
                     else

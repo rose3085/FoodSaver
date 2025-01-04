@@ -19,9 +19,9 @@ public partial class UserProfile : ContentPage
         if (BindingContext is UserProfileViewModel viewModel)
         {
             // Check and execute OnPostTapped command
-            if (viewModel.OnPostTapped.CanExecute(null))
+            if (viewModel.OnPageLoad.CanExecute(null))
             {
-                 viewModel.OnPostTapped.Execute(null);
+                 viewModel.OnPageLoad.Execute(null);
             }
 
             //// Check and execute OnGetUserName command

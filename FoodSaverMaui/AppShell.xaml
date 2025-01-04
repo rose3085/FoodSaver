@@ -16,9 +16,11 @@
     
     <ShellContent
        
-        ContentTemplate="{DataTemplate local:CreateAccount}"
-        Route="CreateAccount" />
+        ContentTemplate="{DataTemplate local:Login}"
+        Route="Login" />
 
+
+    <ShellContent Route="CreateAccount" ContentTemplate="{DataTemplate local:CreateAccount}" />
     <ShellContent Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}" />
 
 

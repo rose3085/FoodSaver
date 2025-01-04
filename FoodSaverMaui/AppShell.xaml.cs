@@ -7,7 +7,7 @@ namespace FoodSaverMaui
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(Login), typeof(Login));
+            //Routing.RegisterRoute(nameof(CreateAccount), typeof(CreateAccount));
             Routing.RegisterRoute(nameof(FindFood),typeof(FindFood));
             Routing.RegisterRoute(nameof(LandingPage), typeof(LandingPage));
             Routing.RegisterRoute(nameof(UserProfile), typeof(UserProfile));

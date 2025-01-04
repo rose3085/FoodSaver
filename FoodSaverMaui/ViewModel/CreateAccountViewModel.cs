@@ -150,7 +150,7 @@ namespace FoodSaverMaui.ViewModel
         public async Task SignInTapped()
         {
 
-            await Shell.Current.GoToAsync(nameof(Login));
+            await Shell.Current.GoToAsync("//Login");
         
         }
 

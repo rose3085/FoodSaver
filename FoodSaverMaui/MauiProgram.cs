@@ -32,16 +32,16 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<IBiometric>(BiometricAuthenticationService.Default);
             builder.Services.AddSingleton<IJwtHelper, JwtHelper>();
             builder.Services.AddSingleton<HttpClient>();
-            builder.Services.AddSingleton<CreateAccount>();
-            builder.Services.AddSingleton<CreateAccountViewModel>();
+            builder.Services.AddTransient<CreateAccount>();
+            builder.Services.AddTransient<CreateAccountViewModel>();
             builder.Services.AddSingleton<UserServices>();
             builder.Services.AddSingleton<SalesRecordServices>();
 
             builder.Services.AddTransient<Login>();
             builder.Services.AddTransient<LoginViewModel>();
 
-            builder.Services.AddSingleton<HomePage>();
-            builder.Services.AddSingleton<HomePageViewModel>();
+            builder.Services.AddTransient<HomePage>();
+            builder.Services.AddTransient<HomePageViewModel>();
 
             builder.Services.AddSingleton<LandingPage>();
             builder.Services.AddSingleton<LandingPageViewModel>();
