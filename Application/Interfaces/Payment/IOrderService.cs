@@ -12,5 +12,7 @@ namespace Application.Interfaces.Payment
     public interface IOrderService
     {
         Task<OrderResponse> CreateOrder(CreateOrderDto createOrderRequest);
+
+        //Task AddDeliveryAddress(DeliveryAddressDto deliveryAddressDto);
     }
 }

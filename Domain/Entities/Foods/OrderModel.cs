@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Payment;
+﻿using Domain.Entities.Location;
+using Domain.Entities.Payment;
 using Domain.Entities.User;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace Domain.Entities.Foods
 
         public FoodModel Food { get; set; }
         public PaymentModel Payment { get; set; }
+        public DeliveryAddressModel DeliveryAddress { get; set; }
         public DateTime CreatedTime { get; set; }
 
     }

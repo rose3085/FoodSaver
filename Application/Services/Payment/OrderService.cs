@@ -8,6 +8,7 @@ using Application.Response.Food;
 using Application.Services.SalesRecord;
 using AutoMapper;
 using Domain.Entities.Foods;
+using Domain.Entities.Location;
 using Domain.Entities.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -40,6 +41,7 @@ namespace Application.Services.Payment
             _salesRecordService = salesRecordService;
         }
 
+     
         //    try { }
         //        catch (Exception ex) {
 
@@ -95,6 +97,16 @@ namespace Application.Services.Payment
 
 
                         var id = Guid.NewGuid().ToString();
+                        var deliveryId = Guid.NewGuid().ToString();
+
+                        var deliveryAddress = new DeliveryAddressModel
+                        { 
+                            Id = deliveryId,
+                            WardNumber = createOrderRequest.WardNumber,
+                            ToleName = createOrderRequest.ToleName,
+                            CityName = createOrderRequest.CityName,
+                        
+                        };
                         var order = new OrderModel
                         {
                             Id = id,
@@ -102,7 +114,7 @@ namespace Application.Services.Payment
                             Food = checkProductExist,
                             Payment = createPayment,
                             CreatedTime = DateTime.UtcNow,
-
+                            DeliveryAddress = deliveryAddress,
                         };
 
                         checkProductExist.IsBooked = true;

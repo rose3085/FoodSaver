@@ -28,6 +28,7 @@ namespace Infrastructure.Data.DataContext
         public DbSet<AddressModel> Address { get; set; }
         public DbSet<PaymentModel> Payment { get; set; }
         public DbSet<SalesRecordModel> SalesRecord { get; set; }
+        public DbSet<DeliveryAddressModel> DeliveryAddress { get; set; }
     }
 }
 
