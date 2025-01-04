@@ -1,4 +1,5 @@
-﻿using FoodSaverMaui.KhaltiServices;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FoodSaverMaui.KhaltiServices;
 using FoodSaverMaui.Views;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,16 @@ namespace FoodSaverMaui.ViewModel
     [QueryProperty(nameof(ProductId), "ProductId")]
     public partial class KhaltiPaymentViewModel : BaseViewModel
     {
+
+        [ObservableProperty]
+        string wardNumber;
+
+        [ObservableProperty]
+        string toleName;
+
+        [ObservableProperty]
+        string cityName;
+
         private string _amount;
 
         public string Amount

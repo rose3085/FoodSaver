@@ -41,6 +41,11 @@ namespace FoodSaverMaui.ViewModel
         }
         public async Task BuyButtonPressed()
         {
+            var userName = await SecureStorage.GetAsync("userName");
+            if (Product.UserName == userName)
+            {
+                IsBusy = false;
+            }
             await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}?Amount={product.PricePerKg}&ProductId={product.Id}");
         }
 
