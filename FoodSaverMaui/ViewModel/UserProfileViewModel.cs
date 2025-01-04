@@ -5,11 +5,13 @@ using FoodSaverMaui.Helper;
 using FoodSaverMaui.Response;
 using FoodSaverMaui.Services.Food;
 using FoodSaverMaui.Services.SalesRecord;
+using FoodSaverMaui.Services.User;
 using FoodSaverMaui.Views;
 using Plugin.Maui.Biometric;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -34,6 +36,8 @@ namespace FoodSaverMaui.ViewModel
 
         [ObservableProperty]
         public bool showSalesLimitReachedMessage;
+
+       
 
         //private double _percentage;
 
@@ -61,6 +65,7 @@ namespace FoodSaverMaui.ViewModel
         }
 
         private readonly FoodService _foodService;
+        private readonly UserProfileService _userProfileService;
         private readonly SalesRecordServices _salesRecordService;
         private readonly IJwtHelper _jwtHelper;
 
@@ -75,9 +80,11 @@ namespace FoodSaverMaui.ViewModel
         public Command OnEditProfileTapped { get; }
         public Command OnDotsTapped { get; }
         public Command OnHistoryTapped { get; }
-        public UserProfileViewModel(FoodService foodService,IJwtHelper jwtHelper,SalesRecordServices salesRecordServices)
+        public Command OnPageLoad { get; }
+        public UserProfileViewModel(FoodService foodService,IJwtHelper jwtHelper,SalesRecordServices salesRecordServices, UserProfileService userProfileService)
         {
             _foodService = foodService;
+            _userProfileService = userProfileService;
             _salesRecordService = salesRecordServices;
             _jwtHelper = jwtHelper;
             OnEnableFingerprintTapped = new Command(async () => await EnableFingerPrintTapped());
@@ -94,6 +101,29 @@ namespace FoodSaverMaui.ViewModel
             IsComponent1Visible = true;
             IsComponent2Visible = false;
             ShowSalesLimitReachedMessage = false;
+            OnPageLoad = new Command(async() => await GetUserRoles());
+        }
+
+        public async Task GetUserRoles()
+        {
+            try
+            {
+                IsBusy = true;
+
+                var role = await _userProfileService.GetUserRoles();
+                if (role == "Buyer")
+                {
+                    isSeller = false;
+                }
+                else
+                {
+                    await PostTapped();
+                }
+            }
+            finally
+            { 
+            IsBusy = false; }
+        
         }
 
         public async Task DotsTapped(GetProductsResponse selectedProduct)
@@ -172,6 +202,7 @@ namespace FoodSaverMaui.ViewModel
                 var request = await _foodService.GetUserProducts();
                 if (request != null)
                 {
+                    
                     Products.Clear();
                     foreach (var product in request)
                     {
@@ -242,8 +273,13 @@ namespace FoodSaverMaui.ViewModel
         }
         public async Task LogoutTapped()
         {
-            await Shell.Current.GoToAsync(nameof(Login));
+            var checkFingerPrint =await SecureStorage.GetAsync("FingerPrint");
 
+           var confirm = await Shell.Current.DisplayAlert("Logout","You're being logged out!","Ok","Cancel");
+            if (confirm == true)
+            {
+                Application.Current.MainPage = new AppShell();
+            }
         }
 
 
