@@ -22,6 +22,7 @@ public partial class PostSuccessfullPage : ContentPage
             {
                 viewModel.OnBuyPost.Execute(null); // Execute the command
             }
+
         }
         await Task.Delay(1000);
         await Shell.Current.GoToAsync("//HomePage");

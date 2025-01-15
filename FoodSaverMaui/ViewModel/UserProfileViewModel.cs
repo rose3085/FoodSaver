@@ -6,7 +6,9 @@ using FoodSaverMaui.Response;
 using FoodSaverMaui.Services.Food;
 using FoodSaverMaui.Services.SalesRecord;
 using FoodSaverMaui.Services.User;
+using FoodSaverMaui.SignalRServices;
 using FoodSaverMaui.Views;
+using Microsoft.AspNetCore.SignalR.Client;
 using Plugin.Maui.Biometric;
 using System;
 using System.Collections.Generic;
@@ -81,12 +83,15 @@ namespace FoodSaverMaui.ViewModel
         public Command OnDotsTapped { get; }
         public Command OnHistoryTapped { get; }
         public Command OnPageLoad { get; }
-        public UserProfileViewModel(FoodService foodService,IJwtHelper jwtHelper,SalesRecordServices salesRecordServices, UserProfileService userProfileService)
+        private readonly HubConnection _hubConnection;
+        private readonly ISignalRService _signalRService;
+        public UserProfileViewModel(FoodService foodService, ISignalRService signalRService, IJwtHelper jwtHelper,SalesRecordServices salesRecordServices, UserProfileService userProfileService)
         {
             _foodService = foodService;
             _userProfileService = userProfileService;
             _salesRecordService = salesRecordServices;
             _jwtHelper = jwtHelper;
+            _signalRService = signalRService;
             OnEnableFingerprintTapped = new Command(async () => await EnableFingerPrintTapped());
             OnPostTapped = new Command(async () => await PostTapped());
             OnHistoryTapped = new Command(async () => await HistoryTapped());
@@ -278,6 +283,24 @@ namespace FoodSaverMaui.ViewModel
            var confirm = await Shell.Current.DisplayAlert("Logout","You're being logged out!","Ok","Cancel");
             if (confirm == true)
             {
+                if (_hubConnection != null)
+                {
+                    if (_hubConnection.State != HubConnectionState.Disconnected)
+                    {
+                        try
+                        {
+                            await _hubConnection.StopAsync();
+                            Console.WriteLine("HubConnection stopped.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error stopping HubConnection: {ex.Message}");
+                        }
+                    }
+
+                    await _hubConnection.DisposeAsync();
+                    Console.WriteLine("HubConnection disposed.");
+                }
                 Application.Current.MainPage = new AppShell();
             }
         }

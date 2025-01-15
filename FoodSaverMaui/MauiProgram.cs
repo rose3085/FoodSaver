@@ -4,9 +4,11 @@ using FoodSaverMaui.KhaltiServices;
 using FoodSaverMaui.Services.Food;
 using FoodSaverMaui.Services.SalesRecord;
 using FoodSaverMaui.Services.User;
+using FoodSaverMaui.SignalRServices;
 using FoodSaverMaui.ViewModel;
 using FoodSaverMaui.Views;
 using Microsoft.Extensions.Logging;
+using Plugin.LocalNotification;
 using Plugin.Maui.Biometric;
 
 namespace FoodSaverMaui
@@ -19,6 +21,7 @@ namespace FoodSaverMaui
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseLocalNotification()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -87,6 +90,7 @@ namespace FoodSaverMaui
 
             builder.Services.AddTransient<EditProfile>();
             builder.Services.AddTransient<EditProfileViewModel>();
+            builder.Services.AddSingleton<ISignalRService,SignalRService>();
 
 
 #if DEBUG

@@ -19,5 +19,7 @@ namespace Application.Interfaces.Food
 
         Task<FoodServiceResponse> DeleteFood(string foodId);
         Task<IEnumerable<GetProductResponse>> GetUsersProduct();
+
+        Task<FoodModel> GetProductById(string productId);
     }
 }

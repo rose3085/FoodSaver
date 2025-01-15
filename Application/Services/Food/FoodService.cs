@@ -229,7 +229,7 @@ namespace Application.Services.Food
             var result = await _uow.AsyncRepositories<FoodModel>().GetRandomWithIncludeAsync(includes);
 
 
-             var baseUrl = $"https://dd31-2405-acc0-1504-cce4-d12a-f565-6a03-9e7f.ngrok-free.app";
+             var baseUrl = $"https://91e8-2405-acc0-1504-cce4-117a-683f-20a2-62cc.ngrok-free.app";
             // var baseUrl = $"https://localhost:7293";
             var productResult =  result
                 .Where(product => product.IsBooked == false)
@@ -343,6 +343,24 @@ namespace Application.Services.Food
             await imageFile.CopyToAsync(stream);
           
             return fileName;
+        }
+
+        public async Task<FoodModel> GetProductById(string productId)
+        {
+            var includes = new Expression<Func<FoodModel, object>>[]
+                  {
+                        s => s.Seller,
+                        s => s.Address,
+                  };
+            var result = await _uow.AsyncRepositories<FoodModel>().GetWithIncludeAndId(productId,includes);
+            if (result != null)
+            {
+                return result;
+            }
+            else 
+            {
+                return null;
+            }
         }
     }
 }
