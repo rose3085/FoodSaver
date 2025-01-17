@@ -22,6 +22,8 @@ using Application.Interfaces.Payment;
 using FoodSaver.Controllers.Food;
 using Application.Interfaces.SalesRecord;
 using Application.Services.SalesRecord;
+using Application.Interfaces.PurchaseHistory;
+using Application.Services.PurchaseHistory;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,6 +77,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ISalesRecordService, SalesRecordService>();
+builder.Services.AddScoped<IPurchaseHistoryService, PurchaseHistoryService>();
 builder.Services.AddTransient<OrderController>();
 
 //builder.Services.AddAutoMapper(typeof(Program));

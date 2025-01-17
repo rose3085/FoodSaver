@@ -25,5 +25,7 @@ namespace Application.Interfaces.Data
         //);
 
         Task<T> GetWithIncludeAndId<TPrimaryKey>(TPrimaryKey id, Expression<Func<T, object>>[] children);
+
+        Task<IEnumerable<T>> GetwithIncludeAndFilter(Expression<Func<T, object>>[] children, Expression<Func<T, bool>> filter);
     }
 }
