@@ -3,7 +3,9 @@ using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Helper;
 using FoodSaverMaui.Response;
+using FoodSaverMaui.Response.PurchaseHistory;
 using FoodSaverMaui.Services.Food;
+using FoodSaverMaui.Services.PurchaseHistory;
 using FoodSaverMaui.Services.SalesRecord;
 using FoodSaverMaui.Services.User;
 using FoodSaverMaui.Views;
@@ -47,6 +49,7 @@ namespace FoodSaverMaui.ViewModel
         //    set => SetProperty(ref _percentage, value);
         //}
         public ObservableCollection<GetProductsResponse> Products { get; } = new();
+        public ObservableCollection<GetPurchaseWrapper> PurchaseHistory { get; } = new();
 
         private bool _isComponent1Visible ;
 
@@ -64,8 +67,16 @@ namespace FoodSaverMaui.ViewModel
             set => SetProperty(ref _isComponent2Visible, value);
         }
 
+        private bool _isComponent3Visible;
+
+        public bool IsComponent3Visible
+        {
+            get => _isComponent3Visible;
+            set => SetProperty(ref _isComponent3Visible, value);
+        }
         private readonly FoodService _foodService;
         private readonly UserProfileService _userProfileService;
+        private readonly PurchaseHistoryService _purchaseHistoryService;
         private readonly SalesRecordServices _salesRecordService;
         private readonly IJwtHelper _jwtHelper;
 
@@ -74,17 +85,19 @@ namespace FoodSaverMaui.ViewModel
         public Command OnDeleteUserTapped { get; }
         public Command OnChangeEmailTapped { get; }
         public Command OnLogoutTapped { get; }
-        public Command ToggleCommand { get; }
+      
         public Command OnGetUserName { get; }
         public Command OnPostTapped { get; }
         public Command OnEditProfileTapped { get; }
         public Command OnDotsTapped { get; }
         public Command OnHistoryTapped { get; }
         public Command OnPageLoad { get; }
-        public UserProfileViewModel(FoodService foodService,IJwtHelper jwtHelper,SalesRecordServices salesRecordServices, UserProfileService userProfileService)
+        public Command OnPurchaseHistoryTapped { get; }
+        public UserProfileViewModel(FoodService foodService,IJwtHelper jwtHelper,SalesRecordServices salesRecordServices, UserProfileService userProfileService, PurchaseHistoryService purchaseHistoryService)
         {
             _foodService = foodService;
             _userProfileService = userProfileService;
+            _purchaseHistoryService = purchaseHistoryService;
             _salesRecordService = salesRecordServices;
             _jwtHelper = jwtHelper;
             OnEnableFingerprintTapped = new Command(async () => await EnableFingerPrintTapped());
@@ -94,16 +107,46 @@ namespace FoodSaverMaui.ViewModel
             OnDeleteUserTapped = new Command(async () => await DeleteUserTapped());
             OnChangeEmailTapped = new Command(async () => await ChangeEmailTapped());
             OnLogoutTapped = new Command(async() => await LogoutTapped());
-            ToggleCommand = new Command(async () => await OnToggleCommand());
+            
             OnGetUserName = new Command(async () => await GetUserName());
             OnEditProfileTapped = new Command(async() => await EditProfileTapped());
             OnDotsTapped = new Command<GetProductsResponse>(async (selectedProduct) => await DotsTapped(selectedProduct));
             IsComponent1Visible = true;
             IsComponent2Visible = false;
+            IsComponent3Visible = false;
             ShowSalesLimitReachedMessage = false;
             OnPageLoad = new Command(async() => await GetUserRoles());
+            OnPurchaseHistoryTapped = new Command(async() => await PurchaseHistoryTapped());
         }
 
+
+        public async Task PurchaseHistoryTapped()
+        {
+            try {
+                var result = await _purchaseHistoryService.GetUserPurchase();
+                if (result == null)
+                {
+                    await Shell.Current.DisplayAlert("Something went wrong!","Couldn't display Purchase History","Ok");
+                }
+                else 
+                {
+                    PurchaseHistory.Clear();
+                    await foreach (var product in result)
+                    {
+                        
+                        PurchaseHistory.Add(product);
+                    }
+                    OnPropertyChanged(nameof(PurchaseHistory));
+                    IsComponent1Visible = false;
+                    IsComponent2Visible = false;
+                    IsComponent3Visible = true;
+                }
+
+            }
+            catch(Exception ex) {
+                await Shell.Current.DisplayAlert("Something went wrong!", "Couldn't display Purchase History", "Ok");
+            }
+        }
         public async Task GetUserRoles()
         {
             try
@@ -181,7 +224,8 @@ namespace FoodSaverMaui.ViewModel
                     { Percentage = 1.0; }
                     IsComponent1Visible = false;
                     IsComponent2Visible = true;
-             
+                    IsComponent3Visible = false;
+
             }
             catch
             {
@@ -212,6 +256,7 @@ namespace FoodSaverMaui.ViewModel
 
                     IsComponent1Visible = true;
                     IsComponent2Visible = false;
+                    IsComponent3Visible = false;
                 }
                 else
                 {
@@ -232,23 +277,6 @@ namespace FoodSaverMaui.ViewModel
             }
 
         }
-
-
-        public async Task OnToggleCommand()
-        {
-            IsComponent1Visible = !IsComponent1Visible;
-            IsComponent2Visible = !IsComponent2Visible;
-
-
-
-
-
-
-
-            // Optional: Simulate some asynchronous behavior
-            await Task.Delay(100);
-    }
-
 
         public async Task EditProfileTapped()
         {

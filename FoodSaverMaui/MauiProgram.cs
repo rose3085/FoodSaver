@@ -2,6 +2,7 @@
 using FoodSaverMaui.Helper;
 using FoodSaverMaui.KhaltiServices;
 using FoodSaverMaui.Services.Food;
+using FoodSaverMaui.Services.PurchaseHistory;
 using FoodSaverMaui.Services.SalesRecord;
 using FoodSaverMaui.Services.User;
 using FoodSaverMaui.ViewModel;
@@ -35,7 +36,7 @@ namespace FoodSaverMaui
             builder.Services.AddTransient<CreateAccount>();
             builder.Services.AddTransient<CreateAccountViewModel>();
             builder.Services.AddSingleton<UserServices>();
-            builder.Services.AddSingleton<SalesRecordServices>();
+            
 
             builder.Services.AddTransient<Login>();
             builder.Services.AddTransient<LoginViewModel>();
@@ -49,6 +50,9 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<UserProfile>();
             builder.Services.AddSingleton<UserProfileViewModel>();
             builder.Services.AddSingleton<UserProfileService>();
+            builder.Services.AddSingleton<SalesRecordServices>();
+            builder.Services.AddSingleton<PurchaseHistoryService>();
+
 
             builder.Services.AddSingleton<UpdatePassword>();
             builder.Services.AddSingleton<UpdatePasswordViewModel>();
