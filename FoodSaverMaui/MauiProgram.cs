@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using FoodSaverMaui.Helper;
+using FoodSaverMaui.Helper.CacheHelper;
 using FoodSaverMaui.KhaltiServices;
 using FoodSaverMaui.Services.Food;
 using FoodSaverMaui.Services.PurchaseHistory;
@@ -30,6 +31,7 @@ namespace FoodSaverMaui
                     fonts.AddFont("Solway-Bold.tff", "Solway");
                 });
 
+            builder.Services.AddScoped<ICacheService, CacheService >();
             builder.Services.AddSingleton<IBiometric>(BiometricAuthenticationService.Default);
             builder.Services.AddSingleton<IJwtHelper, JwtHelper>();
             builder.Services.AddSingleton<HttpClient>();

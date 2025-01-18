@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Helper;
+using FoodSaverMaui.Helper.CacheHelper;
 using FoodSaverMaui.Response;
 using FoodSaverMaui.Response.PurchaseHistory;
 using FoodSaverMaui.Services.Food;
@@ -78,6 +79,7 @@ namespace FoodSaverMaui.ViewModel
         private readonly UserProfileService _userProfileService;
         private readonly PurchaseHistoryService _purchaseHistoryService;
         private readonly SalesRecordServices _salesRecordService;
+        private readonly ICacheService _cacheService;
         private readonly IJwtHelper _jwtHelper;
 
         public Command OnEnableFingerprintTapped { get; }
@@ -93,12 +95,13 @@ namespace FoodSaverMaui.ViewModel
         public Command OnHistoryTapped { get; }
         public Command OnPageLoad { get; }
         public Command OnPurchaseHistoryTapped { get; }
-        public UserProfileViewModel(FoodService foodService,IJwtHelper jwtHelper,SalesRecordServices salesRecordServices, UserProfileService userProfileService, PurchaseHistoryService purchaseHistoryService)
+        public UserProfileViewModel(FoodService foodService,ICacheService cacheService,IJwtHelper jwtHelper,SalesRecordServices salesRecordServices, UserProfileService userProfileService, PurchaseHistoryService purchaseHistoryService)
         {
             _foodService = foodService;
             _userProfileService = userProfileService;
             _purchaseHistoryService = purchaseHistoryService;
             _salesRecordService = salesRecordServices;
+            _cacheService = cacheService;
             _jwtHelper = jwtHelper;
             OnEnableFingerprintTapped = new Command(async () => await EnableFingerPrintTapped());
             OnPostTapped = new Command(async () => await PostTapped());
@@ -123,6 +126,7 @@ namespace FoodSaverMaui.ViewModel
         public async Task PurchaseHistoryTapped()
         {
             try {
+                IsBusy = true;
                 var result = await _purchaseHistoryService.GetUserPurchase();
                 if (result == null)
                 {
@@ -146,6 +150,7 @@ namespace FoodSaverMaui.ViewModel
             catch(Exception ex) {
                 await Shell.Current.DisplayAlert("Something went wrong!", "Couldn't display Purchase History", "Ok");
             }
+            finally { IsBusy = false; }
         }
         public async Task GetUserRoles()
         {
@@ -203,34 +208,40 @@ namespace FoodSaverMaui.ViewModel
         {
             try
             {
+                IsBusy = true;
+
                 var request = await _salesRecordService.GetSalesRecord();
-            
-                    string limitReached = request.dailyLimitReached.ToString();
-                    await SecureStorage.SetAsync("dailyLimitReached",request.dailyLimitReached.ToString());
-                    var newAmount = request.newAmount;
-                    Totalsales = newAmount + request.totalPreviousAmount;
-                    double maxLimit = 200;
-                    RemainingLimit = maxLimit - newAmount;
-                    if (RemainingLimit <= 0)
-                    {
-                        RemainingLimit = 0;
-                        isSalesLimitReached = true;
-                        ShowSalesLimitReachedMessage = true;
 
-                    }
-                    Percentage = newAmount / maxLimit;
+                string limitReached = request.dailyLimitReached.ToString();
+                await SecureStorage.SetAsync("dailyLimitReached", request.dailyLimitReached.ToString());
+                var newAmount = request.newAmount;
+                Totalsales = newAmount + request.totalPreviousAmount;
+                double maxLimit = 200;
+                RemainingLimit = maxLimit - newAmount;
+                if (RemainingLimit <= 0)
+                {
+                    RemainingLimit = 0;
+                    isSalesLimitReached = true;
+                    ShowSalesLimitReachedMessage = true;
 
-                    if (Percentage > 1.0)
-                    { Percentage = 1.0; }
-                    IsComponent1Visible = false;
-                    IsComponent2Visible = true;
-                    IsComponent3Visible = false;
+                }
+                Percentage = newAmount / maxLimit;
+
+                if (Percentage > 1.0)
+                { Percentage = 1.0; }
+                IsComponent1Visible = false;
+                IsComponent2Visible = true;
+                IsComponent3Visible = false;
 
             }
             catch
             {
 
                 await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
+            }
+            finally
+            {
+                IsBusy = false;
             }
 
         }
@@ -243,12 +254,34 @@ namespace FoodSaverMaui.ViewModel
                 //var token = await SecureStorage.GetAsync("token");
                 //UserName = _jwtHelper.ExtractUserInfo(token);
                 IsBusy = true;
-                var request = await _foodService.GetUserProducts();
-                if (request != null)
+                var cacheResult = await _cacheService.GetFromCache<IEnumerable<GetProductsResponse>>("UserProduct");
+                if ( cacheResult == null)
                 {
-                    
+                    var request = await _foodService.GetUserProducts();
+                    if (request.Count() > 0 || request != null)
+                    {
+
+                        Products.Clear();
+                        foreach (var product in request)
+                        {
+                            Products.Add(product);
+                        }
+                        OnPropertyChanged(nameof(Products));
+
+                        IsComponent1Visible = true;
+                        IsComponent2Visible = false;
+                        IsComponent3Visible = false;
+                    }
+                    else
+                    {
+
+                        await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
+                    }
+                }
+                else 
+                {
                     Products.Clear();
-                    foreach (var product in request)
+                    foreach (var product in cacheResult)
                     {
                         Products.Add(product);
                     }
@@ -258,11 +291,8 @@ namespace FoodSaverMaui.ViewModel
                     IsComponent2Visible = false;
                     IsComponent3Visible = false;
                 }
-                else
-                {
 
-                    await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
-                }
+               
             }
             catch
             {

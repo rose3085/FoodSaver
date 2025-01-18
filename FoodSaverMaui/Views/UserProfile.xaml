@@ -101,13 +101,14 @@
                         </Button>
                     </Grid>
                     <!--<BoxView Grid.Row="1" HeightRequest="1"/>-->
-                    <Grid Grid.Row="1">
-
-                        <ScrollView >
-
-
-
-                            <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single" IsVisible="{Binding IsComponent1Visible}">
+                    <Grid Grid.Row="1" >
+                        <Grid >
+                            <ActivityIndicator Grid.Row="0" IsRunning="{Binding IsBusy}" 
+                                IsVisible="{Binding IsBusy}"
+                                        Color="Black"  HeightRequest="25" WidthRequest="25"/>
+                        </Grid>
+                        
+                        <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single" IsVisible="{Binding IsComponent1Visible}">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="model:GetProductsResponse">
                                         <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -175,7 +176,7 @@
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
-                        </ScrollView>
+                     
 
 
                         <Frame IsVisible="{Binding IsComponent2Visible}" BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -239,11 +240,7 @@
                         </Frame>
 
 
-                        <ScrollView >
-
-
-
-                            <CollectionView ItemsSource="{Binding PurchaseHistory}" SelectionMode="Single" IsVisible="{Binding IsComponent3Visible}">
+                      <CollectionView ItemsSource="{Binding PurchaseHistory}" SelectionMode="Single" IsVisible="{Binding IsComponent3Visible}">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="purchaseModel:GetPurchaseWrapper">
                                         <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -278,7 +275,7 @@
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
-                        </ScrollView>
+                       
 
 
                     </Grid>
