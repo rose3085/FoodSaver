@@ -29,6 +29,8 @@ namespace FoodSaverMaui.ViewModel
         [ObservableProperty]
         bool isRefreshing;
 
+     
+       public bool IsNotRefreshing => !IsRefreshing;
         public Command OnDetailButtonClicked { get; }
         public Command OnRemoveButtonPressed { get; }
 

@@ -66,9 +66,11 @@
 	  <None Remove="Resources\Images\dots.png" />
 	  <None Remove="Resources\Images\down.png" />
 	  <None Remove="Resources\Images\email.png" />
+	  <None Remove="Resources\Images\filter.png" />
 	  <None Remove="Resources\Images\find.png" />
 	  <None Remove="Resources\Images\fingerprint.png" />
 	  <None Remove="Resources\Images\finger_print.png" />
+	  <None Remove="Resources\Images\gallery.png" />
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\key.png" />
 	  <None Remove="Resources\Images\list.png" />

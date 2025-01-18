@@ -31,73 +31,63 @@
                 <Grid Grid.Row="1" RowDefinitions="Auto,*,Auto" RowSpacing="5">
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,Auto" ColumnSpacing="5" Padding="15,0,0,0">
                         <Button Grid.Column="0" Text="Posts" FontSize="15" FontAttributes="Bold" IsVisible="{Binding IsSeller}"
-                             Command="{Binding OnPostTapped}"
-                             CommandParameter="1" >
-                            <VisualStateManager.VisualStateGroups>
+                             Command="{Binding OnPostTapped}" 
+                             CommandParameter="1" BackgroundColor="Transparent">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsComponent1Visible}" Value="True">
+                                    <Setter Property="TextColor" Value="#385897" />
+                                    <Setter Property="FontSize" Value="15.5" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsComponent1Visible}" Value="False">
+                                    <Setter Property="TextColor" Value="Gray" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                            <!--<VisualStateManager.VisualStateGroups>
                                 <VisualStateGroupList>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
                                             <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="Transparent" />
+                                                --><!--<Setter Property="BackgroundColor" Value="Transparent" />--><!--
                                                 <Setter Property="TextColor" Value="Gray"/>
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="Pressed">
                                             <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="Grey" />
+                                                --><!--<Setter Property="BackgroundColor" Value="Grey" />--><!--
                                                 <Setter Property="TextColor" Value="#385897"/>
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="PointerOver" />
                                     </VisualStateGroup>
                                 </VisualStateGroupList>
-                            </VisualStateManager.VisualStateGroups>
+                            </VisualStateManager.VisualStateGroups>-->
                         </Button>
                         <Button Grid.Column="1" Text="SaleHistory"  FontSize="15" FontAttributes="Bold"
                              Command="{Binding OnHistoryTapped}"
-                             CommandParameter="2"  >
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroupList>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="Transparent" />
-                                                <Setter Property="TextColor" Value="Gray"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                        <VisualState x:Name="Pressed">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="Grey" />
-                                                <Setter Property="TextColor" Value="#385897"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                        <VisualState x:Name="PointerOver" />
-                                    </VisualStateGroup>
-                                </VisualStateGroupList>
-                            </VisualStateManager.VisualStateGroups>
+                             CommandParameter="2" BackgroundColor="Transparent" >
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsComponent2Visible}" Value="True">
+                                    <Setter Property="TextColor" Value="#385897" />
+                                    <Setter Property="FontSize" Value="15.5" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsComponent2Visible}" Value="False">
+                                    <Setter Property="TextColor" Value="Gray" />
+                                </DataTrigger>
+                            </Button.Triggers>
                         </Button>
                         <Button Grid.Column="2" Text="PurchaseHistory"  FontSize="15" FontAttributes="Bold"
-                                Command="{Binding OnPurchaseHistoryTapped}"
+                                Command="{Binding OnPurchaseHistoryTapped}" BackgroundColor="Transparent"
                                 >
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroupList>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="Transparent" />
-                                                <Setter Property="TextColor" Value="Gray"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                        <VisualState x:Name="Pressed">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="Grey" />
-                                                <Setter Property="TextColor" Value="#385897"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                        <VisualState x:Name="PointerOver" />
-                                    </VisualStateGroup>
-                                </VisualStateGroupList>
-                            </VisualStateManager.VisualStateGroups>
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsComponent3Visible}" Value="True">
+                                    <Setter Property="TextColor" Value="#385897" />
+                                    <Setter Property="FontSize" Value="15.5" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsComponent3Visible}" Value="False">
+                                    <Setter Property="TextColor" Value="Gray" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                            
                         </Button>
                     </Grid>
                     <!--<BoxView Grid.Row="1" HeightRequest="1"/>-->
@@ -302,7 +292,7 @@
             
             <toolkit:Expander.Header >
                 <Frame Background="Transparent"  BorderColor="Transparent" HorizontalOptions="Start" VerticalOptions="Start" >
-                    <Image   Source="settings.png" HeightRequest="24" WidthRequest="24"  >
+                    <Image   Source="settings.png" HeightRequest="22" WidthRequest="22"  >
                       
                     </Image>
                 </Frame>
@@ -310,7 +300,7 @@
             </toolkit:Expander.Header>
             
 
-            <VerticalStackLayout Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  Background="#f4f4f4" HeightRequest="750"  Spacing="10" Padding="10">
+            <VerticalStackLayout  Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  Background="#f4f4f4" HeightRequest="750"  Spacing="10" Padding="10">
 
                     
                 <!--<VerticalStackLayout.Shadow>

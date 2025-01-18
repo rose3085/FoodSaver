@@ -247,7 +247,33 @@ namespace FoodSaverMaui.ViewModel
         }
 
 
-        public async Task PostTapped()
+
+        public async Task GetUserProduct()
+        {
+            var request = await _foodService.GetUserProducts();
+            if (request.Count() > 0 )
+            {
+
+                Products.Clear();
+                foreach (var product in request)
+                {
+                    Products.Add(product);
+                }
+                OnPropertyChanged(nameof(Products));
+
+                IsComponent1Visible = true;
+                IsComponent2Visible = false;
+                IsComponent3Visible = false;
+            }
+            else
+            {
+
+                await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
+            }
+            }
+
+
+            public async Task PostTapped()
         {
             try
             {
@@ -255,14 +281,16 @@ namespace FoodSaverMaui.ViewModel
                 //UserName = _jwtHelper.ExtractUserInfo(token);
                 IsBusy = true;
                 var cacheResult = await _cacheService.GetFromCache<IEnumerable<GetProductsResponse>>("UserProduct");
-                if ( cacheResult == null)
+                if (cacheResult != null)
                 {
-                    var request = await _foodService.GetUserProducts();
-                    if (request.Count() > 0 || request != null)
+                    if (cacheResult.Count() == 0)
                     {
-
+                        await GetUserProduct();
+                    }
+                    else
+                    {
                         Products.Clear();
-                        foreach (var product in request)
+                        foreach (var product in cacheResult)
                         {
                             Products.Add(product);
                         }
@@ -272,26 +300,11 @@ namespace FoodSaverMaui.ViewModel
                         IsComponent2Visible = false;
                         IsComponent3Visible = false;
                     }
-                    else
-                    {
-
-                        await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
-                    }
                 }
-                else 
+                else
                 {
-                    Products.Clear();
-                    foreach (var product in cacheResult)
-                    {
-                        Products.Add(product);
-                    }
-                    OnPropertyChanged(nameof(Products));
-
-                    IsComponent1Visible = true;
-                    IsComponent2Visible = false;
-                    IsComponent3Visible = false;
+                    await GetUserProduct();
                 }
-
                
             }
             catch
