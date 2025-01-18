@@ -28,7 +28,13 @@ namespace Application.Services.SalesRecord
         {
             var result = await _uow.AsyncRepositories<SalesRecordModel>().GetAllAsync();
             if (result != null)
-            { return result; }
+            {
+                if (result.Count() > 0)
+                {
+                    return result;
+                }
+                else { return null; }
+            }
             else
             { return null; }
         }
