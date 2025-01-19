@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -157,22 +158,41 @@ namespace FoodSaverMaui.ViewModel
         {
             try
             {
-                IsBusy = true;
+                IsSeller = false;
+                IsBuyer = false;
 
-                var role = await _userProfileService.GetUserRoles();
-                if (role == "Buyer")
+                var roles = await SecureStorage.GetAsync("roles");
+                if (roles != null)
                 {
-                    isSeller = false;
-                }
-                else
-                {
-                    await PostTapped();
+                    var rolesList = JsonSerializer.Deserialize<IList<string>>(roles);
+                    if (rolesList != null)
+                    {
+                        if (rolesList.Count() > 0 && rolesList.Contains("Seller"))
+                        {
+                            IsSeller = true;
+                            if (rolesList.Count() > 0 && rolesList.Contains("Buyer"))
+                            {
+                                IsBuyer = true;
+
+                            }
+                            await PostTapped();
+                        }
+
+                        else if (rolesList.Count() > 0 && rolesList.Contains("Buyer"))
+                        {
+                            IsBuyer = true;
+                            await PurchaseHistoryTapped();
+                            
+                        }
+
+                    }
                 }
             }
-            finally
-            { 
-            IsBusy = false; }
-        
+            catch
+            {
+
+            }
+
         }
 
         public async Task DotsTapped(GetProductsResponse selectedProduct)
@@ -356,6 +376,8 @@ namespace FoodSaverMaui.ViewModel
            var confirm = await Shell.Current.DisplayAlert("Logout","You're being logged out!","Ok","Cancel");
             if (confirm == true)
             {
+                Products.Clear();
+                await SecureStorage.SetAsync("isLoggedOut","yes");
                 Application.Current.MainPage = new AppShell();
             }
         }

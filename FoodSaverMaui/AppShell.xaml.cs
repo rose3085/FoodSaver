@@ -1,14 +1,16 @@
-﻿using FoodSaverMaui.Views;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FoodSaverMaui.Views;
 
 namespace FoodSaverMaui
 {
     public partial class AppShell : Shell
     {
+ 
         public AppShell()
         {
             InitializeComponent();
             //Routing.RegisterRoute(nameof(CreateAccount), typeof(CreateAccount));
-            Routing.RegisterRoute(nameof(FindFood),typeof(FindFood));
+            Routing.RegisterRoute(nameof(FindFood), typeof(FindFood));
             Routing.RegisterRoute(nameof(LandingPage), typeof(LandingPage));
             Routing.RegisterRoute(nameof(UserProfile), typeof(UserProfile));
             Routing.RegisterRoute(nameof(UploadFood), typeof(UploadFood));
@@ -19,8 +21,31 @@ namespace FoodSaverMaui
             Routing.RegisterRoute(nameof(PostSuccessfullPage), typeof(PostSuccessfullPage));
             Routing.RegisterRoute(nameof(PaymentUrl), typeof(PaymentUrl));
             Routing.RegisterRoute(nameof(KhaltiPaymentView), typeof(KhaltiPaymentView));
-            Routing.RegisterRoute(nameof(UploadPostSucessfull),typeof(UploadPostSucessfull));
+            Routing.RegisterRoute(nameof(UploadPostSucessfull), typeof(UploadPostSucessfull));
             Routing.RegisterRoute(nameof(EditProfile), typeof(EditProfile));
+
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            //IsLoggedIn = false;
+            //var token = await SecureStorage.GetAsync("token");
+            var checkLogin = await SecureStorage.GetAsync("isLoggedOut");
+            if (checkLogin != null)
+
+            {
+                if (checkLogin == "yes")
+                {
+                    await GoToAsync("//Login");
+
+
+                }
+                else
+                { await GoToAsync("//HomePage"); }
+            }
+            else { await GoToAsync("//Login"); }
+
 
         }
     }

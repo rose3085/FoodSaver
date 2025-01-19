@@ -16,7 +16,7 @@
             <ShellContent 
                      Icon="home.png"
                       ContentTemplate="{DataTemplate local:LandingPage}" />
-        <ShellContent 
+        <ShellContent IsVisible="{Binding IsSeller}"
               Icon="gallery.png"
 ContentTemplate="{DataTemplate local:UploadFood}" />
 

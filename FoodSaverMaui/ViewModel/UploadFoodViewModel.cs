@@ -105,7 +105,7 @@ namespace FoodSaverMaui.ViewModel
             if (!string.IsNullOrEmpty(wardNumber) && !string.IsNullOrEmpty(toleName)
                     && !string.IsNullOrEmpty(cityName))
             {
-                
+
                 var address = $"{cityName} {toleName}";
 
                 IEnumerable<Location> locations = await Geocoding.Default.GetLocationsAsync(address);
@@ -124,10 +124,12 @@ namespace FoodSaverMaui.ViewModel
 
                 }
             }
-            
-            var toast = Toast.Make($"Enter all address fields!", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
-            await toast.Show();
+            else
+            {
 
+                var toast = Toast.Make($"Enter all address fields!", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                await toast.Show();
+            }
 
         }
         public async Task PostButtonTapped()
@@ -159,7 +161,8 @@ namespace FoodSaverMaui.ViewModel
                         if (result == "Product added successfully")
                         {
 
-                            await Shell.Current.GoToAsync(nameof(UploadPostSucessfull));
+                            await Shell.Current.GoToAsync("//HomePage");
+                            //await Shell.Current.Navigation.PushModalAsync(UploadPostSucessfull);
                         }  
                         
                         var toast = Toast.Make($"{result}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);

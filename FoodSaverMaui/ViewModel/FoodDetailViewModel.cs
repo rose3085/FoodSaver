@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Maui.Alerts;
+﻿
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FoodSaverMaui.Helper;
 using FoodSaverMaui.Response;
 using FoodSaverMaui.Views;
 using System;
@@ -15,7 +17,10 @@ namespace FoodSaverMaui.ViewModel
     [QueryProperty(nameof(Product), "Product")]
     public partial class FoodDetailViewModel : BaseViewModel
     {
-        
+
+        [ObservableProperty]
+        bool isBuyButtonVisible;
+
         private GetProductsResponse product;
 
         public GetProductsResponse Product // Define the property itself
@@ -24,17 +29,37 @@ namespace FoodSaverMaui.ViewModel
             set => SetProperty(ref product, value); // Use SetProperty to notify change
         }
 
+        private readonly IJwtHelper _jwtHelper;
+
         public Command OnRemoveButtonPressed { get; }
         public Command OnPinLocationTapped { get; }
         public Command OnBuyButtonPressed { get; }
-
-        public FoodDetailViewModel()
+        public Command OnPageMount { get; }
+        public FoodDetailViewModel(IJwtHelper jwtHelper)
         {
+            _jwtHelper = jwtHelper;
             OnRemoveButtonPressed = new Command(async() => await RemoveButtonPressed());
             OnPinLocationTapped = new Command(async () => await PinLocationTapped());
             OnBuyButtonPressed = new Command(async () => await BuyButtonPressed());
+            OnPageMount = new Command(async() => await PageMount());
         }
 
+        public async Task PageMount()
+        {
+            IsBuyButtonVisible = false;
+            var token = await SecureStorage.GetAsync("token");
+            if(token != null){
+                var userName =  _jwtHelper.ExtractUserInfo(token);
+                if(Product.UserName == userName)
+                {
+                   IsBuyButtonVisible = false;
+                }
+                else
+                {
+                   IsBuyButtonVisible = true;
+                }
+            }
+        }
         public async Task RemoveButtonPressed()
         {
             await Shell.Current.GoToAsync("..");

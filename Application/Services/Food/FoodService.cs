@@ -229,7 +229,7 @@ namespace Application.Services.Food
             var result = await _uow.AsyncRepositories<FoodModel>().GetRandomWithIncludeAsync(includes);
 
 
-             var baseUrl = $"https://365c-2405-acc0-1504-cce4-b1d5-a8bb-47d6-f13.ngrok-free.app";
+             var baseUrl = $"https://1ac2-2405-acc0-1504-cce4-e8d9-5730-e9ec-3d4d.ngrok-free.app";
             // var baseUrl = $"https://localhost:7293";
             var productResult =  result
                 .Where(product => product.IsBooked == false)
@@ -273,13 +273,14 @@ namespace Application.Services.Food
                         s => s.Address,
                   };
                     var result = await _uow.AsyncRepositories<FoodModel>().GetWithInclude(includes);
-                    var baseUrl = $"https://365c-2405-acc0-1504-cce4-b1d5-a8bb-47d6-f13.ngrok-free.app";
+                    var baseUrl = $"https://1ac2-2405-acc0-1504-cce4-e8d9-5730-e9ec-3d4d.ngrok-free.app";
                     //var getProduct = await GetProductsAsync();
                     var getProduct = result
                         .Where(product => product.Seller == userInfo)
                         .OrderByDescending(product => product.Date)
                                .Select(async product =>
                                {
+
                                    var timeDifference = await CalculateTime(product.Date);
                                    return new GetProductResponse
                                    {

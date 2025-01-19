@@ -9,4 +9,18 @@ public partial class FoodDetail : ContentPage
 		InitializeComponent();
 		BindingContext = vm;
 	}
+
+	protected async override void OnAppearing()
+	{
+		base.OnAppearing();
+        
+        if (BindingContext is FoodDetailViewModel viewModel)
+		{
+            if (viewModel.OnPageMount.CanExecute(null))
+            {
+                viewModel.OnPageMount.Execute(null);
+            }
+        }
+
+    }
 }

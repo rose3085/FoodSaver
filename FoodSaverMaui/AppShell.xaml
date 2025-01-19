@@ -19,9 +19,10 @@
         ContentTemplate="{DataTemplate local:Login}"
         Route="Login" />
 
-
+    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}" IsVisible="True" />
     <ShellContent Route="CreateAccount" ContentTemplate="{DataTemplate local:CreateAccount}" />
-    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}" />
+   
+  
 
 
 </Shell>

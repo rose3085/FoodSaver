@@ -64,7 +64,7 @@
                         </Button>
                         <Button Grid.Column="1" Text="SaleHistory"  FontSize="15" FontAttributes="Bold"
                              Command="{Binding OnHistoryTapped}"
-                             CommandParameter="2" BackgroundColor="Transparent" >
+                             CommandParameter="2" BackgroundColor="Transparent" IsVisible="{Binding IsSeller}" >
                             <Button.Triggers>
                                 <DataTrigger TargetType="Button" Binding="{Binding IsComponent2Visible}" Value="True">
                                     <Setter Property="TextColor" Value="#385897" />
@@ -76,7 +76,7 @@
                             </Button.Triggers>
                         </Button>
                         <Button Grid.Column="2" Text="PurchaseHistory"  FontSize="15" FontAttributes="Bold"
-                                Command="{Binding OnPurchaseHistoryTapped}" BackgroundColor="Transparent"
+                                Command="{Binding OnPurchaseHistoryTapped}" BackgroundColor="Transparent" IsVisible="{Binding IsBuyer}"
                                 >
                             <Button.Triggers>
                                 <DataTrigger TargetType="Button" Binding="{Binding IsComponent3Visible}" Value="True">
@@ -282,7 +282,7 @@
 
         <!-- Side Navigation Expander -->
         <toolkit:Expander HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"
-                         
+                    x:Name="SettingsExpander" 
                      Direction="Down"
                       IsExpanded="False"
                       AbsoluteLayout.LayoutBounds="0, 0, 550, 1"

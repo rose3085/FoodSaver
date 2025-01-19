@@ -43,8 +43,8 @@ namespace FoodSaverMaui
             builder.Services.AddTransient<Login>();
             builder.Services.AddTransient<LoginViewModel>();
 
-            builder.Services.AddTransient<HomePage>();
-            builder.Services.AddTransient<HomePageViewModel>();
+            builder.Services.AddSingleton<HomePage>();
+            builder.Services.AddSingleton<HomePageViewModel>();
 
             builder.Services.AddSingleton<LandingPage>();
             builder.Services.AddSingleton<LandingPageViewModel>();
