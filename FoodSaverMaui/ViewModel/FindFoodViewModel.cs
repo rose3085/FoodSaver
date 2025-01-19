@@ -153,17 +153,20 @@ namespace FoodSaverMaui.ViewModel
                 var request = await _foodService.GetAllProducts();
                 if (request != null)
                 {
-                    
+
                     if (request.Count() == 0)
                     {
                         await Shell.Current.DisplayAlert("No product to display", "Please try again later", "Ok!");
                     }
-                    Products.Clear();
-                    foreach (var product in request)
+                    else
                     {
-                        Products.Add(product);
+                        Products.Clear();
+                        foreach (var product in request)
+                        {
+                            Products.Add(product);
+                        }
+                        OnPropertyChanged(nameof(Products));
                     }
-                    OnPropertyChanged(nameof(Products));
 
                 }
                 else

@@ -130,10 +130,11 @@ namespace FoodSaverMaui.ViewModel
                 var result = await _purchaseHistoryService.GetUserPurchase();
                 if (result == null)
                 {
-                    await Shell.Current.DisplayAlert("Something went wrong!","Couldn't display Purchase History","Ok");
+                    await Shell.Current.DisplayAlert("No Purchase History to display!!","Please try again later.","Ok!");
                 }
                 else 
                 {
+                    
                     PurchaseHistory.Clear();
                     await foreach (var product in result)
                     {
@@ -211,27 +212,33 @@ namespace FoodSaverMaui.ViewModel
                 IsBusy = true;
 
                 var request = await _salesRecordService.GetSalesRecord();
-
-                string limitReached = request.dailyLimitReached.ToString();
-                await SecureStorage.SetAsync("dailyLimitReached", request.dailyLimitReached.ToString());
-                var newAmount = request.newAmount;
-                Totalsales = newAmount + request.totalPreviousAmount;
-                double maxLimit = 200;
-                RemainingLimit = maxLimit - newAmount;
-                if (RemainingLimit <= 0)
+                if (request == null)
                 {
-                    RemainingLimit = 0;
-                    isSalesLimitReached = true;
-                    ShowSalesLimitReachedMessage = true;
-
+                    await Shell.Current.DisplayAlert("You currently have no sales history to display!!","Please try again later.", "Ok!");
                 }
-                Percentage = newAmount / maxLimit;
+                else
+                {
+                    string limitReached = request.dailyLimitReached.ToString();
+                    await SecureStorage.SetAsync("dailyLimitReached", request.dailyLimitReached.ToString());
+                    var newAmount = request.newAmount;
+                    Totalsales = newAmount + request.totalPreviousAmount;
+                    double maxLimit = 200;
+                    RemainingLimit = maxLimit - newAmount;
+                    if (RemainingLimit <= 0)
+                    {
+                        RemainingLimit = 0;
+                        isSalesLimitReached = true;
+                        ShowSalesLimitReachedMessage = true;
 
-                if (Percentage > 1.0)
-                { Percentage = 1.0; }
-                IsComponent1Visible = false;
-                IsComponent2Visible = true;
-                IsComponent3Visible = false;
+                    }
+                    Percentage = newAmount / maxLimit;
+
+                    if (Percentage > 1.0)
+                    { Percentage = 1.0; }
+                    IsComponent1Visible = false;
+                    IsComponent2Visible = true;
+                    IsComponent3Visible = false;
+                }
 
             }
             catch
@@ -268,7 +275,7 @@ namespace FoodSaverMaui.ViewModel
             else
             {
 
-                await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
+                await Shell.Current.DisplayAlert( "You currently have no post to display.","Please try again later", "Ok!");
             }
             }
 

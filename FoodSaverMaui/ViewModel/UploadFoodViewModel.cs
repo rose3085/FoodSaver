@@ -88,6 +88,9 @@ namespace FoodSaverMaui.ViewModel
             OnGetUserName = new Command(async () => await GetUserName());
         }
         public bool IsImageSelected => PickedImage != null;
+        public bool IsImageNotSelected => !IsImageSelected;
+
+
         private byte[] _imageData;
         public string PickedImageName;
 

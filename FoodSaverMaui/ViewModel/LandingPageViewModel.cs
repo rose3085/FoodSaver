@@ -58,13 +58,16 @@ namespace FoodSaverMaui.ViewModel
             await _cacheService.AddOrUpdateCache("ProductHomePage",request);
             if (request != null)
             {
-                Products.Clear();
-                foreach (var product in request)
+                if (request.Count() > 0)
                 {
-                    Products.Add(product);
+                    Products.Clear();
+                    foreach (var product in request)
+                    {
+                        Products.Add(product);
+                    }
+                    OnPropertyChanged(nameof(Products));
                 }
-                OnPropertyChanged(nameof(Products));
-
+                else { await Shell.Current.DisplayAlert( "No products available to display!!","Please try again later.", "Ok!"); }
             }
             else
             {

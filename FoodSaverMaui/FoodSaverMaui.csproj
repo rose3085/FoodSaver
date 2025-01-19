@@ -72,6 +72,7 @@
 	  <None Remove="Resources\Images\finger_print.png" />
 	  <None Remove="Resources\Images\gallery.png" />
 	  <None Remove="Resources\Images\home.png" />
+	  <None Remove="Resources\Images\image.png" />
 	  <None Remove="Resources\Images\key.png" />
 	  <None Remove="Resources\Images\list.png" />
 	  <None Remove="Resources\Images\location.png" />
@@ -91,6 +92,7 @@
 	  <None Remove="Resources\Images\remove.png" />
 	  <None Remove="Resources\Images\rightArrows.png" />
 	  <None Remove="Resources\Images\settings.png" />
+	  <None Remove="Resources\Images\sold.png" />
 	  <None Remove="Resources\Images\user.png" />
 	  <None Remove="Resources\Splash\splash.png" />
 	</ItemGroup>

@@ -47,6 +47,8 @@
                         <Border StrokeShape="Rectangle " StrokeThickness="0.5" >
                             <Grid  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="5"
             Padding="5,10,10,10" >
+                                
+                                
 
                                 <Frame Grid.Row="0"
                                 BorderColor="Transparent"
@@ -57,32 +59,39 @@
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center">
 
-                                    <ImageButton 
-           
+                                    <Grid RowDefinitions="Auto,*" RowSpacing="5" VerticalOptions="CenterAndExpand" >
+                                        <ImageButton 
+                                Grid.Row="0"
                                 Source="{Binding PickedImage}"
                                 Command="{Binding OnFliePicked}" 
                                 Aspect="AspectFill"
        
     >
 
-                                        <ImageButton.Triggers>
-                                            <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="false">
-                                                <Setter Property="Source" Value="plus.png" />
-                                                <Setter Property="HeightRequest" Value="30"/>
-                                                <Setter Property="WidthRequest" Value="30 "/>
+                                            <ImageButton.Triggers>
+                                                <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="false">
+                                                    <Setter Property="Source" Value="image.png" />
+                                                    <Setter Property="HeightRequest" Value="40"/>
+                                                    <Setter Property="WidthRequest" Value="40"/>
 
 
 
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="true">
-                                                <Setter Property="Source" Value="{Binding PickedImage}" />
-                                                <Setter Property="BackgroundColor" Value="Transparent" />
-                                                <Setter Property="HeightRequest" Value="180"/>
-                                                <Setter Property="WidthRequest" Value="290 "/>
-                                            </DataTrigger>
-                                        </ImageButton.Triggers>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="true">
+                                                    <Setter Property="Source" Value="{Binding PickedImage}" />
+                                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                                    <Setter Property="HeightRequest" Value="180"/>
+                                                    <Setter Property="WidthRequest" Value="290 "/>
+                                                </DataTrigger>
+                                            </ImageButton.Triggers>
 
-                                    </ImageButton>
+                                        </ImageButton>
+                                        <Grid RowDefinitions="Auto,*"  Grid.Row="1" RowSpacing="5" VerticalOptions="CenterAndExpand"  >
+                                            <Label Text="Browse Image" Grid.Row="0" FontSize="15" TextColor="#385897" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsImageNotSelected}"/>
+                                            <Label Text="Supported Image : PNG, JPG, JPEG" Grid.Row="1" FontSize="13" TextColor="Gray" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsImageNotSelected}" />
+                                        </Grid>
+                                    </Grid>
+
                                 </Frame>
 
                                 <Grid Grid.Row="1"  RowDefinitions="Auto,Auto" >
@@ -270,8 +279,8 @@
                     <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="50" Padding="15,0,0,10">
                         <Button Grid.Column="0" Command="{Binding OnPostTapped}" HorizontalOptions="EndAndExpand" Margin="0,0,35,0" Text="Confirm Post" HeightRequest="40" WidthRequest="110" Background="#03b25a"/>
                         <ActivityIndicator Grid.Column="1" IsRunning="{Binding IsBusy}" 
-                   IsVisible="{Binding IsBusy}" HorizontalOptions="EndAndExpand" 
-                           Color="#03b25a" />
+                   IsVisible="{Binding IsBusy}" HorizontalOptions="EndAndExpand" HeightRequest="20" WidthRequest="20"
+                           Color="Black" />
                     </Grid>
                 </Grid>
             </Border>
