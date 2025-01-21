@@ -43,8 +43,8 @@ namespace FoodSaverMaui.SignalRServices
                     var request = new NotificationRequest
                     {
                         NotificationId = 1111,
-                        Title = "Meow",
-                        Subtitle = "maui",
+                        Title = "Food Saver",
+                        Subtitle = "Notifications",
                         Description = message,
                         BadgeNumber = 27,
                         Schedule = new NotificationRequestSchedule
@@ -93,19 +93,7 @@ namespace FoodSaverMaui.SignalRServices
         {
             try
             {
-                //if (_hubConnection.State != HubConnectionState.Disconnected)
-                //{
-                //    try
-                //    {
-                //        await _hubConnection.StopAsync();
-                //        Console.WriteLine("HubConnection stopped.");
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        Console.WriteLine($"Error stopping HubConnection: {ex.Message}");
-                //    }
-                //}
-               // await _hubConnection.StopAsync();
+               
                 await _hubConnection.StartAsync();
                
                

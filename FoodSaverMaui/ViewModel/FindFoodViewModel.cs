@@ -62,12 +62,12 @@ namespace FoodSaverMaui.ViewModel
         {
             if(selectedProduct == null)
                 return;
-            await _signalRService.SendNotification("dd27b90-05b9-49a3-a2d6-5271d50b6c41", "MeowwwwwwwwwwwwwwBhowwwwwwwwww");
-            //await Shell.Current.GoToAsync(nameof(FoodDetail), true, new Dictionary<string, object>
-            //{
+           // await _signalRService.SendNotification("dd27b90-05b9-49a3-a2d6-5271d50b6c41", "MeowwwwwwwwwwwwwwBhowwwwwwwwww");
+            await Shell.Current.GoToAsync(nameof(FoodDetail), true, new Dictionary<string, object>
+            {
 
-            // {"Product", selectedProduct }
-            //});
+             {"Product", selectedProduct }
+            });
         }
         public async void ShowPopup()
         {

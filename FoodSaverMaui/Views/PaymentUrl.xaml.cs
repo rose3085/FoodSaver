@@ -36,6 +36,7 @@ public partial class PaymentUrl : ContentPage
             if (status == "Completed")
             {
                 await Task.Delay(1000);
+
                 await Shell.Current.GoToAsync(nameof(PostSuccessfullPage));
             }
             if(status == "User canceled")
