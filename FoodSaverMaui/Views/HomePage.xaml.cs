@@ -11,25 +11,27 @@ public partial class HomePage : Shell
 		InitializeComponent();
 		BindingContext = vm;
 	}
-    protected override void OnAppearing()
+
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
-
-
-
+        await SecureStorage.SetAsync("isLoggedOut", "no");
         if (_isFirstLoad && BindingContext is HomePageViewModel viewModel)
         {
             _isFirstLoad = false;
-
-        
-            
-            
-            // Mark as loaded
-                                  // RunOnFirstLoad();
-            //if (viewModel.OnClickTapped.CanExecute(null)) // Check if the command can be executed
-            //{
-            //    viewModel.OnClickTapped.Execute(null); // Execute the command
-            //}
+            if (viewModel.OnPageMount.CanExecute(null)) 
+            {
+                viewModel.OnPageMount.Execute(null); 
+            }
         }
+     
+
     }
+    protected async override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        Preferences.Set("HomePage", "//HomePage");
+    }
+   
+    
 }

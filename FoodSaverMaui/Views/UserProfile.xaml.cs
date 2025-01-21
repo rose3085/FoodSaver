@@ -15,6 +15,7 @@ public partial class UserProfile : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        SettingsExpander.IsExpanded = false;
 
         if (BindingContext is UserProfileViewModel viewModel)
         {
@@ -30,6 +31,11 @@ public partial class UserProfile : ContentPage
             //    viewModel.OnGetUserName.Execute(null);
             //}
         }
+    }
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        SettingsExpander.IsExpanded = false;
     }
 
 

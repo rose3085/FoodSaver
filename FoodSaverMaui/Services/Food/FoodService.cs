@@ -12,16 +12,19 @@ using System.Net.Http;
 using System.IO;
 using System.Threading.Tasks;
 using System.Globalization;
+using FoodSaverMaui.Helper.CacheHelper;
 
 namespace FoodSaverMaui.Services.Food
 {
     public class FoodService
     {
         private readonly HttpClient _httpClient;
+        private readonly ICacheService _cacheService;
 
-        public FoodService(HttpClient httpClient)
+        public FoodService(HttpClient httpClient, ICacheService cacheService)
         {
             _httpClient = httpClient;
+            _cacheService = cacheService;
         }
 
         public async Task<IEnumerable<GetProductsResponse>> GetAllProducts()
@@ -74,6 +77,9 @@ namespace FoodSaverMaui.Services.Food
                 {
 
                     var result = await response.Content.ReadFromJsonAsync<IEnumerable<GetProductsResponse>>();
+
+                    await _cacheService.AddOrUpdateCache("UserProduct",result);
+
                     return result;
 
                 }

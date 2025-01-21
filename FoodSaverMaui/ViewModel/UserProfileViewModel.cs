@@ -2,8 +2,11 @@
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Helper;
+using FoodSaverMaui.Helper.CacheHelper;
 using FoodSaverMaui.Response;
+using FoodSaverMaui.Response.PurchaseHistory;
 using FoodSaverMaui.Services.Food;
+using FoodSaverMaui.Services.PurchaseHistory;
 using FoodSaverMaui.Services.SalesRecord;
 using FoodSaverMaui.Services.User;
 using FoodSaverMaui.SignalRServices;
@@ -16,6 +19,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -49,6 +53,7 @@ namespace FoodSaverMaui.ViewModel
         //    set => SetProperty(ref _percentage, value);
         //}
         public ObservableCollection<GetProductsResponse> Products { get; } = new();
+        public ObservableCollection<GetPurchaseWrapper> PurchaseHistory { get; } = new();
 
         private bool _isComponent1Visible ;
 
@@ -66,9 +71,18 @@ namespace FoodSaverMaui.ViewModel
             set => SetProperty(ref _isComponent2Visible, value);
         }
 
+        private bool _isComponent3Visible;
+
+        public bool IsComponent3Visible
+        {
+            get => _isComponent3Visible;
+            set => SetProperty(ref _isComponent3Visible, value);
+        }
         private readonly FoodService _foodService;
         private readonly UserProfileService _userProfileService;
+        private readonly PurchaseHistoryService _purchaseHistoryService;
         private readonly SalesRecordServices _salesRecordService;
+        private readonly ICacheService _cacheService;
         private readonly IJwtHelper _jwtHelper;
 
         public Command OnEnableFingerprintTapped { get; }
@@ -76,20 +90,24 @@ namespace FoodSaverMaui.ViewModel
         public Command OnDeleteUserTapped { get; }
         public Command OnChangeEmailTapped { get; }
         public Command OnLogoutTapped { get; }
-        public Command ToggleCommand { get; }
+      
         public Command OnGetUserName { get; }
         public Command OnPostTapped { get; }
         public Command OnEditProfileTapped { get; }
         public Command OnDotsTapped { get; }
         public Command OnHistoryTapped { get; }
         public Command OnPageLoad { get; }
+        public Command OnPurchaseHistoryTapped { get; }
+
         private readonly HubConnection _hubConnection;
         private readonly ISignalRService _signalRService;
-        public UserProfileViewModel(FoodService foodService, ISignalRService signalRService, IJwtHelper jwtHelper,SalesRecordServices salesRecordServices, UserProfileService userProfileService)
+        public UserProfileViewModel(FoodService foodService,ISignalRService signalRService, ICacheService cacheService, IJwtHelper jwtHelper, SalesRecordServices salesRecordServices, UserProfileService userProfileService, PurchaseHistoryService purchaseHistoryService)
         {
             _foodService = foodService;
             _userProfileService = userProfileService;
+            _purchaseHistoryService = purchaseHistoryService;
             _salesRecordService = salesRecordServices;
+            _cacheService = cacheService;
             _jwtHelper = jwtHelper;
             _signalRService = signalRService;
             OnEnableFingerprintTapped = new Command(async () => await EnableFingerPrintTapped());
@@ -99,36 +117,88 @@ namespace FoodSaverMaui.ViewModel
             OnDeleteUserTapped = new Command(async () => await DeleteUserTapped());
             OnChangeEmailTapped = new Command(async () => await ChangeEmailTapped());
             OnLogoutTapped = new Command(async() => await LogoutTapped());
-            ToggleCommand = new Command(async () => await OnToggleCommand());
+            
             OnGetUserName = new Command(async () => await GetUserName());
             OnEditProfileTapped = new Command(async() => await EditProfileTapped());
             OnDotsTapped = new Command<GetProductsResponse>(async (selectedProduct) => await DotsTapped(selectedProduct));
             IsComponent1Visible = true;
             IsComponent2Visible = false;
+            IsComponent3Visible = false;
             ShowSalesLimitReachedMessage = false;
             OnPageLoad = new Command(async() => await GetUserRoles());
+            OnPurchaseHistoryTapped = new Command(async() => await PurchaseHistoryTapped());
         }
 
+
+        public async Task PurchaseHistoryTapped()
+        {
+            try {
+                IsBusy = true;
+                var result = await _purchaseHistoryService.GetUserPurchase();
+                if (result == null)
+                {
+                    await Shell.Current.DisplayAlert("No Purchase History to display!!","Please try again later.","Ok!");
+                }
+                else 
+                {
+                    
+                    PurchaseHistory.Clear();
+                    await foreach (var product in result)
+                    {
+                        
+                        PurchaseHistory.Add(product);
+                    }
+                    OnPropertyChanged(nameof(PurchaseHistory));
+                    IsComponent1Visible = false;
+                    IsComponent2Visible = false;
+                    IsComponent3Visible = true;
+                }
+
+            }
+            catch(Exception ex) {
+                await Shell.Current.DisplayAlert("Something went wrong!", "Couldn't display Purchase History", "Ok");
+            }
+            finally { IsBusy = false; }
+        }
         public async Task GetUserRoles()
         {
             try
             {
-                IsBusy = true;
+                IsSeller = false;
+                IsBuyer = false;
 
-                var role = await _userProfileService.GetUserRoles();
-                if (role == "Buyer")
+                var roles = await SecureStorage.GetAsync("roles");
+                if (roles != null)
                 {
-                    isSeller = false;
-                }
-                else
-                {
-                    await PostTapped();
+                    var rolesList = JsonSerializer.Deserialize<IList<string>>(roles);
+                    if (rolesList != null)
+                    {
+                        if (rolesList.Count() > 0 && rolesList.Contains("Seller"))
+                        {
+                            IsSeller = true;
+                            if (rolesList.Count() > 0 && rolesList.Contains("Buyer"))
+                            {
+                                IsBuyer = true;
+
+                            }
+                            await PostTapped();
+                        }
+
+                        else if (rolesList.Count() > 0 && rolesList.Contains("Buyer"))
+                        {
+                            IsBuyer = true;
+                            await PurchaseHistoryTapped();
+                            
+                        }
+
+                    }
                 }
             }
-            finally
-            { 
-            IsBusy = false; }
-        
+            catch
+            {
+
+            }
+
         }
 
         public async Task DotsTapped(GetProductsResponse selectedProduct)
@@ -165,10 +235,17 @@ namespace FoodSaverMaui.ViewModel
         {
             try
             {
+                IsBusy = true;
+
                 var request = await _salesRecordService.GetSalesRecord();
-            
+                if (request == null)
+                {
+                    await Shell.Current.DisplayAlert("You currently have no sales history to display!!","Please try again later.", "Ok!");
+                }
+                else
+                {
                     string limitReached = request.dailyLimitReached.ToString();
-                    await SecureStorage.SetAsync("dailyLimitReached",request.dailyLimitReached.ToString());
+                    await SecureStorage.SetAsync("dailyLimitReached", request.dailyLimitReached.ToString());
                     var newAmount = request.newAmount;
                     Totalsales = newAmount + request.totalPreviousAmount;
                     double maxLimit = 200;
@@ -186,43 +263,82 @@ namespace FoodSaverMaui.ViewModel
                     { Percentage = 1.0; }
                     IsComponent1Visible = false;
                     IsComponent2Visible = true;
-             
+                    IsComponent3Visible = false;
+                }
+
             }
             catch
             {
 
                 await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
             }
+            finally
+            {
+                IsBusy = false;
+            }
 
         }
 
 
-        public async Task PostTapped()
+
+        public async Task GetUserProduct()
+        {
+            var request = await _foodService.GetUserProducts();
+            if (request.Count() > 0 )
+            {
+
+                Products.Clear();
+                foreach (var product in request)
+                {
+                    Products.Add(product);
+                }
+                OnPropertyChanged(nameof(Products));
+
+                IsComponent1Visible = true;
+                IsComponent2Visible = false;
+                IsComponent3Visible = false;
+            }
+            else
+            {
+
+                await Shell.Current.DisplayAlert( "You currently have no post to display.","Please try again later", "Ok!");
+            }
+            }
+
+
+            public async Task PostTapped()
         {
             try
             {
                 //var token = await SecureStorage.GetAsync("token");
                 //UserName = _jwtHelper.ExtractUserInfo(token);
                 IsBusy = true;
-                var request = await _foodService.GetUserProducts();
-                if (request != null)
+                var cacheResult = await _cacheService.GetFromCache<IEnumerable<GetProductsResponse>>("UserProduct");
+                if (cacheResult != null)
                 {
-                    
-                    Products.Clear();
-                    foreach (var product in request)
+                    if (cacheResult.Count() == 0)
                     {
-                        Products.Add(product);
+                        await GetUserProduct();
                     }
-                    OnPropertyChanged(nameof(Products));
+                    else
+                    {
+                        Products.Clear();
+                        foreach (var product in cacheResult)
+                        {
+                            Products.Add(product);
+                        }
+                        OnPropertyChanged(nameof(Products));
 
-                    IsComponent1Visible = true;
-                    IsComponent2Visible = false;
+                        IsComponent1Visible = true;
+                        IsComponent2Visible = false;
+                        IsComponent3Visible = false;
+                    }
                 }
                 else
                 {
-
-                    await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
+                    await GetUserProduct();
                 }
+               
             }
             catch
             {
@@ -237,23 +353,6 @@ namespace FoodSaverMaui.ViewModel
             }
 
         }
-
-
-        public async Task OnToggleCommand()
-        {
-            IsComponent1Visible = !IsComponent1Visible;
-            IsComponent2Visible = !IsComponent2Visible;
-
-
-
-
-
-
-
-            // Optional: Simulate some asynchronous behavior
-            await Task.Delay(100);
-    }
-
 
         public async Task EditProfileTapped()
         {
@@ -283,24 +382,8 @@ namespace FoodSaverMaui.ViewModel
            var confirm = await Shell.Current.DisplayAlert("Logout","You're being logged out!","Ok","Cancel");
             if (confirm == true)
             {
-                if (_hubConnection != null)
-                {
-                    if (_hubConnection.State != HubConnectionState.Disconnected)
-                    {
-                        try
-                        {
-                            await _hubConnection.StopAsync();
-                            Console.WriteLine("HubConnection stopped.");
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error stopping HubConnection: {ex.Message}");
-                        }
-                    }
-
-                    await _hubConnection.DisposeAsync();
-                    Console.WriteLine("HubConnection disposed.");
-                }
+                Products.Clear();
+                await SecureStorage.SetAsync("isLoggedOut","yes");
                 Application.Current.MainPage = new AppShell();
             }
         }

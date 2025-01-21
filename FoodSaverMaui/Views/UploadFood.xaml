@@ -5,9 +5,8 @@
                xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
             x:DataType="viewmodel:UploadFoodViewModel"
-             NavigationPage.HasNavigationBar="False"
-             NavigationPage.HasBackButton="False"
-             Title="Upload Food"
+               NavigationPage.HasNavigationBar="False"
+             
              >
 
     <ContentPage.Resources>
@@ -18,31 +17,38 @@
             <Setter Property="TextColor" Value="Black" />
         </Style>
     </ContentPage.Resources>
+    <!--<Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" />
+    </Shell.BackButtonBehavior>-->
+ 
 
-
-    <Grid RowDefinitions="Auto,Auto">
-
-        <Frame Grid.Row="0" BorderColor="Transparent" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+    <Grid RowDefinitions="Auto,Auto" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        
+        <Frame Grid.Row="1" BorderColor="Transparent"   Padding="10,10,10,0">
             <Border StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="1.5" StrokeDashOffset="12">
-                <Grid RowDefinitions="Auto,*,Auto" RowSpacing="10" Padding="5,20,5,5"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
-
-                    <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="180" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                        <Label Text="" Grid.Column="0" TextColor="Gray" FontSize="20" Padding="20,0,0,0" FontAttributes="Bold" />
-                        <Grid Grid.Column="1" HorizontalOptions="EndAndExpand" ColumnDefinitions="Auto,Auto" ColumnSpacing="10">
-                            <Image Grid.Column="0" Source="dots.png" HeightRequest="22" HorizontalOptions="EndAndExpand"/>
-                            <Image  Grid.Column="1" Source="remove.png" HeightRequest="22" HorizontalOptions="EndAndExpand" >
-                                <!--<Image.GestureRecognizers>
+                <Grid RowDefinitions="Auto,*,Auto" RowSpacing="10" Padding="5,10,5,5"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <Grid Grid.Row="0"   HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                        <Label Text="Upload Food"  TextColor="#385897" FontSize="23"  Padding="0,5,0,0" FontAttributes="Bold" />
+                    </Grid>
+                    <!--<Grid Grid.Row="0" ColumnDefinitions="Auto,Auto"  >
+                        <Label Text="{Binding UserName}" Grid.Column="0" TextColor="Gray" FontSize="20" Padding="20,0,0,0" FontAttributes="Bold" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                        <Grid Grid.Column="1" HorizontalOptions="EndAndExpand"  ColumnSpacing="10">
+                            --><!--<Image Grid.Column="0" Source="dots.png" HeightRequest="22" HorizontalOptions="EndAndExpand"/>--><!--
+                            <Image   Source="remove.png" HeightRequest="22" HorizontalOptions="End" VerticalOptions="End" >
+                                --><!--<Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OnRemoveButtonPressed}"/>
-                            </Image.GestureRecognizers>-->
+                            </Image.GestureRecognizers>--><!--
                             </Image>
                         </Grid>
 
-                    </Grid>
+                    </Grid>-->
 
                     <Frame Grid.Row="1" Padding="0" BorderColor="Transparent" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
                         <Border StrokeShape="Rectangle " StrokeThickness="0.5" >
                             <Grid  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="5"
             Padding="5,10,10,10" >
+                                
+                                
 
                                 <Frame Grid.Row="0"
                                 BorderColor="Transparent"
@@ -53,32 +59,39 @@
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center">
 
-                                    <ImageButton 
-           
+                                    <Grid RowDefinitions="Auto,*" RowSpacing="5" VerticalOptions="CenterAndExpand" >
+                                        <ImageButton 
+                                Grid.Row="0"
                                 Source="{Binding PickedImage}"
                                 Command="{Binding OnFliePicked}" 
                                 Aspect="AspectFill"
        
     >
 
-                                        <ImageButton.Triggers>
-                                            <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="false">
-                                                <Setter Property="Source" Value="plus.png" />
-                                                <Setter Property="HeightRequest" Value="30"/>
-                                                <Setter Property="WidthRequest" Value="30 "/>
+                                            <ImageButton.Triggers>
+                                                <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="false">
+                                                    <Setter Property="Source" Value="image.png" />
+                                                    <Setter Property="HeightRequest" Value="40"/>
+                                                    <Setter Property="WidthRequest" Value="40"/>
 
 
 
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="true">
-                                                <Setter Property="Source" Value="{Binding PickedImage}" />
-                                                <Setter Property="BackgroundColor" Value="Transparent" />
-                                                <Setter Property="HeightRequest" Value="180"/>
-                                                <Setter Property="WidthRequest" Value="290 "/>
-                                            </DataTrigger>
-                                        </ImageButton.Triggers>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="ImageButton" Binding="{Binding IsImageSelected}" Value="true">
+                                                    <Setter Property="Source" Value="{Binding PickedImage}" />
+                                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                                    <Setter Property="HeightRequest" Value="180"/>
+                                                    <Setter Property="WidthRequest" Value="290 "/>
+                                                </DataTrigger>
+                                            </ImageButton.Triggers>
 
-                                    </ImageButton>
+                                        </ImageButton>
+                                        <Grid RowDefinitions="Auto,*"  Grid.Row="1" RowSpacing="5" VerticalOptions="CenterAndExpand"  >
+                                            <Label Text="Browse Image" Grid.Row="0" FontSize="15" TextColor="#385897" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsImageNotSelected}"/>
+                                            <Label Text="Supported Image : PNG, JPG, JPEG" Grid.Row="1" FontSize="13" TextColor="Gray" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsImageNotSelected}" />
+                                        </Grid>
+                                    </Grid>
+
                                 </Frame>
 
                                 <Grid Grid.Row="1"  RowDefinitions="Auto,Auto" >
@@ -266,8 +279,8 @@
                     <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="50" Padding="15,0,0,10">
                         <Button Grid.Column="0" Command="{Binding OnPostTapped}" HorizontalOptions="EndAndExpand" Margin="0,0,35,0" Text="Confirm Post" HeightRequest="40" WidthRequest="110" Background="#03b25a"/>
                         <ActivityIndicator Grid.Column="1" IsRunning="{Binding IsBusy}" 
-                   IsVisible="{Binding IsBusy}" HorizontalOptions="EndAndExpand" 
-                           Color="#03b25a" />
+                   IsVisible="{Binding IsBusy}" HorizontalOptions="EndAndExpand" HeightRequest="20" WidthRequest="20"
+                           Color="Black" />
                     </Grid>
                 </Grid>
             </Border>

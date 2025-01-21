@@ -19,39 +19,24 @@
                            SearchCommand="{Binding OnSearchButtonPressed}"
                            />
             </Border>
-            <Button  Grid.Column="1" Background="Transparent" Padding="0" HeightRequest="28" ImageSource="more.png" Command="{Binding OnAddButtonClick}"/>
+            <!--<Button  Grid.Column="1" Background="Transparent" Padding="0" HeightRequest="28" ImageSource="gallery.png" Command="{Binding OnAddButtonClick}"/>-->
 
 
-            <Button Grid.Column="2" Background="Transparent" Padding="0" HeightRequest="28" ImageSource="list.png" Command="{Binding ShowPopupCommand}"/>
+            <Button Grid.Column="1" Background="Transparent" Padding="0" HeightRequest="28" ImageSource="filter.png" Command="{Binding ShowPopupCommand}"/>
                 
         </Grid>
+
        
-        <Grid Grid.Row="1" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
-           
+       
+        <Grid Grid.Row="1">
+                <ActivityIndicator Grid.Row="0" IsRunning="{Binding IsBusy}" 
+          IsVisible="{Binding IsBusy}"
+                  Color="Black"  HeightRequest="25" WidthRequest="25"/>
+            </Grid>
 
-
-                <ActivityIndicator IsRunning="{Binding IsBusy}" 
-                   IsVisible="{Binding IsBusy}"
-                                   Color="#03b25a" />
-
-
-            
-
-        </Grid>
-        <!--<Button Grid.Row="1" Text="Click" Command="{Binding OnClickTapped}"/>-->
-        <!--<Image  HeightRequest="405"  Aspect="AspectFill" >
-            <Image.Source>
-                <UriImageSource Uri="https://616a-2405-acc0-1504-9a1f-f568-cac7-3127-f895.ngrok-free.app/Resources/f4c8f45e-ea44-454c-bbbc-88cee1e49586.png"   CacheValidity="2" CachingEnabled="True"/>
-            </Image.Source>
-        </Image>-->
-        
-        <RefreshView IsRefreshing="{Binding IsRefreshing}" Grid.Row="2"
+        <RefreshView IsRefreshing="{Binding IsRefreshing}"  Grid.Row="2"
              Command="{Binding OnClickTapped}">
-            <ScrollView >
-
-
-
-                <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single">
+             <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single"  >
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:GetProductsResponse">
                             <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -120,8 +105,8 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-            </ScrollView>
+          
         </RefreshView>
-
+       
     </Grid>
 </ContentPage>

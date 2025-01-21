@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Maui;
 using FoodSaverMaui.Helper;
+using FoodSaverMaui.Helper.CacheHelper;
 using FoodSaverMaui.KhaltiServices;
 using FoodSaverMaui.Services.Food;
+using FoodSaverMaui.Services.PurchaseHistory;
 using FoodSaverMaui.Services.SalesRecord;
 using FoodSaverMaui.Services.User;
 using FoodSaverMaui.SignalRServices;
@@ -32,19 +34,20 @@ namespace FoodSaverMaui
                     fonts.AddFont("Solway-Bold.tff", "Solway");
                 });
 
+            builder.Services.AddScoped<ICacheService, CacheService >();
             builder.Services.AddSingleton<IBiometric>(BiometricAuthenticationService.Default);
             builder.Services.AddSingleton<IJwtHelper, JwtHelper>();
             builder.Services.AddSingleton<HttpClient>();
             builder.Services.AddTransient<CreateAccount>();
             builder.Services.AddTransient<CreateAccountViewModel>();
             builder.Services.AddSingleton<UserServices>();
-            builder.Services.AddSingleton<SalesRecordServices>();
+            
 
             builder.Services.AddTransient<Login>();
             builder.Services.AddTransient<LoginViewModel>();
 
-            builder.Services.AddTransient<HomePage>();
-            builder.Services.AddTransient<HomePageViewModel>();
+            builder.Services.AddSingleton<HomePage>();
+            builder.Services.AddSingleton<HomePageViewModel>();
 
             builder.Services.AddSingleton<LandingPage>();
             builder.Services.AddSingleton<LandingPageViewModel>();
@@ -52,6 +55,9 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<UserProfile>();
             builder.Services.AddSingleton<UserProfileViewModel>();
             builder.Services.AddSingleton<UserProfileService>();
+            builder.Services.AddSingleton<SalesRecordServices>();
+            builder.Services.AddSingleton<PurchaseHistoryService>();
+
 
             builder.Services.AddSingleton<UpdatePassword>();
             builder.Services.AddSingleton<UpdatePasswordViewModel>();
