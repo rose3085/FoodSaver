@@ -41,24 +41,17 @@ namespace Application.Hubs
                 ConnectionId = connectionId,
             };
            // _sharedDb.connections[Context.ConnectionId] = userConnection;
-            _sharedDb.AddConnection(connectionId,userConnection);
+            _sharedDb.AddConnection(userId,userConnection);
            // return base.OnConnectedAsync();
         }
 
-        public async Task SendNotification(string productId,string message)
+        public async Task SendNotification(string userId,string message)
         {
-
-            var product = await _foodService.GetProductById(productId);
-            var userId = product.Seller.Id;
-            if (userId != null)
-
+            var userConnection =  _sharedDb.GetByUserId("da282bb3-5d60-4bee-b44e-95655de3972a");
+            var connectionId = userConnection.ConnectionId;
+            if (connectionId != null)
             {
-                var userConnection = _sharedDb.GetByUserId(userId);
-                var connectionId = userConnection.ConnectionId;
-                if (connectionId != null)
-                {
-                    await Clients.Client(connectionId).SendAsync("SendNotification", message);
-                }
+                await Clients.Client(connectionId).SendAsync("ReceiveMessage", message);
             }
         }
     }

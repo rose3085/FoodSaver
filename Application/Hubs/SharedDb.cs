@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Application.Hubs
 {
@@ -13,9 +14,9 @@ namespace Application.Hubs
 
         public ConcurrentDictionary<string, UserConnection> connections => _connections;
 
-        public void AddConnection(string connectionId, UserConnection userConnection)
+        public void AddConnection(string userId, UserConnection userConnection)
         {
-            _connections[connectionId] = userConnection;
+            _connections[userId] = userConnection;
         }
 
         public bool RemoveConnection(string connectionId)
@@ -32,10 +33,8 @@ namespace Application.Hubs
 
         public  UserConnection GetByUserId(string userId)
         {
-            return _connections
-               .Where(kvp => kvp.Value.UserId == userId)
-               .Select(kvp => kvp.Value)
-               .FirstOrDefault();
+            var result= _connections.TryGetValue(userId, out var userConnection);
+            return userConnection;
         }
     }
 }

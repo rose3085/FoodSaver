@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.KhaltiServices;
+using FoodSaverMaui.SignalRServices;
 using FoodSaverMaui.Views;
 using System;
 using System.Collections.Generic;
@@ -55,10 +56,13 @@ namespace FoodSaverMaui.ViewModel
 
 
         private readonly IKhaltiService _khaltiServices;
+        private readonly ISignalRService _signalRService;
+
         public Command OnKhaltiPaymentButtonClicked { get; }
-        public KhaltiPaymentViewModel(IKhaltiService khaltiServices)
+        public KhaltiPaymentViewModel(IKhaltiService khaltiServices,ISignalRService signalRService)
         {
             _khaltiServices = khaltiServices;
+            _signalRService = signalRService;
             OnKhaltiPaymentButtonClicked = new Command(async() => await KhaltiPaymentButton());
         }
 
@@ -66,12 +70,13 @@ namespace FoodSaverMaui.ViewModel
         {
             await SecureStorage.SetAsync("amount",Amount);
             await SecureStorage.SetAsync("productId",ProductId);
-            string pay = await _khaltiServices.KhaltiLaunch(Amount,ProductId);
-            if (pay != null)
-            {
-                // await Shell.Current.GoToAsync($"{nameof(PaymentUrl)}?url={Uri.EscapeDataString(pay)}");
-                await Shell.Current.GoToAsync($"{nameof(PaymentUrl)}?url={Uri.EscapeDataString(pay)}");
-            }
+            //string pay = await _khaltiServices.KhaltiLaunch(Amount,ProductId);
+            //if (pay != null)
+            //{
+            //    // await Shell.Current.GoToAsync($"{nameof(PaymentUrl)}?url={Uri.EscapeDataString(pay)}");
+            //    await Shell.Current.GoToAsync($"{nameof(PaymentUrl)}?url={Uri.EscapeDataString(pay)}");
+            //}
+            await _signalRService.SendNotification("dd27b90-05b9-49a3-a2d6-5271d50b6c41","MeowwwwwwwwwwwwwwBhowwwwwwwwww");
         }
     }
 }

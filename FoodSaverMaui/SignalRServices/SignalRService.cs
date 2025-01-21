@@ -17,7 +17,7 @@ namespace FoodSaverMaui.SignalRServices
         {
             
             _hubConnection = new HubConnectionBuilder()
-                 .WithUrl($"https://91e8-2405-acc0-1504-cce4-117a-683f-20a2-62cc.ngrok-free.app/notificationHub", options =>
+                 .WithUrl($"https://28ee-202-79-53-218.ngrok-free.app/notificationHub", options =>
                  {
                      options.AccessTokenProvider = async () =>
                      {
@@ -26,18 +26,37 @@ namespace FoodSaverMaui.SignalRServices
                          return token; 
                      };
                  })
-                 .WithAutomaticReconnect()
+                // .WithAutomaticReconnect()
                  .Build();
             //Messages ??= new ObservableCollection<string>();
-            _hubConnection.On<string>("ReceiveNotification", (message) =>
+
+            // Dispose();
+            //ConnectToHubAsync();
+
+
+            _hubConnection.On<string>("ReceiveMessage", (message) =>
             {
                 // Add the message to the UI-bound collection
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    Notifications.Add(message);
+                    //Notifications.Add(message);
+                    var request = new NotificationRequest
+                    {
+                        NotificationId = 1111,
+                        Title = "Meow",
+                        Subtitle = "maui",
+                        Description = message,
+                        BadgeNumber = 27,
+                        Schedule = new NotificationRequestSchedule
+                        {
+                            NotifyTime = DateTime.Now.AddSeconds(1),
+                        }
+
+                    };
+                    LocalNotificationCenter.Current.Show(request);
                 });
             });
-            ConnectToHubAsync();
+
         }
 
         public async void Dispose()
@@ -45,44 +64,51 @@ namespace FoodSaverMaui.SignalRServices
             if (_hubConnection != null)
             {
                 await _hubConnection.StopAsync();
-                await _hubConnection.DisposeAsync();
+               // await _hubConnection.DisposeAsync();
             }
         }
+
+        public async Task Notify()
+        {
+            if (Notifications.Count > 0)
+            {
+                var request = new NotificationRequest
+                {
+                    NotificationId = 1111,
+                    Title = "Meow",
+                    Subtitle = "maui",
+                    Description = $"{Notifications}",
+                    BadgeNumber = 27,
+                    Schedule = new NotificationRequestSchedule
+                    {
+                        NotifyTime = DateTime.Now.AddSeconds(5),
+                    }
+
+                };
+                LocalNotificationCenter.Current.Show(request);
+            }
+        }
+
         public async  Task ConnectToHubAsync()
         {
             try
             {
-                if (_hubConnection.State != HubConnectionState.Disconnected)
-                {
-                    try
-                    {
-                        await _hubConnection.StopAsync();
-                        Console.WriteLine("HubConnection stopped.");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error stopping HubConnection: {ex.Message}");
-                    }
-                }
+                //if (_hubConnection.State != HubConnectionState.Disconnected)
+                //{
+                //    try
+                //    {
+                //        await _hubConnection.StopAsync();
+                //        Console.WriteLine("HubConnection stopped.");
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        Console.WriteLine($"Error stopping HubConnection: {ex.Message}");
+                //    }
+                //}
+               // await _hubConnection.StopAsync();
                 await _hubConnection.StartAsync();
                
-                if (Notifications.Count >0)
-                {
-                    var request = new NotificationRequest
-                    {
-                        NotificationId = 1111,
-                        Title = "Meow",
-                        Subtitle = "maui",
-                        Description = $"{Notifications}",
-                        BadgeNumber = 27,
-                        Schedule = new NotificationRequestSchedule
-                        { 
-                            NotifyTime = DateTime.Now.AddSeconds(5),
-                        }
-
-                    };
-                    LocalNotificationCenter.Current.Show(request);
-                }
+               
 
             }
             catch (Exception ex)
@@ -90,6 +116,8 @@ namespace FoodSaverMaui.SignalRServices
                 Console.WriteLine($"Failed to send notification: {ex.Message}");
             }
         }
+
+        
        public async Task SendNotification(string productId, string message)
         {
 
