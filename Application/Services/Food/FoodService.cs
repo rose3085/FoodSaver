@@ -346,19 +346,34 @@ namespace Application.Services.Food
             return fileName;
         }
 
-        public async Task<FoodModel> GetProductById(string productId)
+        public async Task<GetProductByIdResponse> GetProductById(string productId)
         {
-            var includes = new Expression<Func<FoodModel, object>>[]
-                  {
+            try
+            {
+                var includes = new Expression<Func<FoodModel, object>>[]
+                      {
                         s => s.Seller,
                         s => s.Address,
-                  };
-            var result = await _uow.AsyncRepositories<FoodModel>().GetWithIncludeAndId(productId,includes);
-            if (result != null)
-            {
-                return result;
+                      };
+                var product = await _uow.AsyncRepositories<FoodModel>().GetWithIncludeAndId(productId, includes);
+                if (product != null)
+                {
+                    var result =  new GetProductByIdResponse()
+                    {
+                        Id = product.Id,
+                        ProductName = product.FoodName,
+                        SellerId = product.Seller?.Id,
+                        SellerName = product.Seller?.UserName,
+                      
+                    };
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else 
+            catch (Exception ex)
             {
                 return null;
             }

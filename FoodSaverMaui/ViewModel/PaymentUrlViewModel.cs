@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FoodSaverMaui.Services.Food;
 using FoodSaverMaui.Services.User;
 using FoodSaverMaui.SignalRServices;
 using System;
@@ -16,6 +17,7 @@ namespace FoodSaverMaui.ViewModel
         private string _url;
         private readonly ISignalRService _signalRService;
         private readonly UserProfileService _userProfileService;
+        private readonly FoodService _foodService;
 
         public string url
         {
@@ -30,12 +32,15 @@ namespace FoodSaverMaui.ViewModel
             }
         }
 
+        public Command OnSendNotificationToSeller { get; }
 
         //public Command NavigatedPage { get; }
-        public PaymentUrlViewModel(ISignalRService signalRService,UserProfileService userProfileService)
+        public PaymentUrlViewModel(ISignalRService signalRService,UserProfileService userProfileService,FoodService foodService)
         {
             _signalRService = signalRService;
             _userProfileService = userProfileService;
+            _foodService = foodService;
+            OnSendNotificationToSeller = new Command(async() => await SendNotificationToSeller());
            // NavigatedPage = new Command(async() => await OnPageNavigation());
         }
 
@@ -46,12 +51,19 @@ namespace FoodSaverMaui.ViewModel
             try
             {
                 var productId = await SecureStorage.GetAsync("productId");
-                var user = await _userProfileService.GetUserByName();
-                if (user != null)
+                var product = await _foodService.GetProductById(productId);
+                if (product != null)
                 {
-                    var userId = user.Id;
-                    await _signalRService.SendNotification("dd27b90-05b9-49a3-a2d6-5271d50b6c41", "MeowwwwwwwwwwwwwwBhowwwwwwwwww");
+                    //var user = await _userProfileService.GetUserByName();
+                    var userId = product.SellerId;
+                    var buyerName = await SecureStorage.GetAsync("userName");
+                    if (userId != null && buyerName != null)
+                    {
 
+                        var message = $"{buyerName} has bought your product";
+                        await _signalRService.SendNotification(userId, message);
+
+                    }
                 }
             }
             catch { }

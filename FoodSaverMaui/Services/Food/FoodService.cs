@@ -27,6 +27,44 @@ namespace FoodSaverMaui.Services.Food
             _cacheService = cacheService;
         }
 
+
+
+        public async Task<GetProductByIdResponse> GetProductById(string id)
+        {
+            try
+            {
+                var jwtToken = await SecureStorage.GetAsync("token");
+                if (string.IsNullOrEmpty(jwtToken))
+                {
+                    throw new InvalidOperationException("Token not found.");
+                }
+                var url = $"{App.Settings.ApiBaseUrl}/api/Food/GetFoodById?id={id}";
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                var response = await _httpClient.GetAsync(url, CancellationToken.None);
+                Console.WriteLine($"s Code: {(int)response.StatusCode}");
+                if (response.IsSuccessStatusCode)
+                {
+
+                    var result = await response.Content.ReadFromJsonAsync<GetProductByIdResponse>();
+
+                    await _cacheService.AddOrUpdateCache("UserProduct", result);
+
+                    return result;
+
+                }
+                else
+                {
+
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
         public async Task<IEnumerable<GetProductsResponse>> GetAllProducts()
         {
             try
