@@ -12,6 +12,8 @@ using Microsoft.Extensions.Hosting;
 using SixLabors.ImageSharp;
 using Domain.Entities.Location;
 using System.Security.Claims;
+using System.Net;
+using SixLabors.ImageSharp.PixelFormats;
 
 
 namespace Application.Services.Food
@@ -219,7 +221,26 @@ namespace Application.Services.Food
 
         }
 
-        public async Task<IEnumerable<GetProductResponse>> GetProductsAsync()
+        public async Task<double> CalculateDistance(double currentLat, double currentLong, double latitude, double longitude)
+        {
+            const double EarthRadiusKm = 6371;
+
+            var dLat = DegreesToRadians(latitude - currentLat);
+            var dLon = DegreesToRadians(longitude - currentLong);
+
+            var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                    Math.Cos(DegreesToRadians(currentLat)) * Math.Cos(DegreesToRadians(currentLong)) *
+                    Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            return EarthRadiusKm * c;
+
+        }
+        private double DegreesToRadians(double degrees)
+        {
+            return degrees * (Math.PI / 180);
+        }
+        public async Task<IEnumerable<GetProductResponse>> GetProductsAsync(double currentLat, double currentLong)
         {
             var includes = new Expression<Func<FoodModel, object>>[]
                    {
@@ -234,8 +255,12 @@ namespace Application.Services.Food
             var productResult =  result
                 .Where(product => product.IsBooked == false)
                 .Select(async product => 
-            {
+                {
                 var timeDifference = await CalculateTime(product.Date);
+                    var latitude = product.Address.Latitude;
+                   var longitude = product.Address.Longitude;
+
+                    var distance = await CalculateDistance(currentLat,currentLong,latitude,longitude);
                 return new GetProductResponse
                 {
                     Id = product.Id,
@@ -250,13 +275,16 @@ namespace Application.Services.Food
                     Latitude = product.Address.Latitude,
                     Longitude = product.Address.Longitude,
                     Date = timeDifference,
+                    Distance = distance,
                     // image Url form ma return garne
                     ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
                 };
             }).ToList();
             // var getResult = _mapper.Map<IEnumerable<GetProductResponse>>(productResult);
             var finalResult = await Task.WhenAll(productResult);
-            return finalResult;
+            var sortedResult = finalResult.OrderBy(product => product.Distance).ToList();
+
+            return sortedResult;
         }
 
         public async Task<IEnumerable<GetProductResponse>> GetUsersProduct()

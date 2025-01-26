@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace FoodSaverMaui.ViewModel
 {
     public partial class LandingPageViewModel : BaseViewModel
@@ -50,30 +51,46 @@ namespace FoodSaverMaui.ViewModel
            });
         }
 
+        public async Task<Location> GetLocation()
+        {
 
+
+            GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+
+            Location location = await Geolocation.Default.GetLocationAsync(request);
+
+
+            return location;
+        }
 
         public async Task GetProducts()
         {
-            var request = await _foodService.GetAllProducts();
-            await _cacheService.AddOrUpdateCache("ProductHomePage",request);
-            if (request != null)
+            var location = await GetLocation();
+            if (location != null)
             {
-                if (request.Count() > 0)
+                double currentLat = location.Latitude;
+                double currentLong = location.Longitude;
+                var request = await _foodService.GetAllProducts(currentLat, currentLong);
+                await _cacheService.AddOrUpdateCache("ProductHomePage", request);
+                if (request != null)
                 {
-                    Products.Clear();
-                    foreach (var product in request)
+                    if (request.Count() > 0)
                     {
-                        Products.Add(product);
+                        Products.Clear();
+                        foreach (var product in request)
+                        {
+                            Products.Add(product);
+                        }
+                        OnPropertyChanged(nameof(Products));
                     }
-                    OnPropertyChanged(nameof(Products));
+                    else { await Shell.Current.DisplayAlert("No products available to display!!", "Please try again later.", "Ok!"); }
                 }
-                else { await Shell.Current.DisplayAlert( "No products available to display!!","Please try again later.", "Ok!"); }
-            }
-            else
-            {
+                else
+                {
 
-                await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
+                    await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
 
+                }
             }
         }
 

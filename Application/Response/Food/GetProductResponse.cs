@@ -21,5 +21,7 @@ namespace Application.Response.Food
         public double Latitude { get; set; }
         public double Longitude { get; set; }  
         public string ImageUrl { get; set; }
+
+        public double Distance { get; set; }
     }
 }

@@ -144,39 +144,56 @@ namespace FoodSaverMaui.ViewModel
             
 
         }
-
-
-        //// Command that fetches the data
-        //[RelayCommand]
-        public async Task ClickTapped()
+        public async Task<Location> GetLocation()
         {
+
+
+            GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+
+            Location location = await Geolocation.Default.GetLocationAsync(request);
+
+           
+                return location;
+        }
+            
+
+
+            //// Command that fetches the data
+            //[RelayCommand]
+            public async Task ClickTapped()
+            {
             try
             {
                 
                 IsBusy = true;
-                var request = await _foodService.GetAllProducts();
-                if (request != null)
-                {
-
-                    if (request.Count() == 0)
+               var location = await GetLocation();
+                if (location != null) {
+                    double currentLat = location.Latitude;
+                    double currentLong = location.Longitude;
+                    var request = await _foodService.GetAllProducts(currentLat,currentLong);
+                    if (request != null)
                     {
-                        await Shell.Current.DisplayAlert("No product to display", "Please try again later", "Ok!");
+
+                        if (request.Count() == 0)
+                        {
+                            await Shell.Current.DisplayAlert("No product to display", "Please try again later", "Ok!");
+                        }
+                        else
+                        {
+                            Products.Clear();
+                            foreach (var product in request)
+                            {
+                                Products.Add(product);
+                            }
+                            OnPropertyChanged(nameof(Products));
+                        }
+
                     }
                     else
                     {
-                        Products.Clear();
-                        foreach (var product in request)
-                        {
-                            Products.Add(product);
-                        }
-                        OnPropertyChanged(nameof(Products));
+
+                        await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
                     }
-
-                }
-                else
-                {
-
-                    await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
                 }
             }
             finally

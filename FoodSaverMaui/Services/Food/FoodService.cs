@@ -104,7 +104,7 @@ namespace FoodSaverMaui.Services.Food
 
         }
 
-        public async Task<IEnumerable<GetProductsResponse>> GetAllProducts()
+        public async Task<IEnumerable<GetProductsResponse>> GetAllProducts(double currentLat, double currentLong)
         {
             try
             {
@@ -113,7 +113,7 @@ namespace FoodSaverMaui.Services.Food
                 {
                     throw new InvalidOperationException("Token not found.");
                 }
-                var url = $"{App.Settings.ApiBaseUrl}/api/Food/GetAllFood";
+                var url = $"{App.Settings.ApiBaseUrl}/api/Food/GetAllFood?currentLat={currentLat}&currentLong={currentLong}";
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 var response = await _httpClient.GetAsync(url, CancellationToken.None);
                 Console.WriteLine($"s Code: {(int)response.StatusCode}");

@@ -21,9 +21,9 @@ namespace FoodSaver.Controllers.Food
         [HttpGet]
         [Route("GetAllFood")]
        
-        public async Task<IActionResult> GetProducts()
+        public async Task<IActionResult> GetProducts(double currentLat, double currentLong)
         {
-            var products = await _foodService.GetProductsAsync();
+            var products = await _foodService.GetProductsAsync(currentLat,currentLong);
             return Ok(products);
         }
 
