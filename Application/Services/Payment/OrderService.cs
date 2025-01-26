@@ -105,7 +105,8 @@ namespace Application.Services.Payment
                             WardNumber = createOrderRequest.WardNumber,
                             ToleName = createOrderRequest.ToleName,
                             CityName = createOrderRequest.CityName,
-                            
+                            Latitude = createOrderRequest.Latitude,
+                            Longitude = createOrderRequest.Longitude,
                         
                         };
                         var order = new OrderModel
@@ -176,6 +177,76 @@ namespace Application.Services.Payment
                     IsSuccess = false,
                     Error = ex.Message
                 };
+            }
+        }
+
+        public async Task<IEnumerable<GetOrderResponse>> GetAllOrders()
+        {
+            try {
+                var includes = new Expression<Func<OrderModel, object>>[]
+                    {
+                        s => s.DeliveryAddress,
+                        s => s.Food,
+                        
+                    };
+                var request = await _uow.AsyncRepositories<OrderModel>().GetWithInclude(includes);
+                if (request.Count() > 0)
+                {
+                    var result = request.Select(async order =>
+                    {
+                        return new GetOrderResponse()
+                        {
+                            Id = order.Id,
+                            CityName = order.DeliveryAddress?.CityName,
+                            FoodName = order.Food.FoodName,
+                            IsDelivered = order.IsDelivered,
+
+                        };
+                    }).ToList();
+                    return await Task.WhenAll(result);
+
+
+
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<GetOrderResponse> GetOrderById(string orderId)
+        {
+            try
+            {
+               
+                    var includes = new Expression<Func<OrderModel, object>>[]
+                        {
+                        s => s.DeliveryAddress,
+                        s => s.Food,
+
+                        };
+                var request = await _uow.AsyncRepositories<OrderModel>().GetWithIncludeAndId(orderId,includes);
+                if (request != null)
+                {
+                    return new GetOrderResponse()
+                    {
+                        Id = request.Id,
+                        CityName = request.DeliveryAddress?.CityName,
+                        FoodName = request.Food.FoodName,
+                        IsDelivered = request.IsDelivered,
+                    };
+                }
+                else { return null; }
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
     }

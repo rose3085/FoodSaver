@@ -20,6 +20,7 @@ namespace FoodSaver.Controllers.Food
 
 
         [HttpPost]
+        [Route("PlaceOrder")]
         [Authorize]
        
         public async Task<IActionResult> PlaceOrder([FromBody]CreateOrderDto createOrderRequest)
@@ -33,5 +34,30 @@ namespace FoodSaver.Controllers.Food
             return BadRequest();
         }
 
+        [HttpGet]
+        [Route("GetAllOrders")]
+        public async Task<IActionResult> GetAllOrders()
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _orderService.GetAllOrders();
+                return Ok(result);
+
+            }
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("GetOrderById")]
+        public async Task<IActionResult> GetOrderById(string orderId)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _orderService.GetOrderById(orderId);
+                return Ok(result);
+
+            }
+            return BadRequest();
+        }
     }
 }

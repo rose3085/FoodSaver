@@ -50,7 +50,9 @@ namespace Application.Services.PurchaseHistory
                                     {
 
                                         return new GetUserPurchaseHistoryResponse()
-                                        { Food = food.Food };
+                                        {
+                                            OrderId = food.Id,
+                                            Food = food.Food };
                                     }).ToList();
                         return await Task.WhenAll(foodResult);
                     }

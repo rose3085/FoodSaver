@@ -9,6 +9,7 @@ namespace Application.Response.PurchaseHistory
 {
     public class GetUserPurchaseHistoryResponse
     {
+        public string OrderId { get; set; }
         public FoodModel Food { get; set; }
 
     }

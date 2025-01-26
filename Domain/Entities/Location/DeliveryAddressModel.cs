@@ -17,8 +17,8 @@ namespace Domain.Entities.Location
 
         public string CityName { get; set; }
 
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
         public string OrderId { get; set; }
         public OrderModel Order { get; set; }
