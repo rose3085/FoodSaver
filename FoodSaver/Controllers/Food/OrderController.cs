@@ -59,5 +59,18 @@ namespace FoodSaver.Controllers.Food
             }
             return BadRequest();
         }
+
+        [HttpGet]
+        [Route("GetOrderByProductId")]
+        public async Task<IActionResult> GetOrderByProductId(string productId)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _orderService.GetOrderByProductId(productId);
+                return Ok(result);
+
+            }
+            return BadRequest();
+        }
     }
 }
