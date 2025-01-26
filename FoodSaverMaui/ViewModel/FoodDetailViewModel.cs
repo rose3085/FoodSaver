@@ -71,6 +71,9 @@ namespace FoodSaverMaui.ViewModel
             {
                 IsBusy = false;
             }
+
+
+
             await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}?Amount={product.PricePerKg}&ProductId={product.Id}");
         }
 
