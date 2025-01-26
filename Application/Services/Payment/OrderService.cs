@@ -249,5 +249,43 @@ namespace Application.Services.Payment
                 return null;
             }
         }
+
+        public async Task<GetOrderByProductIdResponse> GetOrderByProductId(string productId)
+        {
+            try {
+
+                var includes = new Expression<Func<OrderModel, object>>[]
+                       {
+                        s => s.DeliveryAddress,
+                        s => s.Food,
+                        s => s.Buyer,
+                        s => s.Payment,
+                       };
+                Expression<Func<OrderModel, bool>> filter = x => x.Food.Id == productId;
+                var request = await _uow.AsyncRepositories<OrderModel>().GetwithIncludeAndFilter(includes, filter);
+                if (request.Count() > 0)
+                {
+
+                    var result = request.FirstOrDefault();
+                    return new GetOrderByProductIdResponse()
+                    { 
+                        BuyerName = result.Buyer?.UserName,
+                        Email = result.Buyer?.Email,
+                        PhoneNumber = result.Buyer?.PhoneNumber,
+                        FoodName = result.Food.FoodName,
+                        IsDelivered = result.IsDelivered,
+                        CityName = result.DeliveryAddress?.CityName,
+                        WardNumber = result.DeliveryAddress?.WardNumber,
+                        ToleName = result.DeliveryAddress?.ToleName,
+                        CreatedTime = result.CreatedTime,
+                    };
+                }
+                else { return null; }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

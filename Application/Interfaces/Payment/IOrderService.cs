@@ -18,6 +18,8 @@ namespace Application.Interfaces.Payment
 
         Task<GetOrderResponse> GetOrderById(string orderId);
 
+        Task<GetOrderByProductIdResponse> GetOrderByProductId(string productId);
+
         //Task AddDeliveryAddress(DeliveryAddressDto deliveryAddressDto);
     }
 }
