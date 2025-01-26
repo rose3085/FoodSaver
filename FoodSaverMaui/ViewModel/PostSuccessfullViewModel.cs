@@ -39,6 +39,9 @@ namespace FoodSaverMaui.ViewModel
             var pidx = await SecureStorage.GetAsync("pidx");
             var amount = await SecureStorage.GetAsync("amount");
             var productId = await SecureStorage.GetAsync("productId");
+            var cityName = await SecureStorage.GetAsync("cityName");
+            var toleName = await SecureStorage.GetAsync("toleName");
+            var wardNumber = await SecureStorage.GetAsync("wardNumber");
             var token = await SecureStorage.GetAsync("token");
             var userName = _jwtHelper.ExtractUserInfo(token);
             var requestModel = new BuyFoodModel()

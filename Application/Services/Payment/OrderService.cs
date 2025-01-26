@@ -105,6 +105,7 @@ namespace Application.Services.Payment
                             WardNumber = createOrderRequest.WardNumber,
                             ToleName = createOrderRequest.ToleName,
                             CityName = createOrderRequest.CityName,
+                            
                         
                         };
                         var order = new OrderModel
