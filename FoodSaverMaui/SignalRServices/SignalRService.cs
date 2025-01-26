@@ -17,7 +17,7 @@ namespace FoodSaverMaui.SignalRServices
         {
             
             _hubConnection = new HubConnectionBuilder()
-                 .WithUrl($"https://0b11-2405-acc0-1504-cce4-d173-a702-8018-1210.ngrok-free.app/notificationHub", options =>
+                 .WithUrl($"https://34bf-2405-acc0-1504-cce4-f915-d307-b1b4-24af.ngrok-free.app/notificationHub", options =>
                  {
                      options.AccessTokenProvider = async () =>
                      {
@@ -33,6 +33,14 @@ namespace FoodSaverMaui.SignalRServices
             // Dispose();
             //ConnectToHubAsync();
 
+            //_hubConnection.On<string>("ReceivePendingMessage", (message) =>
+            //{
+            //    // Add the message to the UI-bound collection
+            //    MainThread.BeginInvokeOnMainThread(() =>
+            //    {
+            //        Notify(message);
+            //    });
+            //});
 
             _hubConnection.On<string>("ReceiveMessage", (message) =>
             {
@@ -54,12 +62,13 @@ namespace FoodSaverMaui.SignalRServices
 
                     };
                     LocalNotificationCenter.Current.Show(request);
+                    //Notify(message);
                 });
             });
 
         }
 
-        public async void Dispose()
+        public async Task Dispose()
         {
             if (_hubConnection != null)
             {
@@ -68,25 +77,24 @@ namespace FoodSaverMaui.SignalRServices
             }
         }
 
-        public async Task Notify()
+        public async Task Notify(string message)
         {
-            if (Notifications.Count > 0)
-            {
+           
                 var request = new NotificationRequest
                 {
                     NotificationId = 1111,
-                    Title = "Meow",
-                    Subtitle = "maui",
-                    Description = $"{Notifications}",
+                    Title = "Food Saver",
+                    Subtitle = "Notifications",
+                    Description = message,
                     BadgeNumber = 27,
                     Schedule = new NotificationRequestSchedule
                     {
-                        NotifyTime = DateTime.Now.AddSeconds(5),
+                        NotifyTime = DateTime.Now.AddSeconds(1),
                     }
 
                 };
                 LocalNotificationCenter.Current.Show(request);
-            }
+           
         }
 
         public async  Task ConnectToHubAsync()
@@ -95,8 +103,9 @@ namespace FoodSaverMaui.SignalRServices
             {
                
                 await _hubConnection.StartAsync();
-               
-               
+
+
+                //await SendNotification("da282bb3-5d60-4bee-b44e-95655de3972a", "Rose wants to buy your product.", "2dd27b90-05b9-49a3-a2d6-5271d50b6c41");
 
             }
             catch (Exception ex)
@@ -105,14 +114,17 @@ namespace FoodSaverMaui.SignalRServices
             }
         }
 
+
+       
         
-       public async Task SendNotification(string productId, string message)
+       public async Task SendNotification(string sellerId, string message, string buyerId)
         {
 
 
             try
             {
-                await _hubConnection.InvokeAsync("SendNotification",productId, message);
+                
+                await _hubConnection.InvokeAsync("SendNotification",sellerId, message);
                 // Messages.Add($" {Name} Joined chat room: {Message}");
             }
 

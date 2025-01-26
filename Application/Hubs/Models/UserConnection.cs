@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Hubs
+namespace Application.Hubs.Models
 {
     public class UserConnection
     {

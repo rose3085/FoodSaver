@@ -74,7 +74,7 @@ namespace FoodSaverMaui.Services.Food
                 {
                     throw new InvalidOperationException("Token not found.");
                 }
-                var url = $"{App.Settings.ApiBaseUrl}/api/Food/GetFood";
+                var url = $"{App.Settings.ApiBaseUrl}/api/Food/GetAllFood";
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 var response = await _httpClient.GetAsync(url, CancellationToken.None);
                 Console.WriteLine($"s Code: {(int)response.StatusCode}");

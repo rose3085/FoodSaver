@@ -27,6 +27,7 @@ using Application.Services.PurchaseHistory;
 
 using Microsoft.AspNetCore.SignalR;
 using Application.Hubs;
+using Application.Hubs.InMemoryDb;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,7 +72,8 @@ builder.Services.AddSwaggerGen(option =>
 });
 
 
-builder.Services.AddSingleton<SharedDb>();
+builder.Services.AddSingleton<UserConnectionDb>();
+builder.Services.AddSingleton<NotificationDb>();
 builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
 

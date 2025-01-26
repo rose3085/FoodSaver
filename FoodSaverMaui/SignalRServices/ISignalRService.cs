@@ -9,6 +9,7 @@ namespace FoodSaverMaui.SignalRServices
     public interface ISignalRService
     {
         Task ConnectToHubAsync();
-        Task SendNotification(string productId, string message);
+        Task SendNotification(string sellerId, string message, string buyerId);
+        Task Dispose();
     }
 }

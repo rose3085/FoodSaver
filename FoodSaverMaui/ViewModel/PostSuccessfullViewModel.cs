@@ -52,7 +52,7 @@ namespace FoodSaverMaui.ViewModel
             if (request.IsSuccess == true)
             {
                 var message = $"{userName} wants to buy your product.";
-                await _signalRService.SendNotification(productId,message);
+               // await _signalRService.SendNotification(productId,message);
                // SendNotification(productId, message);
                  SecureStorage.Remove("pidx");
                 SecureStorage.Remove("amount");

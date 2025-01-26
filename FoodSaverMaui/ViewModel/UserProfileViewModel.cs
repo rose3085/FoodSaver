@@ -384,6 +384,7 @@ namespace FoodSaverMaui.ViewModel
             {
                 Products.Clear();
                 await SecureStorage.SetAsync("isLoggedOut","yes");
+               await _signalRService.Dispose();
                 Application.Current.MainPage = new AppShell();
             }
         }
