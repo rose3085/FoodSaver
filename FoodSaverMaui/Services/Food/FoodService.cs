@@ -13,6 +13,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Globalization;
 using FoodSaverMaui.Helper.CacheHelper;
+using FoodSaverMaui.Response.FoodOrder;
 
 namespace FoodSaverMaui.Services.Food
 {
@@ -28,6 +29,44 @@ namespace FoodSaverMaui.Services.Food
         }
 
 
+
+        public async Task<GetOrderByProductIdResponse> GetOrderByProductId(string productId)
+        {
+
+            try
+            {
+                var jwtToken = await SecureStorage.GetAsync("token");
+                if (string.IsNullOrEmpty(jwtToken))
+                {
+                    throw new InvalidOperationException("Token not found.");
+                }
+                var url = $"{App.Settings.ApiBaseUrl}/api/Order/GetOrderByProductId?productId={productId}";
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                var response = await _httpClient.GetAsync(url, CancellationToken.None);
+                Console.WriteLine($"s Code: {(int)response.StatusCode}");
+                if (response.IsSuccessStatusCode)
+                {
+
+                    var result = await response.Content.ReadFromJsonAsync<GetOrderByProductIdResponse>();
+
+                    //await _cacheService.AddOrUpdateCache("UserProduct", result);
+
+                    return result;
+
+                }
+                else
+                {
+
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+
+        }
 
         public async Task<GetProductByIdResponse> GetProductById(string id)
         {

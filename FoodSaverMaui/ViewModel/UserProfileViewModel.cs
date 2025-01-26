@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Helper;
 using FoodSaverMaui.Helper.CacheHelper;
 using FoodSaverMaui.Response;
+using FoodSaverMaui.Response.FoodOrder;
 using FoodSaverMaui.Response.PurchaseHistory;
 using FoodSaverMaui.Services.Food;
 using FoodSaverMaui.Services.PurchaseHistory;
@@ -54,6 +55,8 @@ namespace FoodSaverMaui.ViewModel
         //}
         public ObservableCollection<GetProductsResponse> Products { get; } = new();
         public ObservableCollection<GetPurchaseWrapper> PurchaseHistory { get; } = new();
+
+        public GetOrderByProductIdResponse OrderDetail { get; } = new();
 
         private bool _isComponent1Visible ;
 
@@ -137,7 +140,23 @@ namespace FoodSaverMaui.ViewModel
                 return;
             if (selectedProduct.IsBooked == true)
             {
-                await Shell.Current.GoToAsync(nameof(OrderDetail));
+
+                var order = await _foodService.GetOrderByProductId(selectedProduct.Id);
+                if (order != null)
+                {
+
+                    await Shell.Current.GoToAsync(nameof(OrderDetail), true, new Dictionary<string, object>
+                    {
+
+                     {"OrderDetail", order }
+                    });
+                }
+                else 
+                {
+                    var message = "Couldn't display product details.";
+                    var toast = Toast.Make($"{message}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                    await toast.Show();
+                }
 
             }
             else
