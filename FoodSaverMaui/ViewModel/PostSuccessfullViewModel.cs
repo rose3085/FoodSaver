@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Location = Microsoft.Maui.Devices.Sensors.Location;
 
 namespace FoodSaverMaui.ViewModel
 {
@@ -33,6 +33,20 @@ namespace FoodSaverMaui.ViewModel
         }
 
 
+        public async Task<Location> GetLocation(string cityName, string wardNumber, string toleName)
+        {
+            if (!string.IsNullOrEmpty(wardNumber) && !string.IsNullOrEmpty(toleName)
+                    && !string.IsNullOrEmpty(cityName))
+            {
+                var address = $"{cityName} {toleName}";
+
+                IEnumerable<Location> locations = await Geocoding.Default.GetLocationsAsync(address);
+                Location location = locations?.FirstOrDefault();
+                return location;
+            }
+            else { return null; }
+        }
+
        
         public async Task BuyPost()
         {
@@ -43,29 +57,42 @@ namespace FoodSaverMaui.ViewModel
             var toleName = await SecureStorage.GetAsync("toleName");
             var wardNumber = await SecureStorage.GetAsync("wardNumber");
             var token = await SecureStorage.GetAsync("token");
-            var cityName = await SecureStorage.GetAsync("cityName");
-            var wardNumber = await SecureStorage.GetAsync("wardNumber");
-            var toleName = await SecureStorage.GetAsync("toleName");
+           
             var userName = _jwtHelper.ExtractUserInfo(token);
-            var requestModel = new BuyFoodModel()
+            if (!string.IsNullOrEmpty(wardNumber) && !string.IsNullOrEmpty(toleName)
+                    && !string.IsNullOrEmpty(cityName))
             {
-                PidX = pidx,
-                Amount = double.Parse(amount),
-                ProductId = productId,
-                BuyerName = userName,
-                ToleName = toleName,
-                CityName = cityName,
-                WardNumber = wardNumber,
-            };
-            var request = await _foodService.BuyFood(requestModel);
-            if (request.IsSuccess == true)
-            {
-                var message = $"{userName} wants to buy your product.";
-               // await _signalRService.SendNotification(productId,message);
-               // SendNotification(productId, message);
-                 SecureStorage.Remove("pidx");
-                SecureStorage.Remove("amount");
-                SecureStorage.Remove("productId");
+                var location = await GetLocation(cityName, wardNumber, toleName);
+                if (location != null)
+                {
+                    var latitude = location.Latitude;
+                    var longitude = location.Longitude;
+
+
+
+                    var requestModel = new BuyFoodModel()
+                    {
+                        PidX = pidx,
+                        Amount = double.Parse(amount),
+                        ProductId = productId,
+                        BuyerName = userName,
+                        ToleName = toleName,
+                        CityName = cityName,
+                        WardNumber = wardNumber,
+                        Latitude = latitude,
+                        Longitude = longitude,
+                    };
+                    var request = await _foodService.BuyFood(requestModel);
+                    if (request.IsSuccess == true)
+                    {
+                        var message = $"{userName} wants to buy your product.";
+                        // await _signalRService.SendNotification(productId,message);
+                        // SendNotification(productId, message);
+                        SecureStorage.Remove("pidx");
+                        SecureStorage.Remove("amount");
+                        SecureStorage.Remove("productId");
+                    }
+                }
             }
             
         }

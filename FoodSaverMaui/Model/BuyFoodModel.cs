@@ -17,6 +17,9 @@ namespace FoodSaverMaui.Model
         public string ToleName { get; set; }
         public string CityName { get; set; }
 
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+
 
     }
 }
