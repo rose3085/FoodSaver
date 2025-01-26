@@ -14,6 +14,7 @@ namespace FoodSaverMaui.Response
         public double PricePerKg { get; set; }
         public double Quantity { get; set; }
 
+        public bool IsBooked { get; set; }
         public string Date { get; set; }
         public string UserName { get; set; }
         public string CityName { get; set; }

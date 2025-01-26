@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodSaverMaui.Views.OrderDetail"
+             Title="OrderDetail">
+    <Grid RowDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="10">
+        <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12">
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="10" RowSpacing="10">
+
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+                    <Grid Grid.Column="0" RowDefinitions="Auto,*">
+                        <Label Grid.Row="0" Text="2023/05/21"/>
+                        <Border  Grid.Row="1"  StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="0.0" StrokeDashOffset="12" HorizontalOptions="EndAndExpand">
+                            <Grid Padding="5" BackgroundColor="#edf9eb">
+                                <Label Grid.Row="0" Text="Delivered" TextColor="#385897" FontSize="15"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <Border  Grid.Column="1" StrokeShape="RoundRectangle 5,5,5,5" StrokeThickness="1.5" StrokeDashOffset="12" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand">
+                        <Grid ColumnDefinitions="Auto,*"  Padding="5" BackgroundColor="#d3d3d3">
+                            <Label Text="Update Status" Grid.Column="0" />
+                            <Image Source="down.png" Grid.Column="1" HeightRequest="24" />
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="3">
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="10,10,0,0">
+                        <Image Grid.Column="0" Source="user.png" HeightRequest="24" WidthRequest="24"/>
+                        <Label Grid.Column="1" FontSize="18" TextColor="#385897" FontAttributes="Bold" FontAutoScalingEnabled="False" Text="Customer " />
+
+                    </Grid>
+                    <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="40,0,0,0">
+
+                        <Label Grid.Column="0" FontSize="16" TextColor="Gray"  Text="Name : " />
+                        <Label Grid.Column="1" FontSize="16" Text="Rose" />
+                    </Grid>
+                    <Grid Grid.Row="2" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="40,0,0,0">
+
+                        <Label Grid.Column="0" FontSize="16" TextColor="Gray"  Text="Email : " />
+                        <Label Grid.Column="1" FontSize="16" Text="rose@gmail.com" />
+                    </Grid>
+                    <Grid Grid.Row="3" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="40,0,0,0">
+
+                        <Label Grid.Column="0" FontSize="16" TextColor="Gray"  Text="Phone : " />
+                        <Label Grid.Column="1" FontSize="16" Text="9800000001" />
+                    </Grid>
+                </Grid>
+
+                <BoxView  Grid.Row="2" HeightRequest="0.5" BackgroundColor="Gray"/>
+                <Grid Grid.Row="3" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="3">
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="10,10,0,0">
+                        <Image Grid.Column="0" Source="user.png" HeightRequest="24" WidthRequest="24"/>
+                        <Label Grid.Column="1" FontSize="18" TextColor="#385897" FontAttributes="Bold" FontAutoScalingEnabled="False" Text="Order Info " />
+
+                    </Grid>
+                    <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="40,0,0,0">
+
+                        <Label Grid.Column="0" FontSize="16" TextColor="Gray"  Text="Name : " />
+                        <Label Grid.Column="1" FontSize="16" Text="Rose" />
+                    </Grid>
+                    <Grid Grid.Row="2" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="40,0,0,0">
+
+                        <Label Grid.Column="0" FontSize="16" TextColor="Gray"  Text="Status : " />
+                        <Label Grid.Column="1" FontSize="16" Text="Delivered" />
+                    </Grid>
+                    <Grid Grid.Row="3" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="40,0,0,0">
+
+                        <Label Grid.Column="0" FontSize="16" TextColor="Gray"  Text="Payment Method : " />
+                        <Label Grid.Column="1" FontSize="16" Text="Khalti" />
+                    </Grid>
+                </Grid>
+                <BoxView  Grid.Row="4" HeightRequest="0.5" BackgroundColor="Gray"/>
+                <Grid Grid.Row="5" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="3">
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="10,10,0,0">
+                        <Image Grid.Column="0" Source="user.png" HeightRequest="24" WidthRequest="24"/>
+                        <Label Grid.Column="1" FontSize="18" TextColor="#385897" FontAttributes="Bold" FontAutoScalingEnabled="False" Text="Delivery Info " />
+
+                    </Grid>
+                    <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="40,0,0,0">
+
+                        <Label Grid.Column="0" FontSize="16" TextColor="Gray"  Text="City Name : " />
+                        <Label Grid.Column="1" FontSize="16" Text="Butwal" />
+                    </Grid>
+                    <Grid Grid.Row="2" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="40,0,0,0">
+
+                        <Label Grid.Column="0" FontSize="16" TextColor="Gray"  Text="Tole Name: " />
+                        <Label Grid.Column="1" FontSize="16" Text="Sukkhanagar" />
+                    </Grid>
+                    <Grid Grid.Row="3" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="40,0,0,0">
+
+                        <Label Grid.Column="0" FontSize="16" TextColor="Gray"  Text="Ward Number : " />
+                        <Label Grid.Column="1" FontSize="16" Text="8" />
+                    </Grid>
+                </Grid>
+               
+
+               
+
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

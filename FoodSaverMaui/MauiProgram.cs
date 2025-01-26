@@ -58,6 +58,8 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<SalesRecordServices>();
             builder.Services.AddSingleton<PurchaseHistoryService>();
 
+            builder.Services.AddSingleton<OrderDetail>();
+            builder.Services.AddSingleton<OrderDetailViewModel>();
 
             builder.Services.AddSingleton<UpdatePassword>();
             builder.Services.AddSingleton<UpdatePasswordViewModel>();

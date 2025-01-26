@@ -98,6 +98,7 @@ namespace FoodSaverMaui.ViewModel
         public Command OnHistoryTapped { get; }
         public Command OnPageLoad { get; }
         public Command OnPurchaseHistoryTapped { get; }
+        public Command OnDetailButtonTapped { get; }
 
         private readonly HubConnection _hubConnection;
         private readonly ISignalRService _signalRService;
@@ -117,7 +118,7 @@ namespace FoodSaverMaui.ViewModel
             OnDeleteUserTapped = new Command(async () => await DeleteUserTapped());
             OnChangeEmailTapped = new Command(async () => await ChangeEmailTapped());
             OnLogoutTapped = new Command(async() => await LogoutTapped());
-            
+            OnDetailButtonTapped = new Command<GetProductsResponse>(async (selectedProduct) => await DetailButtonTapped(selectedProduct));
             OnGetUserName = new Command(async () => await GetUserName());
             OnEditProfileTapped = new Command(async() => await EditProfileTapped());
             OnDotsTapped = new Command<GetProductsResponse>(async (selectedProduct) => await DotsTapped(selectedProduct));
@@ -129,6 +130,26 @@ namespace FoodSaverMaui.ViewModel
             OnPurchaseHistoryTapped = new Command(async() => await PurchaseHistoryTapped());
         }
 
+        public async Task DetailButtonTapped(GetProductsResponse selectedProduct)
+        {
+
+            if (selectedProduct == null)
+                return;
+            if (selectedProduct.IsBooked == true)
+            {
+                await Shell.Current.GoToAsync(nameof(OrderDetail));
+
+            }
+            else
+            {
+                await Shell.Current.GoToAsync(nameof(FoodDetail), true, new Dictionary<string, object>
+                    {
+
+                     {"Product", selectedProduct }
+                    });
+            
+            }
+        }
 
         public async Task PurchaseHistoryTapped()
         {
@@ -326,6 +347,7 @@ namespace FoodSaverMaui.ViewModel
                         foreach (var product in cacheResult)
                         {
                             Products.Add(product);
+
                         }
                         OnPropertyChanged(nameof(Products));
 
