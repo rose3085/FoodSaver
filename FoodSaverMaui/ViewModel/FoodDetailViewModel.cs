@@ -1,6 +1,7 @@
-﻿using CommunityToolkit.Maui.Alerts;
+﻿
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
-using FoodSaverMaui.Model;
+using FoodSaverMaui.Helper;
 using FoodSaverMaui.Response;
 using FoodSaverMaui.Views;
 
@@ -12,7 +13,10 @@ namespace FoodSaverMaui.ViewModel
     [QueryProperty(nameof(Product), "Product")]
     public partial class FoodDetailViewModel : BaseViewModel
     {
-        
+
+        [ObservableProperty]
+        bool isBuyButtonVisible;
+
         private GetProductsResponse product;
 
         public GetProductsResponse Product // Define the property itself
@@ -21,58 +25,65 @@ namespace FoodSaverMaui.ViewModel
             set => SetProperty(ref product, value); // Use SetProperty to notify change
         }
 
-
-        [ObservableProperty]
-        public BuyFoodModel purchaseDetail = new();
-
+        private readonly IJwtHelper _jwtHelper;
 
         public Command OnRemoveButtonPressed { get; }
         public Command OnPinLocationTapped { get; }
         public Command OnBuyButtonPressed { get; }
-
-        public FoodDetailViewModel()
+        public Command OnPageMount { get; }
+        public FoodDetailViewModel(IJwtHelper jwtHelper)
         {
+            _jwtHelper = jwtHelper;
             OnRemoveButtonPressed = new Command(async() => await RemoveButtonPressed());
             OnPinLocationTapped = new Command(async () => await PinLocationTapped());
             OnBuyButtonPressed = new Command(async () => await BuyButtonPressed());
+            OnPageMount = new Command(async() => await PageMount());
         }
 
+        public async Task PageMount()
+        {
+            IsBuyButtonVisible = false;
+            var token = await SecureStorage.GetAsync("token");
+            if(token != null){
+                var userName =  _jwtHelper.ExtractUserInfo(token);
+                if(Product.UserName == userName)
+                {
+                   IsBuyButtonVisible = false;
+                }
+                else
+                {
+                   IsBuyButtonVisible = true;
+                }
+            }
+        }
         public async Task RemoveButtonPressed()
         {
             await Shell.Current.GoToAsync("..");
         }
         public async Task BuyButtonPressed()
         {
-            var userName = await SecureStorage.GetAsync("userName");
-            if (Product.UserName == userName)
-            {
-                IsBusy = false;
-            }
-            string cityName = await Shell.Current.DisplayPromptAsync("Delivery Address","Enter your city name ?");
-            string wardNumber = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your ward number ?",maxLength:2,keyboard:Keyboard.Numeric);
-            string toleName = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your tole name ?");
+            //var userName = await SecureStorage.GetAsync("userName");
+            //if (Product.UserName == userName)
+            //{
+            //    IsBusy = false;
+            //}
 
-            if (cityName != null && wardNumber != null && toleName != null && product.PricePerKg != null && product.Id != null)
+            var city = await Shell.Current.DisplayPromptAsync("Delivery Address","Enter your city name?");
+            if (city != null)
             {
-                 purchaseDetail = new BuyFoodModel
+                var toleName = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your tole name?");
+                if (toleName != null)
                 {
-                    CityName = cityName,
-                    WardNumber = wardNumber,
-                    ToleName = toleName,
-                    Amount = product.PricePerKg,
-                    ProductId = product.Id
-                };
-                var navigationParameter = new Dictionary<string, object>
-                {
-                    { "PurchaseDetail",purchaseDetail }
-                };
-                await Shell.Current.GoToAsync(nameof(KhaltiPaymentView), navigationParameter);
-                //await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}&Amount={product.PricePerKg}&ProductId={product.Id}&CityName=Uri.EscapeDataString({cityName})&WardNumber={wardNumber}&ToleName=Uri.EscapeDataString({toleName}");
+                    var wardNumber = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your ward number?");
+                    if (wardNumber != null)
+                    {
+                        await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}?Amount={product.PricePerKg}&ProductId={product.Id}&CityName={city}&ToleName={toleName}&WardNumber={wardNumber}");
+                    }
+                }
             }
-            else 
-            {
-                return;
-            }
+
+
+           
         }
 
         public async Task PinLocationTapped()

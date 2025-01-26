@@ -17,8 +17,12 @@ namespace Domain.Entities.Foods
 
         public FoodModel Food { get; set; }
         public PaymentModel Payment { get; set; }
-        public DeliveryAddressModel DeliveryAddress { get; set; }
-        public DateTime CreatedTime { get; set; }
 
+       
+        public DeliveryAddressModel DeliveryAddress { get; set; }
+
+        public bool IsDelivered { get; set; } = false;
+        public DateTime CreatedTime { get; set; }
+        
     }
 }

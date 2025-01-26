@@ -105,6 +105,7 @@ namespace Application.Services.Payment
                             WardNumber = createOrderRequest.WardNumber,
                             ToleName = createOrderRequest.ToleName,
                             CityName = createOrderRequest.CityName,
+                            
                         
                         };
                         var order = new OrderModel
@@ -122,6 +123,10 @@ namespace Application.Services.Payment
                         //var request = _mapper.Map<OrderModel>(order);
                         var result = await _uow.AsyncRepositories<OrderModel>().AddAsync(order);
                         await _uow.AsyncRepositories<FoodModel>().UpdateAsync(checkProductExist);
+
+
+
+
 
                         var sellerId = checkProductExist.Seller;
                         if (sellerId != null)

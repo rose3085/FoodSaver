@@ -32,5 +32,11 @@ namespace FoodSaverMaui.ViewModel
 
        public bool isSalesLimitReached;
 
+        [ObservableProperty]
+        public bool isSeller;
+
+        [ObservableProperty]
+        public bool isBuyer;
+
     }
 }

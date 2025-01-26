@@ -61,14 +61,18 @@
 	  <None Remove="Resources\Fonts\Poppins-SemiBold.ttf" />
 	  <None Remove="Resources\Fonts\Solway-Bold.ttf" />
 	  <None Remove="Resources\Images\addpost.png" />
+	  <None Remove="Resources\Images\calendar.png" />
 	  <None Remove="Resources\Images\checked.png" />
 	  <None Remove="Resources\Images\dots.png" />
 	  <None Remove="Resources\Images\down.png" />
 	  <None Remove="Resources\Images\email.png" />
+	  <None Remove="Resources\Images\filter.png" />
 	  <None Remove="Resources\Images\find.png" />
 	  <None Remove="Resources\Images\fingerprint.png" />
 	  <None Remove="Resources\Images\finger_print.png" />
+	  <None Remove="Resources\Images\gallery.png" />
 	  <None Remove="Resources\Images\home.png" />
+	  <None Remove="Resources\Images\image.png" />
 	  <None Remove="Resources\Images\key.png" />
 	  <None Remove="Resources\Images\list.png" />
 	  <None Remove="Resources\Images\location.png" />
@@ -84,9 +88,11 @@
 	  <None Remove="Resources\Images\post.png" />
 	  <None Remove="Resources\Images\profile.png" />
 	  <None Remove="Resources\Images\question.png" />
+	  <None Remove="Resources\Images\reciept.png" />
 	  <None Remove="Resources\Images\remove.png" />
 	  <None Remove="Resources\Images\rightArrows.png" />
 	  <None Remove="Resources\Images\settings.png" />
+	  <None Remove="Resources\Images\sold.png" />
 	  <None Remove="Resources\Images\user.png" />
 	  <None Remove="Resources\Splash\splash.png" />
 	</ItemGroup>
@@ -105,13 +111,17 @@
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="8.0.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="7.1.2" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.11" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="8.0.11" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="9.0.10" />
 		<PackageReference Include="Microsoft.Maui.Maps" Version="9.0.10" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Plugin.LocalNotification" Version="10.1.8" />
 		<PackageReference Include="Plugin.Maui.Biometric" Version="0.0.2" />
+		<PackageReference Include="System.Linq" Version="4.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>

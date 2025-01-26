@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.KhaltiServices;
-using FoodSaverMaui.Model;
+using FoodSaverMaui.SignalRServices;
 using FoodSaverMaui.Views;
 using System;
 using System.Collections.Generic;
@@ -10,77 +10,54 @@ using System.Threading.Tasks;
 
 namespace FoodSaverMaui.ViewModel
 {
-    //[QueryProperty(nameof(Amount), "Amount")]
-    //[QueryProperty(nameof(ProductId), "ProductId")]
-    //[QueryProperty(nameof(CityName), "CityName")]
-    //[QueryProperty(nameof(WardNumber), "WardNumber")]
-    //[QueryProperty(nameof(ToleName), "ToleName")]
-   
-
-    [QueryProperty(nameof(BuyFoodModel), "PurchaseDetail")]
+    [QueryProperty(nameof(Amount), "Amount")]
+    [QueryProperty(nameof(ProductId), "ProductId")]
+    [QueryProperty(nameof(CityName), "CityName")]
+    [QueryProperty(nameof(ToleName), "ToleName")]
+    [QueryProperty(nameof(WardNumber), "WardNumber")]
     public partial class KhaltiPaymentViewModel : BaseViewModel
     {
 
-        private BuyFoodModel buyFoodModel;
+        private string _cityName;
 
-        public BuyFoodModel BuyFoodModel
-        {
-            get => buyFoodModel;
-            set
-            {
-                if (buyFoodModel != value)
-                {
-                    buyFoodModel = value;
-
-
-                    CityName = buyFoodModel?.CityName;
-                    WardNumber = buyFoodModel?.WardNumber;
-                    ToleName = buyFoodModel?.ToleName;
-                    Amount = buyFoodModel.Amount.ToString();
-                    ProductId = buyFoodModel?.ProductId;
-
-                    OnPropertyChanged(nameof(BuyFoodModel));
-                }
-            }
-        }
-
-
-        private string cityName;
         public string CityName
         {
-            get => cityName;
+            get => _cityName;
             set
             {
-                if (cityName != value)
+                if (_cityName != value)
                 {
-                    cityName = value;
+                    _cityName = value;
                     OnPropertyChanged(nameof(CityName));
                 }
             }
         }
 
-        private string toleName;
+        private string _toleName;
+
         public string ToleName
         {
-            get => toleName;
+            get => _toleName;
             set
             {
-                if (toleName != value)
+                if (_toleName != value)
                 {
-                    toleName = value;
+                    _toleName = value;
                     OnPropertyChanged(nameof(ToleName));
                 }
             }
         }
-        private string wardNumber;
+
+        private string _wardNumber;
+
         public string WardNumber
         {
-            get => wardNumber;
+            get => _wardNumber;
             set
             {
-                if (wardNumber != value)
+                if (_wardNumber != value)
                 {
-                    wardNumber = value;
+                    _wardNumber = value;
                     OnPropertyChanged(nameof(WardNumber));
                 }
             }
@@ -123,29 +100,36 @@ namespace FoodSaverMaui.ViewModel
 
        
         private readonly IKhaltiService _khaltiServices;
+        private readonly ISignalRService _signalRService;
+
         public Command OnKhaltiPaymentButtonClicked { get; }
-        public KhaltiPaymentViewModel(IKhaltiService khaltiServices)
+        public KhaltiPaymentViewModel(IKhaltiService khaltiServices,ISignalRService signalRService)
         {
             _khaltiServices = khaltiServices;
+            _signalRService = signalRService;
             OnKhaltiPaymentButtonClicked = new Command(async() => await KhaltiPaymentButton());
            
         }
 
-       
+
+
+
 
         public async Task KhaltiPaymentButton()
         {
-            await SecureStorage.SetAsync("amount", _amount);
-            await SecureStorage.SetAsync("productId", _productId);
-            await SecureStorage.SetAsync("cityName", cityName);
-            await SecureStorage.SetAsync("toleName", toleName);
-            await SecureStorage.SetAsync("wardNumber", wardNumber);
-            string pay = await _khaltiServices.KhaltiLaunch(_amount,_productId);
+            await SecureStorage.SetAsync("amount",Amount);
+            await SecureStorage.SetAsync("productId",ProductId);
+            await SecureStorage.SetAsync("cityName", CityName);
+            await SecureStorage.SetAsync("toleName", ToleName);
+            await SecureStorage.SetAsync("wardNumber", WardNumber);
+           
+            string pay = await _khaltiServices.KhaltiLaunch(Amount, ProductId);
             if (pay != null)
             {
                 // await Shell.Current.GoToAsync($"{nameof(PaymentUrl)}?url={Uri.EscapeDataString(pay)}");
                 await Shell.Current.GoToAsync($"{nameof(PaymentUrl)}?url={Uri.EscapeDataString(pay)}");
             }
+            //await _signalRService.SendNotification("dd27b90-05b9-49a3-a2d6-5271d50b6c41","MeowwwwwwwwwwwwwwBhowwwwwwwwww");
         }
     }
 }

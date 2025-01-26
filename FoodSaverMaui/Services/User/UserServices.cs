@@ -1,7 +1,9 @@
 ﻿
+using FoodSaverMaui.Helper.CacheHelper;
 using FoodSaverMaui.Model;
 using FoodSaverMaui.Response;
 using Newtonsoft.Json;
+using System.Text.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +16,13 @@ namespace FoodSaverMaui.Services.User
     public class UserServices
     {
         private readonly HttpClient _httpClient;
+        private readonly ICacheService _cacheService;
+
         //var url = $"{App.Settings.ApiBaseUrl}/v1/cms/register/bus-station";
-        public UserServices(HttpClient httpClient)
+        public UserServices(HttpClient httpClient,ICacheService cacheService)
         {
             _httpClient = httpClient;
+            _cacheService = cacheService;
         }
 
 
@@ -37,6 +42,8 @@ namespace FoodSaverMaui.Services.User
                     if (result.IsSuccess == true)
                     {
                         await SecureStorage.SetAsync("token", result.Token);
+                        var roles = System.Text.Json.JsonSerializer.Serialize(result.Role);
+                        await SecureStorage.SetAsync("roles",roles);
                         return true;
                     }
                     else 

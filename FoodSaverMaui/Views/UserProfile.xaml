@@ -2,15 +2,21 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FoodSaverMaui.Views.UserProfile"
-               xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
+             xmlns:local="clr-namespace:FoodSaverMaui.Helper"
+            xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
             x:DataType="viewmodel:UserProfileViewModel"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:model="clr-namespace:FoodSaverMaui.Response"
+             xmlns:purchaseModel="clr-namespace:FoodSaverMaui.Response.PurchaseHistory"
              NavigationPage.HasNavigationBar="False"
              >
 
 
-
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:StringConverter x:Key="StringConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
 
     <AbsoluteLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
@@ -23,62 +29,76 @@
                     <Label Text="{Binding UserName}" TextColor="Gray" FontAttributes="Bold" FontSize="20" FontAutoScalingEnabled="False" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                 </Grid>
                 <Grid Grid.Row="1" RowDefinitions="Auto,*,Auto" RowSpacing="5">
-                    <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="5" Padding="15,0,0,0">
-                        <Button Grid.Column="0" Text="Posts" FontSize="15" FontAttributes="Bold"
-                             Command="{Binding OnPostTapped}"
-                             CommandParameter="1" >
-                            <VisualStateManager.VisualStateGroups>
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,Auto" ColumnSpacing="5" Padding="15,0,0,0">
+                        <Button Grid.Column="0" Text="Posts" FontSize="15" FontAttributes="Bold" IsVisible="{Binding IsSeller}"
+                             Command="{Binding OnPostTapped}" 
+                             CommandParameter="1" BackgroundColor="Transparent">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsComponent1Visible}" Value="True">
+                                    <Setter Property="TextColor" Value="#385897" />
+                                    <Setter Property="FontSize" Value="15.5" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsComponent1Visible}" Value="False">
+                                    <Setter Property="TextColor" Value="Gray" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                            <!--<VisualStateManager.VisualStateGroups>
                                 <VisualStateGroupList>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
                                             <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="Transparent" />
+                                                --><!--<Setter Property="BackgroundColor" Value="Transparent" />--><!--
                                                 <Setter Property="TextColor" Value="Gray"/>
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="Pressed">
                                             <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="Grey" />
+                                                --><!--<Setter Property="BackgroundColor" Value="Grey" />--><!--
                                                 <Setter Property="TextColor" Value="#385897"/>
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="PointerOver" />
                                     </VisualStateGroup>
                                 </VisualStateGroupList>
-                            </VisualStateManager.VisualStateGroups>
+                            </VisualStateManager.VisualStateGroups>-->
                         </Button>
-                        <Button Grid.Column="1" Text="History"  FontSize="15" FontAttributes="Bold"
+                        <Button Grid.Column="1" Text="SaleHistory"  FontSize="15" FontAttributes="Bold"
                              Command="{Binding OnHistoryTapped}"
-                             CommandParameter="2"  >
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroupList>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="Transparent" />
-                                                <Setter Property="TextColor" Value="Gray"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                        <VisualState x:Name="Pressed">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="Grey" />
-                                                <Setter Property="TextColor" Value="#385897"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                        <VisualState x:Name="PointerOver" />
-                                    </VisualStateGroup>
-                                </VisualStateGroupList>
-                            </VisualStateManager.VisualStateGroups>
+                             CommandParameter="2" BackgroundColor="Transparent" IsVisible="{Binding IsSeller}" >
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsComponent2Visible}" Value="True">
+                                    <Setter Property="TextColor" Value="#385897" />
+                                    <Setter Property="FontSize" Value="15.5" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsComponent2Visible}" Value="False">
+                                    <Setter Property="TextColor" Value="Gray" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Button Grid.Column="2" Text="PurchaseHistory"  FontSize="15" FontAttributes="Bold"
+                                Command="{Binding OnPurchaseHistoryTapped}" BackgroundColor="Transparent" IsVisible="{Binding IsBuyer}"
+                                >
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsComponent3Visible}" Value="True">
+                                    <Setter Property="TextColor" Value="#385897" />
+                                    <Setter Property="FontSize" Value="15.5" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsComponent3Visible}" Value="False">
+                                    <Setter Property="TextColor" Value="Gray" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                            
                         </Button>
                     </Grid>
                     <!--<BoxView Grid.Row="1" HeightRequest="1"/>-->
-                    <Grid Grid.Row="1">
-
-                        <ScrollView >
-
-
-
-                            <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single" IsVisible="{Binding IsComponent1Visible}">
+                    <Grid Grid.Row="1" >
+                        <Grid >
+                            <ActivityIndicator Grid.Row="0" IsRunning="{Binding IsBusy}" 
+                                IsVisible="{Binding IsBusy}"
+                                        Color="Black"  HeightRequest="25" WidthRequest="25"/>
+                        </Grid>
+                        
+                        <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single" IsVisible="{Binding IsComponent1Visible}">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="model:GetProductsResponse">
                                         <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -87,8 +107,8 @@
                                                 <Grid RowDefinitions="Auto,*" RowSpacing="10" Padding="5,20,3,20"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
 
                                                     <Grid Grid.Row="0" RowDefinitions="Auto,Auto" RowSpacing="10" >
-                                                        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                                            <Grid Grid.Column="0" WidthRequest="280" RowDefinitions="Auto,Auto" ColumnSpacing="5" >
+                                                        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*" ColumnSpacing="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                            <Grid Grid.Column="0" WidthRequest="270" RowDefinitions="Auto,Auto"  >
                                                                 <Grid Grid.Row="0" ColumnSpacing="10" ColumnDefinitions="Auto,Auto" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                                                     <Label Text="{Binding UserName}"  Grid.Column="0" TextColor="Gray" FontSize="22" Padding="15,0,0,0" FontAttributes="Bold" />
                                                                     <Label Grid.Column="1" Text="{Binding Date}" FontSize="14" VerticalOptions="CenterAndExpand"/>
@@ -103,7 +123,10 @@
 
 
                                                             </Grid>
-                                                            <Image  Grid.Column="1" Source="dots.png" HeightRequest="22" HorizontalOptions="EndAndExpand" >
+                                                        <Image  Grid.Column="1" Source="sold.png" HeightRequest="27"  >
+                                                            
+                                                        </Image>
+                                                        <Image  Grid.Column="2" Source="dots.png" HeightRequest="22" HorizontalOptions="EndAndExpand" Margin="0,0,5,0">
                                                                 <Image.GestureRecognizers>
                                                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UserProfileViewModel}}, Path=OnDotsTapped}"
                                                                    CommandParameter="{Binding .}"/>
@@ -135,7 +158,7 @@
                                                                 </Grid>
                                                                 <Button Grid.Column="1" Text="Details" 
                                          
-                                         HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
+                                                                    HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
                                                             </Grid>
                                                         </Grid>
 
@@ -146,7 +169,7 @@
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
-                        </ScrollView>
+                     
 
 
                         <Frame IsVisible="{Binding IsComponent2Visible}" BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -209,6 +232,45 @@
                             </Grid>
                         </Frame>
 
+
+                      <CollectionView ItemsSource="{Binding PurchaseHistory}" SelectionMode="Single" IsVisible="{Binding IsComponent3Visible}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="purchaseModel:GetPurchaseWrapper">
+                                        <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+                                            <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12">
+                                                <Grid RowDefinitions="Auto,*" RowSpacing="10" Padding="5,20,3,20"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+
+
+                                                    <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*" Padding="10,0,10,0" ColumnSpacing="5">
+                                                        <Grid  Grid.Column="0" >
+                                                            <Image Source="reciept.png" HeightRequest="35" WidthRequest="35" />
+                                                        </Grid>
+                                                        <Grid Grid.Column="1" RowDefinitions="Auto,*">
+                                                            <Label Grid.Row="0" Text="{Binding Food.FoodName}" TextColor="Green" FontSize="18"  FontAttributes="Bold" />
+                                                            <Grid  Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="4">
+                                                                <Image Grid.Column="0" Source="calendar.png" HeightRequest="10" WidthRequest="10" />
+                                                                <Label Grid.Column="1" Text="{Binding Food.Date , Converter={StaticResource StringConverter}}" TextColor="Gray" />
+                                                            </Grid>
+                                                        </Grid>
+                                                        <Grid Grid.Column="2" ColumnDefinitions="Auto,*" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand">
+                                                            <Label Grid.Column="0" Text="Rs." TextColor="Red" FontSize="16" />
+                                                           
+                                                                <Label Grid.Column="1" Text="{Binding Food.PricePerKg}" TextColor="Red"  FontSize="16"  />
+                                                            
+                                                           
+                                                        </Grid>
+                                                    </Grid>
+
+                                                </Grid>
+                                            </Border>
+                                        </Frame>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                       
+
+
                     </Grid>
 
                 </Grid>
@@ -220,7 +282,7 @@
 
         <!-- Side Navigation Expander -->
         <toolkit:Expander HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"
-                         
+                    x:Name="SettingsExpander" 
                      Direction="Down"
                       IsExpanded="False"
                       AbsoluteLayout.LayoutBounds="0, 0, 550, 1"
@@ -233,7 +295,7 @@
             
             <toolkit:Expander.Header >
                 <Frame Background="Transparent"  BorderColor="Transparent" HorizontalOptions="Start" VerticalOptions="Start" >
-                    <Image   Source="settings.png" HeightRequest="24" WidthRequest="24"  >
+                    <Image   Source="settings.png" HeightRequest="22" WidthRequest="22"  >
                       
                     </Image>
                 </Frame>
@@ -241,7 +303,7 @@
             </toolkit:Expander.Header>
             
 
-            <VerticalStackLayout Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  Background="#f4f4f4" HeightRequest="750"  Spacing="10" Padding="10">
+            <VerticalStackLayout  Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  Background="#f4f4f4" HeightRequest="750"  Spacing="10" Padding="10">
 
                     
                 <!--<VerticalStackLayout.Shadow>

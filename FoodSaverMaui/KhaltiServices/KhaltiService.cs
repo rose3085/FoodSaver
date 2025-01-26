@@ -28,36 +28,22 @@ namespace FoodSaverMaui.KhaltiServices
             {
                 return null;
             }
-            var amountPaid = int.Parse(amount);
+          
             
             var initiateUrl = $"https://a.khalti.com/api/v2/epayment/initiate/";
-            //var payload = new
-            //{
-            //    return_url = $"{App.Settings.ApiBaseUrl}/PaymentReturn/ReturnUrl",
-            //    website_url = "https://pay.khalti.com",
-            //    amount = amountPaid,
-            //    purchase_order_id =productId,
-            //    purchase_order_name = "test",
-            //    customer_info = new
-            //    {
-            //        name = "Ram Bahadur",
-            //        email = "rabinasedhai1@gmail.com",
-            //        phone = "9800000001"
-            //    },
-
-            //};
+           
             var payload = new
             {
                 return_url = $"{App.Settings.ApiBaseUrl}/PaymentReturn/ReturnUrl",
                 website_url = "https://pay.khalti.com",
-                amount = 1000,
+                amount = Convert.ToInt32(amount),
                 purchase_order_id = productId,
                 purchase_order_name = buyer,
                 customer_info = new
                 {
-                    name = "Ram Bahadur",
-                    email = "rabinasedhai1@gmail.com",
-                    phone = "9800000001"
+                    name = $"{buyer}",
+                   // email = "rabinasedhai1@gmail.com",
+                   
                 },
 
             };

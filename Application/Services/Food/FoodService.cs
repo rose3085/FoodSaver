@@ -229,7 +229,7 @@ namespace Application.Services.Food
             var result = await _uow.AsyncRepositories<FoodModel>().GetRandomWithIncludeAsync(includes);
 
 
-             var baseUrl = $"https://dd31-2405-acc0-1504-cce4-d12a-f565-6a03-9e7f.ngrok-free.app";
+             var baseUrl = $"https://34bf-2405-acc0-1504-cce4-f915-d307-b1b4-24af.ngrok-free.app";
             // var baseUrl = $"https://localhost:7293";
             var productResult =  result
                 .Where(product => product.IsBooked == false)
@@ -273,13 +273,14 @@ namespace Application.Services.Food
                         s => s.Address,
                   };
                     var result = await _uow.AsyncRepositories<FoodModel>().GetWithInclude(includes);
-                    var baseUrl = $"https://7112-2405-acc0-1504-cce4-9534-963d-17f3-f208.ngrok-free.app";
+                    var baseUrl = $"https://34bf-2405-acc0-1504-cce4-f915-d307-b1b4-24af.ngrok-free.app";
                     //var getProduct = await GetProductsAsync();
                     var getProduct = result
                         .Where(product => product.Seller == userInfo)
                         .OrderByDescending(product => product.Date)
                                .Select(async product =>
                                {
+
                                    var timeDifference = await CalculateTime(product.Date);
                                    return new GetProductResponse
                                    {
@@ -343,6 +344,39 @@ namespace Application.Services.Food
             await imageFile.CopyToAsync(stream);
           
             return fileName;
+        }
+
+        public async Task<GetProductByIdResponse> GetProductById(string productId)
+        {
+            try
+            {
+                var includes = new Expression<Func<FoodModel, object>>[]
+                      {
+                        s => s.Seller,
+                        s => s.Address,
+                      };
+                var product = await _uow.AsyncRepositories<FoodModel>().GetWithIncludeAndId(productId, includes);
+                if (product != null)
+                {
+                    var result =  new GetProductByIdResponse()
+                    {
+                        Id = product.Id,
+                        ProductName = product.FoodName,
+                        SellerId = product.Seller?.Id,
+                        SellerName = product.Seller?.UserName,
+                      
+                    };
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

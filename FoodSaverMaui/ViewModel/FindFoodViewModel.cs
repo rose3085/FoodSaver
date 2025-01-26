@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Response;
 using FoodSaverMaui.Services.Food;
+using FoodSaverMaui.SignalRServices;
 using FoodSaverMaui.Views;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace FoodSaverMaui.ViewModel
     public partial class FindFoodViewModel : BaseViewModel
     {
         private readonly FoodService _foodService;
+        private readonly ISignalRService _signalRService;
+
         public Command OnClickTapped { get; }
         public Command OnAddButtonClick { get; }
         public ObservableCollection<GetProductsResponse> Products { get; } = new();
@@ -29,13 +32,16 @@ namespace FoodSaverMaui.ViewModel
         [ObservableProperty]
         bool isRefreshing;
 
+     
+       public bool IsNotRefreshing => !IsRefreshing;
         public Command OnDetailButtonClicked { get; }
         public Command OnRemoveButtonPressed { get; }
 
         public ICommand ShowPopupCommand => new Command(ShowPopup);
-        public FindFoodViewModel(FoodService foodService)
+        public FindFoodViewModel(FoodService foodService,ISignalRService signalRService)
         {
             _foodService = foodService;
+            _signalRService = signalRService;
             OnClickTapped = new Command(async() => await ClickTapped());
             OnAddButtonClick = new Command(async() => await AddButtonClick());
             OnSearchButtonPressed = new Command(async () => await SearchButtonPressed(SearchQuery));
@@ -56,12 +62,12 @@ namespace FoodSaverMaui.ViewModel
         {
             if(selectedProduct == null)
                 return;
+           // await _signalRService.SendNotification("dd27b90-05b9-49a3-a2d6-5271d50b6c41", "MeowwwwwwwwwwwwwwBhowwwwwwwwww");
+            await Shell.Current.GoToAsync(nameof(FoodDetail), true, new Dictionary<string, object>
+            {
 
-           await Shell.Current.GoToAsync(nameof(FoodDetail), true, new Dictionary<string, object>
-           {
-
-            {"Product", selectedProduct }
-           });
+             {"Product", selectedProduct }
+            });
         }
         public async void ShowPopup()
         {
@@ -151,17 +157,20 @@ namespace FoodSaverMaui.ViewModel
                 var request = await _foodService.GetAllProducts();
                 if (request != null)
                 {
-                    
+
                     if (request.Count() == 0)
                     {
                         await Shell.Current.DisplayAlert("No product to display", "Please try again later", "Ok!");
                     }
-                    Products.Clear();
-                    foreach (var product in request)
+                    else
                     {
-                        Products.Add(product);
+                        Products.Clear();
+                        foreach (var product in request)
+                        {
+                            Products.Add(product);
+                        }
+                        OnPropertyChanged(nameof(Products));
                     }
-                    OnPropertyChanged(nameof(Products));
 
                 }
                 else
