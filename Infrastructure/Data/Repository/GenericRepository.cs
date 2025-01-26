@@ -135,6 +135,35 @@ namespace Infrastructure.Data.Repository
             
         }
 
+        public async Task<IEnumerable<T>> GetwithIncludeAndFilter(Expression<Func<T, object>>[] children, Expression<Func<T, bool>> filter)
+        {
+            try
+            {
+               
+                IQueryable<T> query = _db;
+
+              
+                foreach (var child in children)
+                {
+                    query = query.Include(child);
+                    //query = query.Where(filter);
+                }
+
+                // Apply the filter
+                if (filter != null)
+                {
+                    query = query.Where(filter);
+                }
+
+                // Execute the query and return the result
+                return await query.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
 
         //public async Task<T> GetWithIncludeAndFilter(

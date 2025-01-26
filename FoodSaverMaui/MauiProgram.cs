@@ -1,12 +1,16 @@
 ﻿using CommunityToolkit.Maui;
 using FoodSaverMaui.Helper;
+using FoodSaverMaui.Helper.CacheHelper;
 using FoodSaverMaui.KhaltiServices;
 using FoodSaverMaui.Services.Food;
+using FoodSaverMaui.Services.PurchaseHistory;
 using FoodSaverMaui.Services.SalesRecord;
 using FoodSaverMaui.Services.User;
+using FoodSaverMaui.SignalRServices;
 using FoodSaverMaui.ViewModel;
 using FoodSaverMaui.Views;
 using Microsoft.Extensions.Logging;
+using Plugin.LocalNotification;
 using Plugin.Maui.Biometric;
 
 namespace FoodSaverMaui
@@ -19,6 +23,7 @@ namespace FoodSaverMaui
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseLocalNotification()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -29,13 +34,14 @@ namespace FoodSaverMaui
                     fonts.AddFont("Solway-Bold.tff", "Solway");
                 });
 
+            builder.Services.AddScoped<ICacheService, CacheService >();
             builder.Services.AddSingleton<IBiometric>(BiometricAuthenticationService.Default);
             builder.Services.AddSingleton<IJwtHelper, JwtHelper>();
             builder.Services.AddSingleton<HttpClient>();
-            builder.Services.AddSingleton<CreateAccount>();
-            builder.Services.AddSingleton<CreateAccountViewModel>();
+            builder.Services.AddTransient<CreateAccount>();
+            builder.Services.AddTransient<CreateAccountViewModel>();
             builder.Services.AddSingleton<UserServices>();
-            builder.Services.AddSingleton<SalesRecordServices>();
+            
 
             builder.Services.AddTransient<Login>();
             builder.Services.AddTransient<LoginViewModel>();
@@ -49,6 +55,9 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<UserProfile>();
             builder.Services.AddSingleton<UserProfileViewModel>();
             builder.Services.AddSingleton<UserProfileService>();
+            builder.Services.AddSingleton<SalesRecordServices>();
+            builder.Services.AddSingleton<PurchaseHistoryService>();
+
 
             builder.Services.AddSingleton<UpdatePassword>();
             builder.Services.AddSingleton<UpdatePasswordViewModel>();
@@ -87,6 +96,7 @@ namespace FoodSaverMaui
 
             builder.Services.AddTransient<EditProfile>();
             builder.Services.AddTransient<EditProfileViewModel>();
+            builder.Services.AddSingleton<ISignalRService,SignalRService>();
 
 
 #if DEBUG

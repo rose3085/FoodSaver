@@ -4,11 +4,12 @@
             x:Class="FoodSaverMaui.Views.CreateAccount"
               xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
              x:DataType="viewmodel:CreateAccountViewModel"
-                         xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
             NavigationPage.HasNavigationBar="False"
             x:Name="CreateAccountPage"
            >
-
+   
+    
     <ContentPage.Resources>
         <Style x:Key="InvalidEntryStyle" TargetType="Entry">
             <Setter Property="TextColor" Value="Red" />

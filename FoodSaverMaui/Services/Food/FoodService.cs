@@ -12,16 +12,57 @@ using System.Net.Http;
 using System.IO;
 using System.Threading.Tasks;
 using System.Globalization;
+using FoodSaverMaui.Helper.CacheHelper;
 
 namespace FoodSaverMaui.Services.Food
 {
     public class FoodService
     {
         private readonly HttpClient _httpClient;
+        private readonly ICacheService _cacheService;
 
-        public FoodService(HttpClient httpClient)
+        public FoodService(HttpClient httpClient, ICacheService cacheService)
         {
             _httpClient = httpClient;
+            _cacheService = cacheService;
+        }
+
+
+
+        public async Task<GetProductByIdResponse> GetProductById(string id)
+        {
+            try
+            {
+                var jwtToken = await SecureStorage.GetAsync("token");
+                if (string.IsNullOrEmpty(jwtToken))
+                {
+                    throw new InvalidOperationException("Token not found.");
+                }
+                var url = $"{App.Settings.ApiBaseUrl}/api/Food/GetFoodById?id={id}";
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                var response = await _httpClient.GetAsync(url, CancellationToken.None);
+                Console.WriteLine($"s Code: {(int)response.StatusCode}");
+                if (response.IsSuccessStatusCode)
+                {
+
+                    var result = await response.Content.ReadFromJsonAsync<GetProductByIdResponse>();
+
+                    await _cacheService.AddOrUpdateCache("UserProduct", result);
+
+                    return result;
+
+                }
+                else
+                {
+
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
         }
 
         public async Task<IEnumerable<GetProductsResponse>> GetAllProducts()
@@ -33,7 +74,7 @@ namespace FoodSaverMaui.Services.Food
                 {
                     throw new InvalidOperationException("Token not found.");
                 }
-                var url = $"{App.Settings.ApiBaseUrl}/api/Food/GetFood";
+                var url = $"{App.Settings.ApiBaseUrl}/api/Food/GetAllFood";
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 var response = await _httpClient.GetAsync(url, CancellationToken.None);
                 Console.WriteLine($"s Code: {(int)response.StatusCode}");
@@ -74,6 +115,9 @@ namespace FoodSaverMaui.Services.Food
                 {
 
                     var result = await response.Content.ReadFromJsonAsync<IEnumerable<GetProductsResponse>>();
+
+                    await _cacheService.AddOrUpdateCache("UserProduct",result);
+
                     return result;
 
                 }

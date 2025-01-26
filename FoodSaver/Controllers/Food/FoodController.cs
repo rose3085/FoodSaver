@@ -19,7 +19,7 @@ namespace FoodSaver.Controllers.Food
         }
 
         [HttpGet]
-        [Route("GetFood")]
+        [Route("GetAllFood")]
        
         public async Task<IActionResult> GetProducts()
         {
@@ -27,6 +27,15 @@ namespace FoodSaver.Controllers.Food
             return Ok(products);
         }
 
+
+        [HttpGet]
+        [Route("GetFoodById")]
+
+        public async Task<IActionResult> GetProductsById(string id)
+        {
+            var products = await _foodService.GetProductById(id);
+            return Ok(products);
+        }
 
         [HttpGet]
         [Route("GetUserFood")]

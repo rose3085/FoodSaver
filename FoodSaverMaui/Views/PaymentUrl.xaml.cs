@@ -35,7 +35,17 @@ public partial class PaymentUrl : ContentPage
             string status = queryParams["status"];
             if (status == "Completed")
             {
+                if (BindingContext is PaymentUrlViewModel viewModel)
+                {
+                    if (viewModel.OnSendNotificationToSeller.CanExecute(null)) 
+                    {
+                        viewModel.OnSendNotificationToSeller.Execute(null);
+                    }
+
+                }
+
                 await Task.Delay(1000);
+
                 await Shell.Current.GoToAsync(nameof(PostSuccessfullPage));
             }
             if(status == "User canceled")

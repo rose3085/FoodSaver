@@ -123,6 +123,10 @@ namespace Application.Services.Payment
                         var result = await _uow.AsyncRepositories<OrderModel>().AddAsync(order);
                         await _uow.AsyncRepositories<FoodModel>().UpdateAsync(checkProductExist);
 
+
+
+
+
                         var sellerId = checkProductExist.Seller;
                         if (sellerId != null)
                         {
