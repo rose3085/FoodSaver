@@ -66,15 +66,28 @@ namespace FoodSaverMaui.ViewModel
         }
         public async Task BuyButtonPressed()
         {
-            var userName = await SecureStorage.GetAsync("userName");
-            if (Product.UserName == userName)
+            //var userName = await SecureStorage.GetAsync("userName");
+            //if (Product.UserName == userName)
+            //{
+            //    IsBusy = false;
+            //}
+
+            var city = await Shell.Current.DisplayPromptAsync("Delivery Address","Enter your city name?");
+            if (city != null)
             {
-                IsBusy = false;
+                var toleName = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your tole name?");
+                if (toleName != null)
+                {
+                    var wardNumber = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your ward number?");
+                    if (wardNumber != null)
+                    {
+                        await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}?Amount={product.PricePerKg}&ProductId={product.Id}&CityName={city}&ToleName={toleName}&WardNumber={wardNumber}");
+                    }
+                }
             }
 
 
-
-            await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}?Amount={product.PricePerKg}&ProductId={product.Id}");
+           
         }
 
         public async Task PinLocationTapped()

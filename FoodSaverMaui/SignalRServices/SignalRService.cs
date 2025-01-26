@@ -28,19 +28,7 @@ namespace FoodSaverMaui.SignalRServices
                  })
                 // .WithAutomaticReconnect()
                  .Build();
-            //Messages ??= new ObservableCollection<string>();
-
-            // Dispose();
-            //ConnectToHubAsync();
-
-            //_hubConnection.On<string>("ReceivePendingMessage", (message) =>
-            //{
-            //    // Add the message to the UI-bound collection
-            //    MainThread.BeginInvokeOnMainThread(() =>
-            //    {
-            //        Notify(message);
-            //    });
-            //});
+         
 
             _hubConnection.On<string>("ReceiveMessage", (message) =>
             {

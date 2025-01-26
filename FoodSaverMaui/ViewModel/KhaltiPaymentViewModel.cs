@@ -12,17 +12,57 @@ namespace FoodSaverMaui.ViewModel
 {
     [QueryProperty(nameof(Amount), "Amount")]
     [QueryProperty(nameof(ProductId), "ProductId")]
+    [QueryProperty(nameof(CityName), "CityName")]
+    [QueryProperty(nameof(ToleName), "ToleName")]
+    [QueryProperty(nameof(WardNumber), "WardNumber")]
     public partial class KhaltiPaymentViewModel : BaseViewModel
     {
 
-        [ObservableProperty]
-        string wardNumber;
+        private string _cityName;
 
-        [ObservableProperty]
-        string toleName;
+        public string CityName
+        {
+            get => _cityName;
+            set
+            {
+                if (_cityName != value)
+                {
+                    _cityName = value;
+                    OnPropertyChanged(nameof(CityName));
+                }
+            }
+        }
 
-        [ObservableProperty]
-        string cityName;
+        private string _toleName;
+
+        public string ToleName
+        {
+            get => _toleName;
+            set
+            {
+                if (_toleName != value)
+                {
+                    _toleName = value;
+                    OnPropertyChanged(nameof(ToleName));
+                }
+            }
+        }
+
+        private string _wardNumber;
+
+        public string WardNumber
+        {
+            get => _wardNumber;
+            set
+            {
+                if (_wardNumber != value)
+                {
+                    _wardNumber = value;
+                    OnPropertyChanged(nameof(WardNumber));
+                }
+            }
+        }
+
 
         private string _amount;
 
@@ -66,10 +106,18 @@ namespace FoodSaverMaui.ViewModel
             OnKhaltiPaymentButtonClicked = new Command(async() => await KhaltiPaymentButton());
         }
 
+
+
+
+
         public async Task KhaltiPaymentButton()
         {
             await SecureStorage.SetAsync("amount",Amount);
             await SecureStorage.SetAsync("productId",ProductId);
+            await SecureStorage.SetAsync("cityName", CityName);
+            await SecureStorage.SetAsync("toleName", ToleName);
+            await SecureStorage.SetAsync("wardNumber", WardNumber);
+           
             string pay = await _khaltiServices.KhaltiLaunch(Amount, ProductId);
             if (pay != null)
             {

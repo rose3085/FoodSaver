@@ -54,6 +54,14 @@ namespace FoodSaverMaui.ViewModel
             try
             {
                 var productId = await SecureStorage.GetAsync("productId");
+                var cityName = await SecureStorage.GetAsync("cityName");
+                var toleName = await SecureStorage.GetAsync("toleName");
+                var wardNumber = await SecureStorage.GetAsync("wardNumber");
+
+                if (cityName != null && toleName != null && wardNumber != null)
+                { 
+                
+                }
                 var product = await _foodService.GetProductById(productId);
                 if (product != null)
                 {
