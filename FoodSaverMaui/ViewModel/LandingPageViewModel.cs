@@ -53,7 +53,7 @@ namespace FoodSaverMaui.ViewModel
 
         public async Task<Location> GetLocation()
         {
-
+            try { 
 
             GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
 
@@ -61,64 +61,73 @@ namespace FoodSaverMaui.ViewModel
 
 
             return location;
+                 }
+            catch { return null; }
         }
 
         public async Task GetProducts()
         {
-            var location = await GetLocation();
-            if (location != null)
+            try
             {
-                double currentLat = location.Latitude;
-                double currentLong = location.Longitude;
-                var request = await _foodService.GetAllProducts(currentLat, currentLong);
-                await _cacheService.AddOrUpdateCache("ProductHomePage", request);
-                if (request != null)
+                var location = await GetLocation();
+                if (location != null)
                 {
-                    if (request.Count() > 0)
+                    double currentLat = location.Latitude;
+                    double currentLong = location.Longitude;
+                    var request = await _foodService.GetAllProducts(currentLat, currentLong);
+                   // await _cacheService.AddOrUpdateCache("ProductHomePage", request);
+                    if (request != null)
                     {
-                        Products.Clear();
-                        foreach (var product in request)
+                        if (request.Count() > 0)
                         {
-                            Products.Add(product);
+                            Products.Clear();
+                            foreach (var product in request)
+                            {
+                                Products.Add(product);
+                            }
+                            OnPropertyChanged(nameof(Products));
                         }
-                        OnPropertyChanged(nameof(Products));
+                        else { await Shell.Current.DisplayAlert("No products available to display!!", "Please try again later.", "Ok!"); }
                     }
-                    else { await Shell.Current.DisplayAlert("No products available to display!!", "Please try again later.", "Ok!"); }
-                }
-                else
-                {
+                    else
+                    {
 
-                    await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
+                        await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
 
+                    }
                 }
             }
+            catch
+            { }
         }
 
         public async Task PageMounted()
         {
-
-            var cachedResult = await _cacheService.GetFromCache<IEnumerable<GetProductsResponse>>("ProductHomePage");
-            if (cachedResult != null)
+            try
             {
-                if (cachedResult.Count() == 0)
-                {
+                //var cachedResult = await _cacheService.GetFromCache<IEnumerable<GetProductsResponse>>("ProductHomePage");
+                //if (cachedResult != null)
+                //{
+                //    if (cachedResult.Count() == 0)
+                //    {
+                //        await GetProducts();
+                //    }
+                //    else
+                //    {
+                //        Products.Clear();
+                //        foreach (var product in cachedResult)
+                //        {
+                //            Products.Add(product);
+                //        }
+                //        OnPropertyChanged(nameof(Products));
+                //    }
+                //}
+                //else
+                //{
                     await GetProducts();
-                }
-                else 
-                {
-                    Products.Clear();
-                    foreach (var product in cachedResult)
-                    {
-                        Products.Add(product);
-                    }
-                    OnPropertyChanged(nameof(Products));
-                }
+                
             }
-            else 
-            {
-                await GetProducts();
-            }
-
+            catch { }
 
         }
     }

@@ -17,6 +17,7 @@ namespace Domain.Entities.SalesRecord
         public bool CommissionPaid { get; set; }
         public double NewAmount { get; set; }
         public ApplicationUser Seller { get; set; }
+        public SellerRevenueModel RevenueModel { get; set; } = null;
 
     }
 }

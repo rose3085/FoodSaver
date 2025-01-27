@@ -270,7 +270,7 @@ namespace FoodSaverMaui.Services.Food
                     return null;
                 }
 
-                var url = $"{App.Settings.ApiBaseUrl}/api/Order";
+                var url = $"{App.Settings.ApiBaseUrl}/api/Order/PlaceOrder";
                 var json = JsonConvert.SerializeObject(buyFoodRequest);
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");

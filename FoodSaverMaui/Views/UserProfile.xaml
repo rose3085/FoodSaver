@@ -217,7 +217,8 @@
                                 </Border>
                             </Grid>
                                 <!--IsVisible="{Binding ShowSalesLimitReachedMessage}"-->
-                                <Grid  RowDefinitions="Auto,Auto" RowSpacing="10" Grid.Row="2" Padding="0,20,0,0" HorizontalOptions="CenterAndExpand" >
+                                <Grid IsVisible="{Binding ShowSalesLimitReachedMessage}"
+                                      RowDefinitions="Auto,Auto" RowSpacing="10" Grid.Row="2" Padding="0,20,0,0" HorizontalOptions="CenterAndExpand" >
                                     <Grid Grid.Row="0" HorizontalOptions="CenterAndExpand" RowDefinitions="Auto,Auto" VerticalOptions="EndAndExpand">
                                         <Label Grid.Row="0" HorizontalOptions="CenterAndExpand" Text="You have reached your daily limit !!" TextColor="Red" />
                                         <Label Grid.Row="1" HorizontalOptions="CenterAndExpand" Text="Please pay Rs. 20 to continue your sale." TextColor="Red" />

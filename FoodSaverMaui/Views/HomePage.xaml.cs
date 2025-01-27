@@ -30,7 +30,7 @@ public partial class HomePage : Shell
     protected async override void OnDisappearing()
     {
         base.OnDisappearing();
-        Preferences.Set("HomePage", "//HomePage");
+      
     }
    
     

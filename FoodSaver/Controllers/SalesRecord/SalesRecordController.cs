@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.SalesRecord;
+﻿using Application.DTO.SalesRecord;
+using Application.Interfaces.SalesRecord;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +15,6 @@ namespace FoodSaver.Controllers.SalesRecord
         {
             _salesRecordService = salesRecordService;
         }
-
 
         [HttpGet]
         [Route("GetSingleRecord")]
@@ -46,6 +46,47 @@ namespace FoodSaver.Controllers.SalesRecord
 
                 return BadRequest();
             }
+
+        }
+
+
+
+        [HttpPost]
+        [Route("SalesRecorsUpdate")]
+        public async Task<IActionResult> PostSalesRecord(PostSalesRecordDto requestModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var request = await _salesRecordService.PostAmountUpdate(requestModel);
+                return Ok(request);
+            }
+            else
+            {
+
+                return BadRequest();
+            }
+
+
+        }
+
+
+
+
+        [HttpPost]
+        [Route("SellerRevenueUpdate")]
+        public async Task<IActionResult> PostSellerRevenue(PostSellerRevenueDto postSellerRevenueDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var request = await _salesRecordService.PostSellerRevenueUpdate(postSellerRevenueDto);
+                return Ok(request);
+            }
+            else
+            {
+
+                return BadRequest();
+            }
+
 
         }
     }

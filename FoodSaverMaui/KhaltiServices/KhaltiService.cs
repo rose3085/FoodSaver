@@ -36,7 +36,7 @@ namespace FoodSaverMaui.KhaltiServices
             {
                 return_url = $"{App.Settings.ApiBaseUrl}/PaymentReturn/ReturnUrl",
                 website_url = "https://pay.khalti.com",
-                amount = Convert.ToInt32(amount),
+                amount = 1000,
                 purchase_order_id = productId,
                 purchase_order_name = buyer,
                 customer_info = new

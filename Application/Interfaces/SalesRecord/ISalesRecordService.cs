@@ -14,5 +14,6 @@ namespace Application.Interfaces.SalesRecord
         Task<FoodServiceResponse> PostAmountUpdate(PostSalesRecordDto request);
         Task<IEnumerable<SalesRecordModel>> GetAllRecord();
         Task<SalesRecordModel> GetSingleRecord(string userName);
+        Task<FoodServiceResponse> PostSellerRevenueUpdate(PostSellerRevenueDto request);
     }
 }

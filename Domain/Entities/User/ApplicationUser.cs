@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Foods;
+using Domain.Entities.SalesRecord;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,6 @@ namespace Domain.Entities.User
         public bool IsDeleted { get; set; } = false;
         public bool CanPost { get; set; } = true;
         public ICollection<FoodModel> Foods { get; set; }
-
+       
     }
 }

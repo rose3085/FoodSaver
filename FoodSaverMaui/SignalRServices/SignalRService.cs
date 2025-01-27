@@ -17,7 +17,7 @@ namespace FoodSaverMaui.SignalRServices
         {
             
             _hubConnection = new HubConnectionBuilder()
-                 .WithUrl($"https://b000-2405-acc0-1504-cce4-e5e8-d0-a178-88a.ngrok-free.app/notificationHub", options =>
+                 .WithUrl($"{App.Settings.ApiBaseUrl}/notificationHub", options =>
                  {
                      options.AccessTokenProvider = async () =>
                      {

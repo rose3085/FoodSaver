@@ -146,14 +146,17 @@ namespace FoodSaverMaui.ViewModel
         }
         public async Task<Location> GetLocation()
         {
+            try
+            {
+
+                GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+
+                Location location = await Geolocation.Default.GetLocationAsync(request);
 
 
-            GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
-
-            Location location = await Geolocation.Default.GetLocationAsync(request);
-
-           
-                return location;
+                     return location;
+            }
+            catch { return null; }
         }
             
 
@@ -164,13 +167,14 @@ namespace FoodSaverMaui.ViewModel
             {
             try
             {
-                
+
                 IsBusy = true;
-               var location = await GetLocation();
-                if (location != null) {
+                var location = await GetLocation();
+                if (location != null)
+                {
                     double currentLat = location.Latitude;
                     double currentLong = location.Longitude;
-                    var request = await _foodService.GetAllProducts(currentLat,currentLong);
+                    var request = await _foodService.GetAllProducts(currentLat, currentLong);
                     if (request != null)
                     {
 
@@ -196,6 +200,7 @@ namespace FoodSaverMaui.ViewModel
                     }
                 }
             }
+            catch { }
             finally
             {
                 IsBusy = false;
