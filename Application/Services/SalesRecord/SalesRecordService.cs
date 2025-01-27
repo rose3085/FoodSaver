@@ -104,32 +104,66 @@ namespace Application.Services.SalesRecord
         {
             try {
                 var checkNewSellerId = await GetAllRecord();
-                if (checkNewSellerId.Count() == 0)
-                {
-                    AddNewRecord(request);
-                }
-                else
-                {
-                    foreach (var idExists in checkNewSellerId)
-
+               if(checkNewSellerId == null)
+                {await AddNewRecord(request);
+                    return new FoodServiceResponse()
                     {
-                        if (idExists.Seller == request.SellerId)
-                        {
-                            var id = Guid.NewGuid().ToString();
-                            var requestModel = new SalesRecordModel()
-                            {
-                                Id = id,
-                                TotalPreviousAmount = 0,
-                                NewAmount = request.NewAmount,
-                                Seller = request.SellerId,
-                                DailyLimitReached = false,
-                                CommissionPaid = true,
+                        Message = "Sales record Updated sucessfully!",
+                        IsSuccess = true,
+                    };
+                }
 
-                            };
-                            var result = await _uow.AsyncRepositories<SalesRecordModel>().AddAsync(requestModel);
-                            _uow.save();
-                            if (request != null)
+                    if (checkNewSellerId.Count() == 0 || checkNewSellerId == null)
+                    {
+                        AddNewRecord(request);
+                    }
+                    else
+                    {
+                        foreach (var idExists in checkNewSellerId)
+
+                        {
+                            if (idExists.Seller == request.SellerId)
                             {
+                                var id = Guid.NewGuid().ToString();
+                                var requestModel = new SalesRecordModel()
+                                {
+                                    Id = id,
+                                    TotalPreviousAmount = 0,
+                                    NewAmount = request.NewAmount,
+                                    Seller = request.SellerId,
+                                    DailyLimitReached = false,
+                                    CommissionPaid = true,
+
+                                };
+                                var result = await _uow.AsyncRepositories<SalesRecordModel>().AddAsync(requestModel);
+                                _uow.save();
+                                if (request != null)
+                                {
+                                    return new FoodServiceResponse()
+                                    {
+                                        Message = "Sales record Updated sucessfully!",
+                                        IsSuccess = true,
+                                    };
+
+                                }
+
+                            }
+                            else
+                            {
+                                idExists.NewAmount += request.NewAmount;
+                                if (idExists.NewAmount >= 200)
+                                {
+                                    idExists.DailyLimitReached = true;
+                                    idExists.CommissionPaid = false;
+                                    var getSeller = await _userManager.FindByIdAsync(request.SellerId.Id);
+                                    getSeller.CanPost = false;
+                                    await _userManager.UpdateAsync(getSeller);
+
+                                }
+
+                                await _uow.AsyncRepositories<SalesRecordModel>().UpdateAsync(idExists);
+
+                                _uow.save();
                                 return new FoodServiceResponse()
                                 {
                                     Message = "Sales record Updated sucessfully!",
@@ -137,39 +171,23 @@ namespace Application.Services.SalesRecord
                                 };
 
                             }
-
                         }
-                        else
-                        {
-                            idExists.NewAmount += request.NewAmount;
-                            if (idExists.NewAmount >= 200)
-                            {
-                                idExists.DailyLimitReached = true;
-                                idExists.CommissionPaid = false;
-                                var getSeller = await _userManager.FindByIdAsync(request.SellerId.Id);
-                                getSeller.CanPost = false;
-                                await _userManager.UpdateAsync(getSeller);
 
-                            }
-
-                            await _uow.AsyncRepositories<SalesRecordModel>().UpdateAsync(idExists);
-
-                            _uow.save();
-                            return new FoodServiceResponse()
-                            {
-                                Message = "Sales record Updated sucessfully!",
-                                IsSuccess = true,
-                            };
-
-                        }
                     }
-
-                }
-                return new FoodServiceResponse()
-                {
-                    Message = "Sales record  Updated!",
-                    IsSuccess = true,
-                };
+                    return new FoodServiceResponse()
+                    {
+                        Message = "Sales record  Updated!",
+                        IsSuccess = true,
+                    };
+                
+                //else
+                //{
+                //    return new FoodServiceResponse()
+                //    {
+                //        Message = "Sales record coulldn't be  Updated!",
+                //        IsSuccess = false,
+                //    };
+                //}
 
             }
             catch (Exception ex)
