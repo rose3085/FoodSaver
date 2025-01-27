@@ -1,5 +1,8 @@
 ﻿using FoodSaverMaui.Helper;
+using FoodSaverMaui.Model;
+using FoodSaverMaui.Response;
 using FoodSaverMaui.Response.SalesRecord;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +56,46 @@ namespace FoodSaverMaui.Services.SalesRecord
                 throw new Exception(ex.Message);
             }
 
+        }
+
+
+        public async Task<ResponseManager> PostSellerRevenue(SellerRevenueModel requestModel)
+        {
+            try
+            {
+                var jwtToken = await SecureStorage.GetAsync("token");
+                if (jwtToken == null)
+                {
+
+                    return null;
+                }
+                var url = $"{App.Settings.ApiBaseUrl}/api/SalesRecord/SellerRevenueUpdate";
+                var json = JsonConvert.SerializeObject(requestModel);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(url, content);
+                Console.WriteLine($"s Code: {(int)response.StatusCode}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<ResponseManager>();
+                    if (result.IsSuccess == true)
+                    {
+                        return result;
+                    }
+                    else
+                    { return null; }
+                }
+                else
+                {
+
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+
+            }
         }
 
     }

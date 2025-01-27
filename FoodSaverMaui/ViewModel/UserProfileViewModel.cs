@@ -1,8 +1,10 @@
-﻿using CommunityToolkit.Maui.Alerts;
+﻿using Android.Accounts;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Helper;
 using FoodSaverMaui.Helper.CacheHelper;
+using FoodSaverMaui.KhaltiServices;
 using FoodSaverMaui.Response;
 using FoodSaverMaui.Response.FoodOrder;
 using FoodSaverMaui.Response.PurchaseHistory;
@@ -87,6 +89,7 @@ namespace FoodSaverMaui.ViewModel
         private readonly SalesRecordServices _salesRecordService;
         private readonly ICacheService _cacheService;
         private readonly IJwtHelper _jwtHelper;
+        private readonly IKhaltiService _khaltiServices;
 
         public Command OnEnableFingerprintTapped { get; }
         public Command OnChangePasswordTapped { get; }
@@ -102,10 +105,11 @@ namespace FoodSaverMaui.ViewModel
         public Command OnPageLoad { get; }
         public Command OnPurchaseHistoryTapped { get; }
         public Command OnDetailButtonTapped { get; }
+        public Command OnConfirmPaymentTapped { get; }
 
         private readonly HubConnection _hubConnection;
         private readonly ISignalRService _signalRService;
-        public UserProfileViewModel(FoodService foodService,ISignalRService signalRService, ICacheService cacheService, IJwtHelper jwtHelper, SalesRecordServices salesRecordServices, UserProfileService userProfileService, PurchaseHistoryService purchaseHistoryService)
+        public UserProfileViewModel(FoodService foodService,IKhaltiService khaltiService,ISignalRService signalRService, ICacheService cacheService, IJwtHelper jwtHelper, SalesRecordServices salesRecordServices, UserProfileService userProfileService, PurchaseHistoryService purchaseHistoryService)
         {
             _foodService = foodService;
             _userProfileService = userProfileService;
@@ -113,6 +117,7 @@ namespace FoodSaverMaui.ViewModel
             _salesRecordService = salesRecordServices;
             _cacheService = cacheService;
             _jwtHelper = jwtHelper;
+            _khaltiServices = khaltiService;
             _signalRService = signalRService;
             OnEnableFingerprintTapped = new Command(async () => await EnableFingerPrintTapped());
             OnPostTapped = new Command(async () => await PostTapped());
@@ -131,8 +136,24 @@ namespace FoodSaverMaui.ViewModel
             ShowSalesLimitReachedMessage = false;
             OnPageLoad = new Command(async() => await GetUserRoles());
             OnPurchaseHistoryTapped = new Command(async() => await PurchaseHistoryTapped());
+            OnConfirmPaymentTapped = new Command(async () => await ConfirmPayment());
         }
 
+        public async Task ConfirmPayment()
+        {
+
+            var confirmPayment = await Shell.Current.DisplayAlert("Confirm Payment ?","Pay Rs.20 to continue selling foods.","Ok","Cancel");
+            if (confirmPayment == true)
+            {
+                string pay = await _khaltiServices.KhaltiLaunch("20", "ProductId");
+                if (pay != null)
+                {
+                    // await Shell.Current.GoToAsync($"{nameof(PaymentUrl)}?url={Uri.EscapeDataString(pay)}");
+                    await Shell.Current.GoToAsync($"{nameof(ConfirmPaymentUrl)}?url={Uri.EscapeDataString(pay)}");
+                }
+            }
+        
+        }
         public async Task DetailButtonTapped(GetProductsResponse selectedProduct)
         {
 

@@ -217,7 +217,7 @@
                                 </Border>
                             </Grid>
                                 <!--IsVisible="{Binding ShowSalesLimitReachedMessage}"-->
-                                <Grid IsVisible="{Binding ShowSalesLimitReachedMessage}"
+                                <Grid 
                                       RowDefinitions="Auto,Auto" RowSpacing="10" Grid.Row="2" Padding="0,20,0,0" HorizontalOptions="CenterAndExpand" >
                                     <Grid Grid.Row="0" HorizontalOptions="CenterAndExpand" RowDefinitions="Auto,Auto" VerticalOptions="EndAndExpand">
                                         <Label Grid.Row="0" HorizontalOptions="CenterAndExpand" Text="You have reached your daily limit !!" TextColor="Red" />
@@ -228,7 +228,9 @@
                                     <Grid Grid.Row="1" HorizontalOptions="CenterAndExpand" RowDefinitions="Auto,Auto" VerticalOptions="EndAndExpand">
                                         <Label Grid.Row="0" Text="Confirm Payment" TextColor="#385897" FontSize="16" FontAttributes="Bold" FontFamily="Poppins"/>
                                         <!--<Button   Grid.Row="0" HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="Pay" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>-->
-
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding OnConfirmPaymentTapped}"/>
+                                        </Grid.GestureRecognizers>
                                     </Grid>
                                 </Grid>
                             </Grid>

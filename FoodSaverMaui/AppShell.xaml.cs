@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FoodSaverMaui.ViewModel;
 using FoodSaverMaui.Views;
 
 namespace FoodSaverMaui
@@ -24,7 +25,8 @@ namespace FoodSaverMaui
             Routing.RegisterRoute(nameof(UploadPostSucessfull), typeof(UploadPostSucessfull));
             Routing.RegisterRoute(nameof(EditProfile), typeof(EditProfile));
             Routing.RegisterRoute(nameof(OrderDetail), typeof(OrderDetail));
-
+            Routing.RegisterRoute(nameof(ConfirmPaymentUrl), typeof(ConfirmPaymentUrl));
+            Routing.RegisterRoute(nameof(ConfirmPaymentSucessfull), typeof(ConfirmPaymentSucessfull));
         }
 
         protected override async void OnAppearing()

@@ -86,6 +86,10 @@ namespace FoodSaverMaui
             builder.Services.AddTransient<UploadPostSucessfull>();
             builder.Services.AddTransient<UploadPostSuccessfullViewModel>();
 
+            builder.Services.AddSingleton<ConfirmPaymentUrl>();
+            builder.Services.AddSingleton<ConfirmPaymentUrlViewModel>();
+            builder.Services.AddSingleton<ConfirmPaymentSucessfull>();
+            builder.Services.AddSingleton<ConfirmPaymentSucessfullViewModel>();
 
             builder.Services.AddTransient<KhaltiPaymentView>();
             builder.Services.AddTransient<KhaltiPaymentViewModel>();
