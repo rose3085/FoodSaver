@@ -28,6 +28,8 @@ using Application.Services.PurchaseHistory;
 using Microsoft.AspNetCore.SignalR;
 using Application.Hubs;
 using Application.Hubs.InMemoryDb;
+using Application.Interfaces.OrderDelivery;
+using Application.Services.OrderDelivery;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -86,6 +88,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ISalesRecordService, SalesRecordService>();
 builder.Services.AddScoped<IPurchaseHistoryService, PurchaseHistoryService>();
+builder.Services.AddScoped<IDeliveryService, DeliveryService>();
 builder.Services.AddTransient<OrderController>();
 
 //builder.Services.AddAutoMapper(typeof(Program));

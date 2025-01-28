@@ -52,7 +52,7 @@ namespace FoodSaver.Controllers.SalesRecord
 
 
         [HttpPost]
-        [Route("SalesRecorsUpdate")]
+        [Route("SalesRecordsUpdate")]
         public async Task<IActionResult> PostSalesRecord(PostSalesRecordDto requestModel)
         {
             if (ModelState.IsValid)
