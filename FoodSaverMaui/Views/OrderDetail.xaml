@@ -4,7 +4,7 @@
              x:Class="FoodSaverMaui.Views.OrderDetail"
               xmlns:local="clr-namespace:FoodSaverMaui.Helper"
              xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
- 
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:OrderDetailViewModel"
              Title="OrderDetail">
 
@@ -27,12 +27,18 @@
                             </Grid>
                         </Border>
                     </Grid>
-                    <Border  Grid.Column="1" StrokeShape="RoundRectangle 5,5,5,5" StrokeThickness="1.5" StrokeDashOffset="12" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand">
-                        <Grid ColumnDefinitions="Auto,*"  Padding="5" BackgroundColor="#d3d3d3">
-                            <Label Text="Update Status" Grid.Column="0" />
-                            <Image Source="down.png" Grid.Column="1" HeightRequest="24" />
-                        </Grid>
-                    </Border>
+                    <Grid Grid.Column="1" RowDefinitions="Auto,*"  Padding="5">
+                        <Border Grid.Row="0"    StrokeShape="RoundRectangle 5,5,5,5" StrokeThickness="1.5" StrokeDashOffset="12" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand">
+                            <Grid ColumnDefinitions="Auto,*"  Padding="5" BackgroundColor="#d3d3d3">
+                                <Label Text="Update Status" Grid.Column="0" />
+                                <Image Source="down.png" Grid.Column="1" HeightRequest="24" />
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OnUpdateDeliveryStatusTapped}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </Border>
+                       
+                    </Grid>
                 </Grid>
 
                 <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="3">

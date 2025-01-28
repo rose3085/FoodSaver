@@ -8,7 +8,7 @@ namespace Application.Response.Food
 {
     public class GetOrderByProductIdResponse
     {
-
+        public string OrderId { get; set; }
         public string BuyerName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber {  get; set; }

@@ -3,6 +3,7 @@ using FoodSaverMaui.Helper;
 using FoodSaverMaui.Helper.CacheHelper;
 using FoodSaverMaui.KhaltiServices;
 using FoodSaverMaui.Services.Food;
+using FoodSaverMaui.Services.OrderDelivery;
 using FoodSaverMaui.Services.PurchaseHistory;
 using FoodSaverMaui.Services.SalesRecord;
 using FoodSaverMaui.Services.User;
@@ -60,6 +61,7 @@ namespace FoodSaverMaui
 
             builder.Services.AddSingleton<OrderDetail>();
             builder.Services.AddSingleton<OrderDetailViewModel>();
+            builder.Services.AddSingleton<DeliveryService>();
 
             builder.Services.AddSingleton<UpdatePassword>();
             builder.Services.AddSingleton<UpdatePasswordViewModel>();

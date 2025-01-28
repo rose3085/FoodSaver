@@ -269,6 +269,7 @@ namespace Application.Services.Payment
                     var result = request.FirstOrDefault();
                     return new GetOrderByProductIdResponse()
                     { 
+                        OrderId = result.Id,
                         BuyerName = result.Buyer?.UserName,
                         Email = result.Buyer?.Email,
                         PhoneNumber = result.Buyer?.PhoneNumber,
