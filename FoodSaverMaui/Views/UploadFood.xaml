@@ -277,7 +277,7 @@
                         </Border>
                     </Frame>
                     <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="50" Padding="15,0,0,10">
-                        <Button Grid.Column="0" Command="{Binding OnPostTapped}" HorizontalOptions="EndAndExpand" Margin="0,0,35,0" Text="Confirm Post" HeightRequest="40" WidthRequest="110" Background="#03b25a"/>
+                        <Button Grid.Column="0" Command="{Binding OnPostTapped}"  HorizontalOptions="EndAndExpand" Margin="0,0,35,0" Text="Confirm Post" HeightRequest="40" WidthRequest="110" Background="#03b25a"/>
                         <ActivityIndicator Grid.Column="1" IsRunning="{Binding IsBusy}" 
                    IsVisible="{Binding IsBusy}" HorizontalOptions="EndAndExpand" HeightRequest="20" WidthRequest="20"
                            Color="Black" />

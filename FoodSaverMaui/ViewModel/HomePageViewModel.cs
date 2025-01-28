@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FoodSaverMaui.Helper;
 using FoodSaverMaui.Helper.CacheHelper;
+using FoodSaverMaui.Services.User;
 using FoodSaverMaui.SignalRServices;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
@@ -15,12 +17,19 @@ namespace FoodSaverMaui.ViewModel
     public partial class HomePageViewModel : BaseViewModel
     {
         public Command OnPageMount { get; }
+
+        private readonly IJwtHelper _jwtHelper;
         private readonly HubConnection _hubConnection;
         private readonly ISignalRService _signalRService;
-      public HomePageViewModel(ICacheService cacheService, ISignalRService signalRService)
+        private readonly UserProfileService _userProfileService;
+
+        public HomePageViewModel(ICacheService cacheService, ISignalRService signalRService,IJwtHelper jwtHelper,UserProfileService userProfileService)
         {
             OnPageMount = new Command(async() => await PageMount());
+            _jwtHelper = jwtHelper;
+            _userProfileService = userProfileService;
             _signalRService = signalRService;
+           
             _signalRService.ConnectToHubAsync();
 
         }
@@ -38,7 +47,16 @@ namespace FoodSaverMaui.ViewModel
                     {
                         if (rolesList.Count() > 0 && rolesList.Contains("Seller"))
                         {
-                            IsSeller = true;
+                           
+                            var user =await _userProfileService.GetUserByName();
+                            if (user != null)
+                            {
+                                if (user.CanPost == true)
+                                {
+                                    IsSeller = true;
+                                }
+                                else { IsSeller = false; }
+                            }
                         }
 
                         if (rolesList.Count() > 0 && rolesList.Contains("Buyer"))

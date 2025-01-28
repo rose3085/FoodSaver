@@ -46,7 +46,7 @@ namespace FoodSaverMaui.ViewModel
         [ObservableProperty]
         public bool showSalesLimitReachedMessage;
 
-       
+
 
         //private double _percentage;
 

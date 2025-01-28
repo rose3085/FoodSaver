@@ -4,7 +4,7 @@
              x:Class="FoodSaverMaui.Views.ConfirmPaymentUrl"
                xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
  x:DataType="viewmodel:ConfirmPaymentUrlViewModel"
-             Title="ConfirmPaymentUrl">
+            >
     <WebView x:Name="PaymentWebView"
             Source="{Binding url}"
             Navigated="OnWebViewNavigated"

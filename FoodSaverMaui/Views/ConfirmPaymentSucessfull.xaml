@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FoodSaverMaui.Views.ConfirmPaymentSucessfull"
              xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
- x:DataType="viewmodel:ConfirmPaymentSucessfullViewModel"
+                x:DataType="viewmodel:ConfirmPaymentSucessfullViewModel"
               NavigationPage.HasNavigationBar="False"
      NavigationPage.HasBackButton="False">
     <VerticalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">

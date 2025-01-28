@@ -38,5 +38,7 @@ namespace FoodSaverMaui.ViewModel
         [ObservableProperty]
         public bool isBuyer;
 
+      
+
     }
 }

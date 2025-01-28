@@ -98,6 +98,14 @@ namespace FoodSaverMaui.ViewModel
         {
             var token = await SecureStorage.GetAsync("token");
             UserName = _jwtHelper.ExtractUserInfo(token);
+
+            //if (ShowSalesLimitReachedMessage == true)
+            //{
+            //    await Shell.Current.DisplayAlert("Sales limit reached!","Please pay Rs.20 to system to continue posting.","Ok");
+            //}
+
+
+
         }
 
         public async Task PinLocationTapped()
