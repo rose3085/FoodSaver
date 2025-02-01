@@ -15,17 +15,22 @@
        
             <ShellContent 
                      Icon="home.png"
-                      ContentTemplate="{DataTemplate local:LandingPage}" />
+                      ContentTemplate="{DataTemplate local:LandingPage}"
+                        Route="LandingPage"/>
         <ShellContent IsVisible="{Binding IsSeller}"
               Icon="gallery.png"
-ContentTemplate="{DataTemplate local:UploadFood}" />
+            ContentTemplate="{DataTemplate local:UploadFood}" 
+                      Route="UploadFood"
+                      />
 
         <ShellContent 
                  Icon="find.png"
-   ContentTemplate="{DataTemplate local:FindFood}" />
+   ContentTemplate="{DataTemplate local:FindFood}"
+            Route="FindFood"/>
         <ShellContent 
                             Icon="profile.png"
-              ContentTemplate="{DataTemplate local:UserProfile}" />
+              ContentTemplate="{DataTemplate local:UserProfile}"
+            Route="UserProfile"/>
     
 
     </TabBar>

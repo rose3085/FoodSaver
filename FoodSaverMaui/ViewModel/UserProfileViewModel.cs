@@ -447,8 +447,26 @@ namespace FoodSaverMaui.ViewModel
                 Products.Clear();
                 await SecureStorage.SetAsync("isLoggedOut","yes");
                await _signalRService.Dispose();
-                Application.Current.MainPage = new AppShell();
+               // Shell.Current.FlyoutIsPresented = false;
+               //await Shell.Current.GoToAsync("//Login");
+
+
+                // Application.Current.MainPage = new AppShell();
+                RestartApp();
             }
+        }
+
+        private void RestartApp()
+        {
+            // Get the current application instance
+            var currentApp = Application.Current;
+
+            // Create a new instance of AppShell
+            var newShell = new AppShell();
+
+            // Set the new shell as the main page
+            currentApp.MainPage = newShell;
+           
         }
 
 

@@ -174,7 +174,8 @@ namespace FoodSaverMaui.ViewModel
                 {
                     double currentLat = location.Latitude;
                     double currentLong = location.Longitude;
-                    var request = await _foodService.GetAllProducts(currentLat, currentLong);
+                    var request = await Task.Run(() => _foodService.GetAllProducts(currentLat, currentLong));
+
                     if (request != null)
                     {
 
@@ -184,12 +185,16 @@ namespace FoodSaverMaui.ViewModel
                         }
                         else
                         {
-                            Products.Clear();
-                            foreach (var product in request)
+                            MainThread.BeginInvokeOnMainThread(() =>
                             {
-                                Products.Add(product);
-                            }
-                            OnPropertyChanged(nameof(Products));
+
+                                Products.Clear();
+                                foreach (var product in request)
+                                {
+                                    Products.Add(product);
+                                }
+                                OnPropertyChanged(nameof(Products));
+                            });
                         }
 
                     }

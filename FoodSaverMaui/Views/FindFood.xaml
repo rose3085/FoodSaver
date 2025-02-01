@@ -36,7 +36,7 @@
 
         <RefreshView IsRefreshing="{Binding IsRefreshing}"  Grid.Row="2"
              Command="{Binding OnClickTapped}">
-             <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single"  >
+            <CollectionView ItemsSource="{Binding Products}"  SelectionMode="Single"  >
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:GetProductsResponse">
                             <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">

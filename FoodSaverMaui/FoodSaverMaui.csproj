@@ -122,6 +122,7 @@
 		<PackageReference Include="Plugin.LocalNotification" Version="10.1.8" />
 		<PackageReference Include="Plugin.Maui.Biometric" Version="0.0.2" />
 		<PackageReference Include="System.Linq" Version="4.3.0" />
+		<PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -177,6 +178,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\PostSuccessfullPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\TempPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\UpdateEmail.xaml">

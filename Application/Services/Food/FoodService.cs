@@ -250,7 +250,7 @@ namespace Application.Services.Food
             var result = await _uow.AsyncRepositories<FoodModel>().GetRandomWithIncludeAsync(includes);
 
 
-             var baseUrl = $"https://0aa2-2405-acc0-1504-cce4-2ca5-a92b-1937-8d3e.ngrok-free.app";
+             var baseUrl = $"https://0e1a-38-255-141-53.ngrok-free.app";
             // var baseUrl = $"https://localhost:7293";
             var productResult =  result
                 .Where(product => product.IsBooked == false)
@@ -301,7 +301,7 @@ namespace Application.Services.Food
                         s => s.Address,
                   };
                     var result = await _uow.AsyncRepositories<FoodModel>().GetWithInclude(includes);
-                    var baseUrl = $"https://0aa2-2405-acc0-1504-cce4-2ca5-a92b-1937-8d3e.ngrok-free.app";
+                    var baseUrl = $"https://0e1a-38-255-141-53.ngrok-free.app";
                     //var getProduct = await GetProductsAsync();
                     var getProduct = result
                         .Where(product => product.Seller == userInfo)

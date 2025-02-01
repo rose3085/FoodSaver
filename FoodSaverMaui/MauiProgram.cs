@@ -47,8 +47,8 @@ namespace FoodSaverMaui
             builder.Services.AddTransient<Login>();
             builder.Services.AddTransient<LoginViewModel>();
 
-            builder.Services.AddSingleton<HomePage>();
-            builder.Services.AddSingleton<HomePageViewModel>();
+            builder.Services.AddTransient<HomePage>();
+            builder.Services.AddTransient<HomePageViewModel>();
 
             builder.Services.AddSingleton<LandingPage>();
             builder.Services.AddSingleton<LandingPageViewModel>();
@@ -104,7 +104,11 @@ namespace FoodSaverMaui
 
             builder.Services.AddTransient<EditProfile>();
             builder.Services.AddTransient<EditProfileViewModel>();
-            builder.Services.AddSingleton<ISignalRService,SignalRService>();
+            builder.Services.AddSingleton<ISignalRService, SignalRService>();
+
+
+            builder.Services.AddSingleton<TempPage>();
+            builder.Services.AddSingleton<TempPageViewModel>();
 
 
 #if DEBUG

@@ -36,6 +36,11 @@ namespace FoodSaverMaui.ViewModel
         public async Task PageMount()
         {
             try {
+
+                var shellItem = Shell.Current?.CurrentItem;
+
+
+
                 IsSeller = false;
                 IsBuyer = false;
               
