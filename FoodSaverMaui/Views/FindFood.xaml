@@ -36,7 +36,7 @@
 
         <RefreshView IsRefreshing="{Binding IsRefreshing}"  Grid.Row="2"
              Command="{Binding OnClickTapped}">
-            <CollectionView ItemsSource="{Binding Products}"  SelectionMode="Single"  >
+            <CollectionView ItemsSource="{Binding Products}"  SelectionMode="Single"  EmptyView="No Products to display">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:GetProductsResponse">
                             <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -77,7 +77,7 @@
                                             
                                             <Grid  RowDefinitions="Auto,Auto,Auto,Auto" 
                                                      >
-                                                    <Image Grid.Row="0"  HeightRequest="320" Aspect="AspectFill" >
+                                                    <Image Grid.Row="0"  HeightRequest="250" Aspect="AspectFill" >
                                                         <Image.Source>
                                                             <UriImageSource Uri="{Binding ImageUrl}"   CacheValidity="2" CachingEnabled="True"/>
                                                         </Image.Source>
@@ -94,7 +94,7 @@
                                             <Button Grid.Column="1" Text="Details" 
                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FindFoodViewModel}}, Path=OnDetailButtonClicked}"
                                                     CommandParameter="{Binding .}"
-                                                    HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
+                                                    HeightRequest="40" WidthRequest="100" Background="#53900f"/>
                                         </Grid>
                                                 </Grid>
                                            

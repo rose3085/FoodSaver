@@ -62,7 +62,7 @@
 
 
                 <Grid Grid.Row="2" HorizontalOptions="EndAndExpand" VerticalOptions="End" Padding="0,30,30,0">
-                    <Button Text="Save" Padding="20,0,20,0"   BackgroundColor="#03b25a" Command="{Binding OnSaveButtonClicked}" />
+                    <Button Text="Save" Padding="20,0,20,0"   BackgroundColor="#53900f" Command="{Binding OnSaveButtonClicked}" />
                 </Grid>
             </Grid>
         </Border>

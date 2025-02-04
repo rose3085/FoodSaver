@@ -10,7 +10,7 @@
 
 
     <Shell.Behaviors>
-        <toolkit:StatusBarBehavior StatusBarColor="#03b25a" StatusBarStyle="LightContent" />
+        <toolkit:StatusBarBehavior StatusBarColor="#2e6f40" StatusBarStyle="LightContent" />
     </Shell.Behaviors>
     
     
@@ -20,6 +20,7 @@
         Route="Login" />
 
     <ShellContent Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}" IsVisible="True" />
+    <ShellContent Route="TempPage" ContentTemplate="{DataTemplate local:TempPage}" />
     <ShellContent Route="CreateAccount" ContentTemplate="{DataTemplate local:CreateAccount}" />
    
   

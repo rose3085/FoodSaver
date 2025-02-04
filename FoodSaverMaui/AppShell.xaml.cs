@@ -10,7 +10,7 @@ namespace FoodSaverMaui
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(TempPage), typeof(TempPage));
+            //Routing.RegisterRoute(nameof(TempPage), typeof(TempPage));
             Routing.RegisterRoute(nameof(FindFood), typeof(FindFood));
             Routing.RegisterRoute(nameof(LandingPage), typeof(LandingPage));
             Routing.RegisterRoute(nameof(UserProfile), typeof(UserProfile));
@@ -46,7 +46,7 @@ namespace FoodSaverMaui
                 }
                 else
                 {
-                    await Shell.Current.GoToAsync(nameof(TempPage));
+                    await Shell.Current.GoToAsync("//TempPage");
                    await Task.Delay(1000);
                     await GoToAsync("//HomePage"); }
             }

@@ -1,5 +1,6 @@
 ﻿using FoodSaverMaui.Model;
 using FoodSaverMaui.Services.User;
+using CommunityToolkit.Maui.Alerts;
 using FoodSaverMaui.Views;
 using System;
 using System.Collections.Generic;
@@ -51,8 +52,8 @@ namespace FoodSaverMaui.ViewModel
 
         }
 
-        public long _phone;
-        public long Phone
+        public string _phone;
+        public string Phone
         {
             get => _phone;
             set
@@ -138,11 +139,11 @@ namespace FoodSaverMaui.ViewModel
         public Command ToggleRadioButtonsCommand { get; }
         public Command OnRegisterTapped { get; }
         public Command OnSignInTapped { get; }
-        public CreateAccountViewModel(UserServices userServices )
+        public CreateAccountViewModel(UserServices userServices)
         {
             ToggleRadioButtonsCommand = new Command(async () => await OnToggleRadioButtonsCommand());
             OnRegisterTapped = new Command(async () => await RegisterTapped());
-            OnSignInTapped = new Command(async() => await SignInTapped());
+            OnSignInTapped = new Command(async () => await SignInTapped());
             _userServices = userServices;
         }
 
@@ -151,15 +152,16 @@ namespace FoodSaverMaui.ViewModel
         {
 
             await Shell.Current.GoToAsync("//Login");
-        
+
         }
 
         public async Task RegisterTapped()
-         {
+        {
+
             if (!string.IsNullOrWhiteSpace(UserName))
             {
                 if (!string.IsNullOrWhiteSpace(Email) &&
-                  long.IsPositive(Phone) && !string.IsNullOrWhiteSpace(Password) && !string.IsNullOrWhiteSpace(ConfirmPassword)
+                  !string.IsNullOrWhiteSpace(Phone) && !string.IsNullOrWhiteSpace(Password) && !string.IsNullOrWhiteSpace(ConfirmPassword)
                   && !string.IsNullOrWhiteSpace(SelectedRole) && Password == ConfirmPassword)
                 {
                     try
@@ -171,7 +173,7 @@ namespace FoodSaverMaui.ViewModel
                         {
                             UserName = UserName,
                             Email = Email,
-                            Phone = Phone,
+                            PhoneNumber = Phone,
                             Password = Password,
                             ConfirmPassword = ConfirmPassword,
 
@@ -181,7 +183,10 @@ namespace FoodSaverMaui.ViewModel
                         if (registerRequest == true)
                         {
                             //await Shell.Current.DisplayAlert("Success", "User successfully registered.", "OK!");
-                            await Shell.Current.GoToAsync("//HomePage");
+                            await Shell.Current.GoToAsync("//Login");
+                            string resultError = "Enter registerd data to login!";
+                            var toast = Toast.Make($"{resultError}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                            await toast.Show();
                         }
                         else
                         {
@@ -195,13 +200,24 @@ namespace FoodSaverMaui.ViewModel
                     }
 
                 }
-            }
-            else 
-            {
+                else
+                {
+                    string resultError = "Enter Valid Credentials!!";
+                    var toast = Toast.Make($"{resultError}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                    await toast.Show();
 
-                await Shell.Current.DisplayAlert("Couldn't register user", "Please try again.", "OK!");
+                }
+            }
+            else
+            {
+                string resultError = "Enter Valid Credentials!!";
+                var toast = Toast.Make($"{resultError}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                await toast.Show();
+
             }
         }
+
+    
 
         public async Task OnToggleRadioButtonsCommand()
         {

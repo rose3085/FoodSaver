@@ -25,7 +25,7 @@
                  AbsoluteLayout.LayoutFlags="All"
                  BackgroundColor="White">
              <Grid RowDefinitions="Auto,*" RowSpacing="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                <Grid Grid.Row="0" HeightRequest="65" BackgroundColor="#f4f4f4" Padding="0,0,0,0" >
+                <Grid Grid.Row="0" HeightRequest="69" BackgroundColor="#f4f4f4" Padding="0,0,0,0" >
                     <Label Text="{Binding UserName}" TextColor="Gray" FontAttributes="Bold" FontSize="20" FontAutoScalingEnabled="False" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                 </Grid>
                 <Grid Grid.Row="1" RowDefinitions="Auto,*,Auto" RowSpacing="5">
@@ -98,7 +98,7 @@
                                         Color="Black"  HeightRequest="25" WidthRequest="25"/>
                         </Grid>
                         
-                        <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single" IsVisible="{Binding IsComponent1Visible}">
+                        <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single" IsVisible="{Binding IsComponent1Visible}" EmptyView="No posts to display!">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="model:GetProductsResponse">
                                         <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -159,7 +159,7 @@
                                                                 <Button Grid.Column="1" Text="Details" 
                                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UserProfileViewModel}}, Path=OnDetailButtonTapped}"
                                                                     CommandParameter="{Binding .}"
-                                                                    HeightRequest="40" WidthRequest="100" Background="#03b25a"/>
+                                                                    HeightRequest="40" WidthRequest="100" Background="#53900f"/>
                                                             </Grid>
                                                         </Grid>
 
@@ -184,7 +184,7 @@
                                         <Frame Grid.Row="1" BorderColor="Beige" Padding="20" >
                                             
                                                 <Grid RowDefinitions="Auto,*">
-                                                    <ProgressBar Grid.Row="0" ProgressColor="#03b25a"  WidthRequest="250"  Progress="{Binding Percentage}"   />
+                                                    <ProgressBar Grid.Row="0" ProgressColor="#53900f"  WidthRequest="250"  Progress="{Binding Percentage}"   />
                                                     <Grid Grid.Row="1"  RowDefinitions="Auto,Auto">
                                                         <Label Grid.Row="0" Padding="0,0,0,0" Text="Remaining sales limit:" HorizontalOptions="CenterAndExpand"
                                                 TextColor="Gray" FontSize="15" FontAttributes="Bold" FontFamily="Poppins"/>
@@ -202,7 +202,7 @@
                                             <BoxView WidthRequest="10" BackgroundColor="Transparent" Grid.Column="0"
                                                  HeightRequest="10" 
                                                  CornerRadius="5" 
-                                                 Color="#03b25a" /> 
+                                                 Color="#53900f" /> 
                                             
                                             <Label Padding="10,0,0,0" Grid.Column="1"  Text="Your total sale is " 
                                                     TextColor="#385897" FontSize="18" FontAttributes="Bold" FontFamily="Poppins"/>
@@ -240,7 +240,7 @@
                         </Frame>
 
 
-                      <CollectionView ItemsSource="{Binding PurchaseHistory}" SelectionMode="Single" IsVisible="{Binding IsComponent3Visible}">
+                      <CollectionView ItemsSource="{Binding PurchaseHistory}" SelectionMode="Single" IsVisible="{Binding IsComponent3Visible}" EmptyView="No Purchase History to display!">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="purchaseModel:GetPurchaseWrapper">
                                         <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -302,7 +302,7 @@
             
             <toolkit:Expander.Header >
                 <Frame Background="Transparent"  BorderColor="Transparent" HorizontalOptions="Start" VerticalOptions="Start" >
-                    <Image   Source="settings.png" HeightRequest="22" WidthRequest="22"  >
+                    <Image   Source="settings.png" HeightRequest="25" WidthRequest="25"  >
                       
                     </Image>
                 </Frame>

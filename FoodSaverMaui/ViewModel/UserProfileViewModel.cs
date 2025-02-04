@@ -362,7 +362,7 @@ namespace FoodSaverMaui.ViewModel
             else
             {
 
-                await Shell.Current.DisplayAlert( "You currently have no post to display.","Please try again later", "Ok!");
+                //await Shell.Current.DisplayAlert( "You currently have no post to display.","Please try again later", "Ok!");
             }
             }
 
@@ -445,6 +445,7 @@ namespace FoodSaverMaui.ViewModel
             if (confirm == true)
             {
                 Products.Clear();
+               await _cacheService.Clear();
                 await SecureStorage.SetAsync("isLoggedOut","yes");
                await _signalRService.Dispose();
                // Shell.Current.FlyoutIsPresented = false;

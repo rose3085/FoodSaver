@@ -35,7 +35,7 @@
 
     <Grid RowDefinitions="Auto,Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
-        <Grid Grid.Row="0" RowDefinitions="Auto" Padding="50,10,50,0"  VerticalOptions="Center" HorizontalOptions="Center">
+        <Grid Grid.Row="0" RowDefinitions="Auto" Padding="50,25,50,0"  VerticalOptions="Center" HorizontalOptions="Center">
 
             <Label Grid.Row="0" Text="Create your account!"
        FontSize="28" TextColor="#385897"
@@ -44,17 +44,19 @@
         </Grid>
         <Grid Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*" RowSpacing="5" Padding="20,5,0,0" >
 
-            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="0"
-Margin="30,0,30,0">
 
+            <Frame BackgroundColor="Transparent" BorderColor="Transparent" Padding="0"  Grid.Row="0"
+                Margin="30,10,30,0">
 
-                <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" >
+                <Border  BackgroundColor="#f7f7f7" StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="0.5" StrokeDashOffset="12" >
 
-                    <Image Source="user.png" WidthRequest="34" HeightRequest="34"
+                    <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" >
+
+                        <Image Source="user.png" WidthRequest="25" HeightRequest="25"
                         Margin="10,0,0,0"
                         HorizontalOptions="Start"
                         VerticalOptions="Center" Grid.Column="0" />
-                    <Entry Placeholder="Username"   toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference CreateEmail}" ReturnType="Next"
+                        <Entry Placeholder="Username"   toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference CreateEmail}" ReturnType="Next"
                         Text="{Binding UserName}"
                         PlaceholderColor="Black"
             FontSize="18"
@@ -62,57 +64,63 @@ Margin="30,0,30,0">
 WidthRequest="{OnIdiom Phone=220, Tablet=400}" />
 
 
-                </Grid>
+                    </Grid>
+                </Border>
             </Frame>
 
-            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="1"
-         Margin="30,10,30,0">
+
+            <Frame BackgroundColor="Transparent" BorderColor="Transparent" Padding="0"  Grid.Row="1"
+                Margin="30,10,30,0">
+
+                <Border  BackgroundColor="#f7f7f7" StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="0.5" StrokeDashOffset="12" >
+
+                    <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
 
 
-                <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
-
-
-                    <Image  Source="email.png" WidthRequest="34" HeightRequest="34"
+                        <Image  Source="email.png" WidthRequest="25" HeightRequest="25"
      Margin="10,0,0,0"
                      HorizontalOptions="Start"
                      VerticalOptions="Center" Grid.Column="0" />
-                    <Entry Placeholder="Email" x:Name="CreateEmail"
+                        <Entry Placeholder="Email" x:Name="CreateEmail"
                     toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference CreatePhone}" ReturnType="Next"
                             Text="{Binding Email}"
                             PlaceholderColor="Black"
                         FontSize="18"
                             Grid.Column="1" HorizontalOptions="Start"
                         WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
-                        <Entry.Behaviors>
-                            <toolkit:EmailValidationBehavior 
+                            <Entry.Behaviors>
+                                <toolkit:EmailValidationBehavior 
          InvalidStyle="{StaticResource InvalidEntryStyle}"
          ValidStyle="{StaticResource ValidEntryStyle}"
          Flags="ValidateOnValueChanged" />
-                        </Entry.Behaviors>
-                    </Entry>
-                </Grid>
+                            </Entry.Behaviors>
+                        </Entry>
+                    </Grid>
+                </Border>
             </Frame>
 
 
-            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="2"
-Margin="30,10,30,0">
+            <Frame BackgroundColor="Transparent" BorderColor="Transparent" Padding="0"  Grid.Row="2"
+                Margin="30,10,30,0">
+
+                <Border  BackgroundColor="#f7f7f7" StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="0.5" StrokeDashOffset="12" >
 
 
-                <Grid ColumnSpacing="15" Padding="3"  ColumnDefinitions="Auto,*"  >
+                    <Grid ColumnSpacing="15" Padding="3"  ColumnDefinitions="Auto,*"  >
 
 
 
-                    <Image Source="phone.png" WidthRequest="34" HeightRequest="34"
+                        <Image Source="phone.png" WidthRequest="25" HeightRequest="25"
 Margin="10,0,0,0"
                         HorizontalOptions="Start"
                         VerticalOptions="Center" Grid.Column="0" />
-                    <Entry Placeholder="Phone Number" x:Name="CreatePhone"
+                        <Entry Placeholder="Phone Number" x:Name="CreatePhone"
                                    Text="{Binding Phone}"  toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference CreatePassword}" ReturnType="Next"
                                    PlaceholderColor="Black"
                            FontSize="18" Grid.Column="1" HorizontalOptions="Start"
                             WidthRequest="{OnIdiom Phone=220, Tablet=400}"  >
-                        <Entry.Behaviors>
-                            <toolkit:CharactersValidationBehavior 
+                            <Entry.Behaviors>
+                                <toolkit:CharactersValidationBehavior 
          InvalidStyle="{StaticResource InvalidEntryStyle}"
          ValidStyle="{StaticResource ValidEntryStyle}"
          Flags="ValidateOnValueChanged"
@@ -123,31 +131,35 @@ Margin="10,0,0,0"
 
 
 
-                        </Entry.Behaviors>
-                    </Entry>
+                            </Entry.Behaviors>
+                        </Entry>
 
-                </Grid>
+                    </Grid>
+                </Border>
             </Frame>
 
 
 
-            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="3"
-    Margin="30,10,30,0">
+
+            <Frame BackgroundColor="Transparent" BorderColor="Transparent" Padding="0"  Grid.Row="3"
+                Margin="30,10,30,0">
+
+                <Border  BackgroundColor="#f7f7f7" StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="0.5" StrokeDashOffset="12" >
 
 
-                <Grid ColumnSpacing="15" Padding="3"  ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
-                    <Image Source="key.png" WidthRequest="34" HeightRequest="34"
+                    <Grid ColumnSpacing="15" Padding="3"  ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+                        <Image Source="key.png" WidthRequest="25" HeightRequest="25"
              Margin="10,0,0,0"
                      HorizontalOptions="Start"
                      VerticalOptions="Center" Grid.Column="0" />
-                    <Entry Placeholder="Password" x:Name="CreatePassword"
+                        <Entry Placeholder="Password" x:Name="CreatePassword"
                             Text="{Binding Password}"
                             toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference ConfirmPassword}" ReturnType="Next"
                             PlaceholderColor="Black" IsPassword="True"
                     FontSize="18" Grid.Column="1" HorizontalOptions="Start"
                       WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
-                        <Entry.Behaviors>
-                            <toolkit:CharactersValidationBehavior 
+                            <Entry.Behaviors>
+                                <toolkit:CharactersValidationBehavior 
          InvalidStyle="{StaticResource InvalidEntryStyle}"
          ValidStyle="{StaticResource ValidEntryStyle}"
          Flags="ValidateOnValueChanged"
@@ -155,30 +167,33 @@ Margin="10,0,0,0"
          CharacterType="Alphanumeric"
          MinimumCharacterTypeCount="6" />
 
-                           
 
-                        </Entry.Behaviors>
-                    </Entry>
-                </Grid>
+
+                            </Entry.Behaviors>
+                        </Entry>
+                    </Grid>
+                </Border>
             </Frame>
 
 
-            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="4"
-Margin="30,10,30,0">
+            <Frame BackgroundColor="Transparent" BorderColor="Transparent" Padding="0"  Grid.Row="4"
+                Margin="30,10,30,0">
+
+                <Border  BackgroundColor="#f7f7f7" StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="0.5" StrokeDashOffset="12" >
 
 
-                <Grid ColumnSpacing="15" Padding="3"  ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
-                    <Image Source="key.png" WidthRequest="34" HeightRequest="34"
+                    <Grid ColumnSpacing="15" Padding="3"  ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+                        <Image Source="key.png" WidthRequest="25" HeightRequest="25"
     Margin="10,0,0,0"
             HorizontalOptions="Start"
             VerticalOptions="Center" Grid.Column="0" />
-                    <Entry Placeholder="Confirm Password" x:Name="ConfirmPassword"
+                        <Entry Placeholder="Confirm Password" x:Name="ConfirmPassword"
                    Text="{Binding ConfirmPassword}"
                    PlaceholderColor="Black" IsPassword="True"
-           FontSize="15" Grid.Column="1" HorizontalOptions="Start"
+           FontSize="18" Grid.Column="1" HorizontalOptions="Start"
              WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
-                        <Entry.Behaviors>
-                            <toolkit:CharactersValidationBehavior 
+                            <Entry.Behaviors>
+                                <toolkit:CharactersValidationBehavior 
 InvalidStyle="{StaticResource InvalidEntryStyle}"
 ValidStyle="{StaticResource ValidEntryStyle}"
 Flags="ValidateOnValueChanged"
@@ -187,35 +202,41 @@ CharacterType="Alphanumeric"
 MinimumCharacterTypeCount="6" />
 
 
-                        </Entry.Behaviors>
-                    </Entry>
-                </Grid>
+                            </Entry.Behaviors>
+                        </Entry>
+                    </Grid>
+                </Border>
             </Frame>
 
             <Grid RowDefinitions="Auto,*" RadioButtonGroup.GroupName="role" Margin="0,0,0,0" Grid.Row="5">
-                <Frame Grid.Row="0" BackgroundColor="#f7f7f7" BorderColor="Black" Padding="5" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
-        Margin="30,10,30,0">
 
-                    <Grid  ColumnSpacing="50">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                <Frame BackgroundColor="Transparent" BorderColor="Transparent" Padding="0"  Grid.Row="0"
+                Margin="30,10,30,0">
 
-                        <Image Source="down.png" WidthRequest="34" HeightRequest="34"
+                    <Border  BackgroundColor="#f7f7f7" StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="0.5" StrokeDashOffset="12" >
+
+                        <Grid  ColumnSpacing="50" Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image Source="down.png" WidthRequest="25" HeightRequest="25"
        Margin="10,0,0,0"
            HorizontalOptions="Start"
            VerticalOptions="Center" Grid.Column="0" />
-                        <Label Text="Choose a Role" FontSize="18"
+                            <Label Text="Choose a Role" FontSize="18"
                       HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1"
                        Margin="10,0,0,0"
        WidthRequest="{OnIdiom Phone=261, Tablet=400}" >
 
-                        </Label>
-                    </Grid>
+                            </Label>
+                        </Grid>
+                    </Border>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleRadioButtonsCommand}" />
                     </Frame.GestureRecognizers>
+                        
                 </Frame>
 
                 <Grid Grid.Row="1"  RowDefinitions="Auto,Auto"  HorizontalOptions="StartAndExpand" Padding="70,0,0,0">
@@ -232,7 +253,7 @@ IsChecked="{Binding IsSellerChecked}"
 
             </Grid>
 
-            <Button Grid.Row="6" Text="Sign Up" BackgroundColor="#03b25a" Margin="0,10,0,0"
+            <Button Grid.Row="6" Text="Sign Up" BackgroundColor="#53900f" Margin="0,10,0,0"
       WidthRequest="{OnIdiom Phone=300, Tablet=400}" 
       HorizontalOptions="Center" 
           Command="{Binding OnRegisterTapped}"

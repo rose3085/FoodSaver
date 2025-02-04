@@ -35,38 +35,41 @@
         <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,*" Padding="20" >
 
 
-            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="0"
-    Margin="30,10,30,0">
+            <Frame BackgroundColor="Transparent" BorderColor="Transparent" Padding="0"  Grid.Row="0"
+                Margin="30,10,30,0">
+
+                <Border  BackgroundColor="#f7f7f7" StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="0.5" StrokeDashOffset="12" >
 
 
-                <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+                    <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
 
 
-                    <Image  Source="email.png" WidthRequest="34" HeightRequest="34"
+                        <Image  Source="email.png" WidthRequest="25" HeightRequest="25"
 Margin="10,0,0,0"
                 HorizontalOptions="Start"
                 VerticalOptions="Center" Grid.Column="0" />
-                    <Entry Placeholder="UserName" x:Name="UserName"
+                        <Entry Placeholder="UserName" x:Name="UserName"
                toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference Email}" ReturnType="Next"
                        Text="{Binding UserName}"
                        PlaceholderColor="Black"
                    FontSize="18"
                        Grid.Column="1" HorizontalOptions="Start"
                    WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
-                     
-                    </Entry>
-                </Grid>
+
+                        </Entry>
+                    </Grid>
+                </Border>
             </Frame>
 
 
-            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="1"
+            <Frame BackgroundColor="Transparent" BorderColor="Transparent" Padding="0"  Grid.Row="1"
                 Margin="30,10,30,0">
 
+                <Border  BackgroundColor="#f7f7f7" StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="0.5" StrokeDashOffset="12" >
+                    <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
 
-                <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
 
-
-                    <Image  Source="email.png" WidthRequest="34" HeightRequest="34"
+                    <Image  Source="email.png" WidthRequest="25" HeightRequest="25"
             Margin="10,0,0,0"
                             HorizontalOptions="Start"
                             VerticalOptions="Center" Grid.Column="0" />
@@ -85,24 +88,27 @@ Margin="10,0,0,0"
                         </Entry.Behaviors>
                     </Entry>
                 </Grid>
+                </Border>
             </Frame>
 
-            <Frame BackgroundColor="#f7f7f7" BorderColor="Black" Padding="0"  Grid.Row="2"
-           Margin="30,10,30,0">
+            <Frame BackgroundColor="Transparent" BorderColor="Transparent" Padding="0"  Grid.Row="2"
+                Margin="30,10,30,0">
+
+                <Border  BackgroundColor="#f7f7f7" StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="0.5" StrokeDashOffset="12" >
 
 
-                <Grid ColumnSpacing="15" Padding="3"  ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
-                    <Image Source="key.png" WidthRequest="34" HeightRequest="34"
+                    <Grid ColumnSpacing="15" Padding="3"  ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+                        <Image Source="key.png" WidthRequest="25" HeightRequest="25"
                     Margin="10,0,0,0"
                             HorizontalOptions="Start"
                             VerticalOptions="Center" Grid.Column="0" />
-                    <Entry Placeholder="Password" x:Name="Password"
+                        <Entry Placeholder="Password" x:Name="Password"
                                    Text="{Binding Password}"
                                    PlaceholderColor="Black" IsPassword="True"
                            FontSize="18" Grid.Column="1" HorizontalOptions="Start"
                              WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
-                        <Entry.Behaviors>
-                            <toolkit:CharactersValidationBehavior 
+                            <Entry.Behaviors>
+                                <toolkit:CharactersValidationBehavior 
                 InvalidStyle="{StaticResource InvalidEntryStyle}"
                 ValidStyle="{StaticResource ValidEntryStyle}"
                 Flags="ValidateOnValueChanged"
@@ -111,18 +117,19 @@ Margin="10,0,0,0"
                 MinimumCharacterTypeCount="5" />
 
 
-                            <toolkit:EventToCommandBehavior 
+                                <toolkit:EventToCommandBehavior 
             EventName="Completed"
             Command="{Binding OnSignInTapped}" />
 
 
-                        </Entry.Behaviors>
-                    </Entry>
-                </Grid>
+                            </Entry.Behaviors>
+                        </Entry>
+                    </Grid>
+                </Border>
             </Frame>
 
             <Grid Grid.Row="3" ColumnSpacing="15" ColumnDefinitions="*,Auto"  Padding="30,20,10,0">
-                <Button Text="Sign In" BackgroundColor="#03b25a" Grid.Column="0"  HorizontalOptions="Start"
+                <Button Text="Sign In" BackgroundColor="#53900f" Grid.Column="0"  HorizontalOptions="Start"
                  WidthRequest="{OnIdiom Phone=240, Tablet=350}" 
                 
                      Command="{Binding OnSignInTapped}"

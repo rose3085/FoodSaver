@@ -13,7 +13,7 @@
         <Grid Grid.Row="0" RowDefinitions="Auto,Auto">
             <Grid Grid.Row="0" VerticalOptions="CenterAndExpand" ColumnDefinitions="Auto,Auto,Auto" ColumnSpacing="30" Padding="10,0,0,5" >
                 <Image Grid.Column="0" Source="logo.png" HeightRequest="60"/>
-                <Label Grid.Column="1"  Text="Food Saver" TextColor="#03b25a" FontSize="42" FontAutoScalingEnabled="False" FontAttributes="Bold" FontFamily="Solway"/>
+                <Label Grid.Column="1"  Text="Food Saver" TextColor="#2e6f40" FontSize="42" FontAutoScalingEnabled="False" FontAttributes="Bold" FontFamily="Solway"/>
 
             </Grid>
             <BoxView Grid.Row="1" HeightRequest="0.2" VerticalOptions="EndAndExpand" BackgroundColor="Gray"/>
@@ -44,7 +44,7 @@
 
 
 
-                <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single" >
+                <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single"  EmptyView="No Products to display">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Horizontal" />
                     </CollectionView.ItemsLayout>
@@ -53,22 +53,23 @@
                             <Frame BorderColor="Transparent" Padding="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                 <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12">
 
-                                    <Grid RowDefinitions="Auto,*" RowSpacing="10" Padding="5,20,3,20"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Grid RowDefinitions="Auto,*" RowSpacing="10" Padding="10,20,8,20"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
 
-                                        <Image Grid.Row="0"  HeightRequest="180" WidthRequest="200" Aspect="AspectFill" >
+                                        <Image Grid.Row="0"  HeightRequest="180"  WidthRequest="200" Aspect="AspectFill" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
                                             <Image.Source>
                                                 <UriImageSource Uri="{Binding ImageUrl}"   CacheValidity="2" CachingEnabled="True"/>
                                             </Image.Source>
                                         </Image>
 
-                                        <Grid  Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="20">
-                                            <Label Grid.Column="0" Text="{Binding ProductName}" TextColor="#385897" 
+                                        <Grid  Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="20" Padding="0,0,5,0">
+                                            <Label Grid.Column="0" Text="{Binding ProductName}" TextColor="#385897" HorizontalOptions="StartAndExpand"
                                                    VerticalOptions="CenterAndExpand"
                                                    FontSize="15" Padding="20,0,0,0" FontAttributes="Bold" />
-                                            <Button Grid.Column="1" Text="Details" 
+                                            <Button Grid.Column="1" Text="Details" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=OnDetailButtonClicked}"
                                             CommandParameter="{Binding .}" Padding="0"
-                                            HeightRequest="30" WidthRequest="60" Background="#03b25a"/>    
+                                            HeightRequest="30" WidthRequest="60" Background="#53900f"/>
+                                            <!--Background="#03b25a"-->
                                         </Grid>
                                     </Grid>
                                 </Border>

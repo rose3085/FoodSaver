@@ -6,7 +6,7 @@
 
     <Style TargetType="TabBar">
         <Setter Property="Shell.TabBarBackgroundColor"
-            Value="#03b25a" />
+            Value="#2e6f40" />
         <Setter Property="Shell.TabBarForegroundColor"
             Value="Black" />
         <Setter Property="Shell.TabBarUnselectedColor"

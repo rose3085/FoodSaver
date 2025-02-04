@@ -88,7 +88,8 @@ namespace FoodSaverMaui.ViewModel
             OnGetUserName = new Command(async () => await GetUserName());
         }
         public bool IsImageSelected => PickedImage != null;
-        public bool IsImageNotSelected => !IsImageSelected;
+        [ObservableProperty]
+        public bool isImageNotSelected = true;
 
 
         private byte[] _imageData;
@@ -225,6 +226,7 @@ namespace FoodSaverMaui.ViewModel
             if (result != null)
             {
                 PickedImageName = result.FileName;
+                IsImageNotSelected = false;
                 using (var stream = await result.OpenReadAsync())
                 {
                     using (var memoryStream = new MemoryStream())
