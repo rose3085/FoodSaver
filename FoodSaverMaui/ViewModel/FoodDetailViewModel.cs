@@ -3,6 +3,9 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Helper;
 using FoodSaverMaui.Response;
+using FoodSaverMaui.Services.Food;
+using FoodSaverMaui.Services.User;
+using FoodSaverMaui.SignalRServices;
 using FoodSaverMaui.Views;
 
 
@@ -26,14 +29,20 @@ namespace FoodSaverMaui.ViewModel
         }
 
         private readonly IJwtHelper _jwtHelper;
+        private readonly FoodService _foodService;
+        private readonly ISignalRService _signalRService;
+        private readonly UserProfileService _userProfileService;
 
         public Command OnRemoveButtonPressed { get; }
         public Command OnPinLocationTapped { get; }
         public Command OnBuyButtonPressed { get; }
         public Command OnPageMount { get; }
-        public FoodDetailViewModel(IJwtHelper jwtHelper)
+        public FoodDetailViewModel(IJwtHelper jwtHelper,FoodService foodService,ISignalRService signalRService,UserProfileService userProfileService)
         {
             _jwtHelper = jwtHelper;
+            _foodService = foodService;
+            _signalRService = signalRService;
+            _userProfileService = userProfileService;
             OnRemoveButtonPressed = new Command(async() => await RemoveButtonPressed());
             OnPinLocationTapped = new Command(async () => await PinLocationTapped());
             OnBuyButtonPressed = new Command(async () => await BuyButtonPressed());
@@ -68,18 +77,26 @@ namespace FoodSaverMaui.ViewModel
             //    IsBusy = false;
             //}
 
-            var city = await Shell.Current.DisplayPromptAsync("Delivery Address","Enter your city name?");
-            if (city != null)
+            try
             {
-                var toleName = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your tole name?");
-                if (toleName != null)
+                var city = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your city name?");
+                if (city != null)
                 {
-                    var wardNumber = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your ward number?");
-                    if (wardNumber != null)
+                    var toleName = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your tole name?");
+                    if (toleName != null)
                     {
-                        await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}?Amount={product.PricePerKg}&ProductId={product.Id}&CityName={city}&ToleName={toleName}&WardNumber={wardNumber}");
+                        var wardNumber = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your ward number?");
+                        if (wardNumber != null)
+                        {
+                           
+                             await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}?Amount={product.PricePerKg}&ProductId={product.Id}&CityName={city}&ToleName={toleName}&WardNumber={wardNumber}");
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
             }
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -121,12 +122,21 @@ namespace Application.Hubs
             if (userId != null)
             {
 
-            var notification = _notificationDb.GetByUserId(userId);
-                if (notification != null)
+            var notifications =await _notificationDb.GetByUserId(userId);
+                if (notifications != null && notifications.Any())
                 {
-                    string message = notification.Message;
-                    await Clients.Client(connectionId).SendAsync("ReceiveMessage", message);
+                    List<string> message = new List<string>();
+
+                    foreach (var notification in notifications)
+                    {
+                        //string message = notification.Message;
+                        message.Add(notification.Message);
+                        await Clients.Client(connectionId).SendAsync("ReceiveMessage", message);
+                       
+                      
+                    }
                     return true;
+
                 }
                 else { return false; }
             }

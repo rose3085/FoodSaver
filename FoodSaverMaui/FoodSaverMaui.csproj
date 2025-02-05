@@ -213,6 +213,10 @@
 	    <Version>1.9.0.3</Version>
 	  </PackageReference>
 	</ItemGroup>
+	<PropertyGroup>
+		<PreserveCompilationContext>true</PreserveCompilationContext>
+		<PublishTrimmed>false</PublishTrimmed>
+	</PropertyGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionFoodSaverMauiHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 

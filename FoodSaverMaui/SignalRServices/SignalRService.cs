@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿using FoodSaverMaui.Model;
+using Microsoft.AspNetCore.SignalR.Client;
 using Plugin.LocalNotification;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace FoodSaverMaui.SignalRServices
     public class SignalRService : ISignalRService
     {
         private readonly HubConnection _hubConnection;
-        public ObservableCollection<string> Notifications { get; } = new ObservableCollection<string>();
+        private bool _isProcessingNotifications = false;
+        public ObservableCollection<string> Notifications { get; set; } = new ObservableCollection<string>();
         public SignalRService()
         {
             
@@ -30,28 +32,36 @@ namespace FoodSaverMaui.SignalRServices
                  .Build();
          
 
-            _hubConnection.On<string>("ReceiveMessage", (message) =>
+            _hubConnection.On<List<string>>("ReceiveMessage", (message) =>
             {
                 // Add the message to the UI-bound collection
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    //Notifications.Add(message);
-                    var request = new NotificationRequest
+                    int notificationCounter = 0;
+                    foreach (var messages in message)
                     {
-                        NotificationId = 1111,
-                        Title = "Food Saver",
-                        Subtitle = "Notifications",
-                        Description = message,
-                        BadgeNumber = 27,
-                        Schedule = new NotificationRequestSchedule
-                        {
-                            NotifyTime = DateTime.Now.AddSeconds(1),
-                        }
+                        
+                        Notifications.Add(messages);
+                       
 
-                    };
-                    LocalNotificationCenter.Current.Show(request);
-                    //Notify(message);
+                        var request = new NotificationRequest
+                        {
+                            NotificationId = notificationCounter++,
+                            Title = "Food Saver",
+                            Subtitle = "Notifications",
+                            Description = messages,
+                            BadgeNumber = 27,
+                            Schedule = new NotificationRequestSchedule
+                            {
+                                NotifyTime = DateTime.Now.AddSeconds(1),
+                            }
+
+                        };
+                        LocalNotificationCenter.Current.Show(request);
+                    }
+                    //Notify();
                 });
+                
             });
 
         }
@@ -65,9 +75,14 @@ namespace FoodSaverMaui.SignalRServices
             }
         }
 
-        public async Task Notify(string message)
+        public async void Notify()
         {
-           
+            if (_isProcessingNotifications) return;
+
+            _isProcessingNotifications = true;
+            while (Notifications.Count > 0)
+            {
+                string message = Notifications[0];
                 var request = new NotificationRequest
                 {
                     NotificationId = 1111,
@@ -82,7 +97,15 @@ namespace FoodSaverMaui.SignalRServices
 
                 };
                 LocalNotificationCenter.Current.Show(request);
-           
+                await Task.Delay(TimeSpan.FromSeconds(5));
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    if (Notifications.Count > 0)
+                        Notifications.RemoveAt(0);
+                });
+            }
+            _isProcessingNotifications = false;
+
         }
 
         public async  Task ConnectToHubAsync()

@@ -1,4 +1,5 @@
 ﻿using Application.Hubs.Models;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -11,19 +12,30 @@ namespace Application.Hubs.InMemoryDb
 {
     public class NotificationDb
     {
-        private readonly ConcurrentDictionary<string, NotificationDto> _notifications = new();
+        private readonly ConcurrentDictionary<string, List<NotificationDto>> _notifications = new();
 
-        public ConcurrentDictionary<string, NotificationDto> notifications => _notifications;
+        public ConcurrentDictionary<string, List<NotificationDto>> notifications => _notifications;
 
-        public void AddNotification(string userId, NotificationDto notificationDto)
+        public  void AddNotification(string userId, NotificationDto notificationDto)
         {
-            _notifications[userId] = notificationDto;
+            _notifications.AddOrUpdate(
+                userId,
+                new List<NotificationDto> { notificationDto},
+                (key, existingList) =>
+                {
+                    lock (existingList) // Lock to prevent concurrent modifications
+                    {
+                        existingList.Add(notificationDto);
+                    }
+                    return existingList;
+                }
+                );
         }
 
-        public NotificationDto GetByUserId(string userId)
+        public async Task<IEnumerable<NotificationDto>> GetByUserId(string userId)
         {
-            var result = _notifications.TryGetValue(userId, out var notificationDto);
-            return notificationDto;
+            var result = _notifications.TryGetValue(userId, out var notificationDto) ? notificationDto : new List<NotificationDto>();
+            return result;
         }
         public bool RemoveNotification(string sellerId)
         {
