@@ -8,9 +8,9 @@
               xmlns:model="clr-namespace:FoodSaverMaui.Response"
              NavigationPage.HasNavigationBar="False">
 
-    <Grid RowDefinitions="Auto,Auto,*" Padding="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
-        <Grid Grid.Row="0" RowDefinitions="Auto,Auto">
+        <Grid Grid.Row="0" RowDefinitions="Auto,Auto" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
             <Grid Grid.Row="0" VerticalOptions="CenterAndExpand" ColumnDefinitions="Auto,Auto,Auto" ColumnSpacing="30" Padding="10,0,0,5" >
                 <Image Grid.Column="0" Source="logo.png" HeightRequest="60"/>
                 <Label Grid.Column="1"  Text="Food Saver" TextColor="#2e6f40" FontSize="42" FontAutoScalingEnabled="False" FontAttributes="Bold" FontFamily="Solway"/>
@@ -19,26 +19,44 @@
             <BoxView Grid.Row="1" HeightRequest="0.2" VerticalOptions="EndAndExpand" BackgroundColor="Gray"/>
         </Grid>
 
-        <Grid Grid.Row="1" RowDefinitions="auto,*">
+        <Grid Grid.Row="1" RowDefinitions="auto,*" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
 
-            <Grid Grid.Row="0" RowDefinitions="auto,*" HorizontalOptions="CenterAndExpand">
+            <Grid Grid.Row="0" RowDefinitions="auto,*" HorizontalOptions="CenterAndExpand" Padding="5,0,0,10">
                 <Label Grid.Row="0" Text="Welcome!" FontSize="50"  FontFamily="Poppins" FontAutoScalingEnabled="False" TextColor="#385897"/>
                 <Label Grid.Row="1" HorizontalOptions="EndAndExpand" Text="To Our Services" FontSize="22"  FontFamily="Poppins" FontAutoScalingEnabled="False" TextColor="#385897"/>
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="2" RowDefinitions="auto,*" Margin="0,250,0,0">
+        <Grid Grid.Row="2" RowDefinitions="Auto,*" RowSpacing="-10" Padding="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <CarouselView Grid.Row="0" ItemsSource="{Binding ImageList}" IndicatorView="IndicatorView" HorizontalScrollBarVisibility="Never" HeightRequest="250"
+              Position="{Binding CurrentIndex, Mode=TwoWay}">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Image Source="{Binding}" Aspect="AspectFill" />
+                        </StackLayout>
+                         
+                       
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <IndicatorView Grid.Row="1" Margin="0,0,0,0" x:Name="IndicatorView" IndicatorColor="Gray" SelectedIndicatorColor="Black" 
+               HorizontalOptions="CenterAndExpand"  />
+        </Grid>
+        
+        
+        <Grid Grid.Row="3" RowDefinitions="auto,*" Margin="0,0,0,0" VerticalOptions="EndAndExpand">
             <Grid Grid.Row="0" Padding="15,0,0,0" ColumnSpacing="180" ColumnDefinitions="Auto,Auto,Auto">
 
                 <Label Grid.Column="0" Text="Our Products" FontSize="18"  FontFamily="Poppins" FontAutoScalingEnabled="False" TextColor="#385897"/>
-                <Grid Grid.Column="1"  ColumnSpacing="10" ColumnDefinitions="Auto,Auto">
+                <!--<Grid Grid.Column="1"  ColumnSpacing="10" ColumnDefinitions="Auto,Auto">
                     <Label Grid.Column="0" Text="More" FontSize="18"  FontFamily="Poppins" FontAutoScalingEnabled="False" TextColor="Gray"/>
                     <Image Grid.Column="1" Source="rightarrows.png" HeightRequest="15" />
 
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OnMoreTapped}" />
                     </Grid.GestureRecognizers>
-                </Grid>
+                </Grid>-->
             </Grid>
             <ScrollView  Grid.Row="1" BackgroundColor="Transparent" >
 

@@ -1,8 +1,10 @@
-﻿using FoodSaverMaui.Helper.CacheHelper;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FoodSaverMaui.Helper.CacheHelper;
 using FoodSaverMaui.Response;
 using FoodSaverMaui.Services.Food;
 using FoodSaverMaui.Views;
 using System;
+using System.Timers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,6 +19,13 @@ namespace FoodSaverMaui.ViewModel
         private readonly FoodService _foodService;
         private readonly ICacheService _cacheService;
 
+        [ObservableProperty]
+        private ObservableCollection<string> imageList;
+
+        [ObservableProperty]
+        private int currentIndex;
+
+        private System.Timers.Timer _timer;
         public ObservableCollection<GetProductsResponse> Products { get; } = new();
         public Command OnClickTapped { get; }
         public Command OnDetailButtonClicked { get; }
@@ -30,7 +39,32 @@ namespace FoodSaverMaui.ViewModel
             OnMoreTapped = new Command(async() => await MoreTapped());
         }
 
+        public async Task ImageCarousel()
+        {
+            // Load images from the Resources/Images folder
+            ImageList = new ObservableCollection<string>
+        {
+            "welcomeimage.png",
+            "notificationimage.png",
+            "buyimage.png",
+            "khaltiimage.png",
+           
+            "mapimage.png"
+        };
 
+            StartAutoSwipe();
+        }
+        private void StartAutoSwipe()
+        {
+            _timer = new System.Timers.Timer(4000);
+            _timer.Elapsed += (s, e) =>
+            {
+                if (ImageList.Count == 0) return;
+                CurrentIndex = (CurrentIndex + 1) % ImageList.Count;
+            };
+            _timer.AutoReset = true;
+            _timer.Start();
+        }
         public async Task MoreTapped()
         {
             //await Shell.Current.GoToAsync(nameof(FindFood));
@@ -69,6 +103,7 @@ namespace FoodSaverMaui.ViewModel
         {
             try
             {
+
                 var location = await GetLocation();
                 if (location != null)
                 {
@@ -124,6 +159,7 @@ namespace FoodSaverMaui.ViewModel
                 //}
                 //else
                 //{
+                await ImageCarousel();
                     await GetProducts();
                 
             }

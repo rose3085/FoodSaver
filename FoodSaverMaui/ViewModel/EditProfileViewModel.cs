@@ -106,33 +106,38 @@ namespace FoodSaverMaui.ViewModel
 
         public async Task SaveButtonClicked()
         {
-            var password = await Shell.Current.DisplayPromptAsync("Confirm","Enter your password?","Ok","Cancel");
-            if (password != null)
+            try
             {
-                if (PhoneNumber == null)
+                IsBusy = true;
+                var password = await Shell.Current.DisplayPromptAsync("Confirm", "Enter your password?", "Ok", "Cancel");
+                if (password != null)
                 {
-                     newPhoneNumber = "string";
+                    if (PhoneNumber == null)
+                    {
+                        newPhoneNumber = "string";
+                    }
+                    else
+                    {
+                        newPhoneNumber = PhoneNumber;
+                    }
+                    var requestModel = new UpdateUserRequest()
+                    {
+                        Password = password,
+                        Email = Email,
+                        UserName = UserName,
+                        Role = newRole,
+                        PhoneNumber = newPhoneNumber
+                    };
+                    var result = await _userProfileService.UpdateUser(requestModel);
+                    if (result != null)
+                    {
+                        // string resultError = "Enter Valid Credentials!!";
+                        var toast = Toast.Make($"{result}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                        await toast.Show();
+                    }
                 }
-                else 
-                {
-                     newPhoneNumber = PhoneNumber;
-                }
-                var requestModel = new UpdateUserRequest()
-                {
-                    Password = password,
-                    Email = Email,
-                    UserName = UserName,
-                    Role = newRole,
-                    PhoneNumber = newPhoneNumber
-                };
-                var result = await _userProfileService.UpdateUser(requestModel);
-                if (result != null)
-                {
-                   // string resultError = "Enter Valid Credentials!!";
-                    var toast = Toast.Make($"{result}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
-                    await toast.Show();
-                }
-            }
+            }finally
+            { IsBusy = false; }
         }
     }
 }

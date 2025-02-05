@@ -295,7 +295,7 @@ namespace Application.Services.User
                         //await _userManager.DeleteAsync(registerModel);
                         return new UserManagerResponse
                         {
-                            IsSuccess = true,
+                            IsSuccess = false,
                             Message = "User created successfully.",
                             Error = "Couldn't assign role to the user"
                         };

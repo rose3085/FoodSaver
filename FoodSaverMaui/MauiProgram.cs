@@ -63,14 +63,14 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<OrderDetailViewModel>();
             builder.Services.AddSingleton<DeliveryService>();
 
-            builder.Services.AddSingleton<UpdatePassword>();
-            builder.Services.AddSingleton<UpdatePasswordViewModel>();
+            builder.Services.AddTransient<UpdatePassword>();
+            builder.Services.AddTransient<UpdatePasswordViewModel>();
 
-            builder.Services.AddSingleton<DeleteUser>();
-            builder.Services.AddSingleton<DeleteUserViewModel>();
+            builder.Services.AddTransient<DeleteUser>();
+            builder.Services.AddTransient<DeleteUserViewModel>();
 
-            builder.Services.AddSingleton<UpdateEmail>();
-            builder.Services.AddSingleton<UpdateEmailViewModel>();
+            builder.Services.AddTransient<UpdateEmail>();
+            builder.Services.AddTransient<UpdateEmailViewModel>();
 
             builder.Services.AddTransient<FindFood>();
             builder.Services.AddTransient<FindFoodViewModel>();

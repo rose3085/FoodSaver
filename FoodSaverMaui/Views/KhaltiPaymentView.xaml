@@ -12,7 +12,7 @@
     </StackLayout>-->
 
     <Frame BorderColor="Transparent" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Border StrokeShape="RoundRectangle 35,35,35,35" StrokeThickness="1.5" StrokeDashOffset="12">
+        <Border StrokeShape="RoundRectangle 35,35,35,35" StrokeThickness="1.5" BackgroundColor="#f7f7f7" StrokeDashOffset="12">
             <Grid RowDefinitions="Auto,Auto,Auto,Auto,*" RowSpacing="20" Padding="50"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
 
                 <Grid Grid.Row="0" RowDefinitions="Auto,Auto,*" RowSpacing="20">
@@ -97,7 +97,7 @@
                
 
                 <Frame Grid.Row="2" Padding="0" BorderColor="Transparent" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                    <Border StrokeShape="Rectangle " StrokeThickness="0" >
+                    <Border StrokeShape="Rectangle " StrokeThickness="0.0" BackgroundColor="#f7f7f7" >
                         <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="10" Padding="10">
                             <Label Grid.Row="0"  HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="Amount to be paid :" TextColor="#385897" FontAttributes="Bold" FontSize="19" />
                             <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" HorizontalOptions="CenterAndExpand" ColumnSpacing="5">

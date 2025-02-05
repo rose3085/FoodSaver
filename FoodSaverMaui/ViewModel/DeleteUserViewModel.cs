@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FoodSaverMaui.Views;
+using FoodSaverMaui.Helper.CacheHelper;
 
 namespace FoodSaverMaui.ViewModel
 {
@@ -18,16 +19,20 @@ namespace FoodSaverMaui.ViewModel
 
         [ObservableProperty]
         string password;
+        [ObservableProperty]
+        string userName;
 
       
 
 
         private readonly UserProfileService _userProfileService;
+        private readonly ICacheService _cacheService;
 
         public Command OnConfirmTapped { get; }
-        public DeleteUserViewModel(UserProfileService userProfileService)
+        public DeleteUserViewModel(UserProfileService userProfileService,ICacheService cacheService)
         {
             _userProfileService = userProfileService;
+            _cacheService = cacheService;
             OnConfirmTapped = new Command(async () => await ConfirmTapped());
         }
         public async Task ConfirmTapped()
@@ -35,14 +40,15 @@ namespace FoodSaverMaui.ViewModel
             try
             {
                 IsBusy = true;
-                if (!string.IsNullOrWhiteSpace(email) && 
-                    !string.IsNullOrWhiteSpace(password)
+                if (!string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(UserName) &&
+                    !string.IsNullOrWhiteSpace(Password)
                     )
                 {
                     var requestModel = new UserLoginRequest
                     {
-                        Email = email,
-                        Password = password,
+                        UserName = UserName,
+                        Email = Email,
+                        Password = Password,
                       
 
                     };
@@ -51,9 +57,25 @@ namespace FoodSaverMaui.ViewModel
                     if (result != null)
                     {
 
-                        var toast = Toast.Make($"{result}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
-                        await toast.Show();
-                        await Shell.Current.GoToAsync(nameof(Login));
+                        //var toast = Toast.Make($"{result}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                        //await toast.Show();
+
+                        if (result == "User Deleted Sucessfully")
+
+                        {
+                            var toast = Toast.Make($"{result}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                            await toast.Show();
+                            SecureStorage.RemoveAll();
+                            Preferences.Clear();
+                            await _cacheService.Clear();
+
+                            await Shell.Current.GoToAsync("//Login");
+                        }
+                        else
+                        {
+                            var toast = Toast.Make($"{result}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                            await toast.Show();
+                        }
                     }
                     else
                     {

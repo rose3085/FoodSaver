@@ -34,7 +34,7 @@ namespace FoodSaverMaui.Services.User
                 var url = $"{App.Settings.ApiBaseUrl}/api/User/LoginUser";
                 var json = JsonConvert.SerializeObject(loginRequest) ;
                 var content = new StringContent(json, Encoding.UTF8,"application/json");
-                var response = await _httpClient.PostAsync(url, content) ;
+                var response = await _httpClient.PostAsync(url, content);
                 Console.WriteLine($"s Code: {(int)response.StatusCode}");
                 if (response.IsSuccessStatusCode)
                 {
@@ -65,7 +65,7 @@ namespace FoodSaverMaui.Services.User
         }
 
 
-        public async Task<bool> RegisterUser(UserRegisterRequest registerRequest,string role)
+        public async Task<UserManagerResponse> RegisterUser(UserRegisterRequest registerRequest,string role)
         {
             try
             {
@@ -79,18 +79,26 @@ namespace FoodSaverMaui.Services.User
                 Console.WriteLine($"s Code: {(int)response.StatusCode}");
                 if (response.IsSuccessStatusCode)
                 {
-                    //var result =  response.Content.ReadFromJsonAsync<>();
-                    return true;
+                    var result =await response.Content.ReadFromJsonAsync<UserManagerResponse>();
+                    if (result != null && result.IsSuccess == true)
+                    {
+                        return result;
+                    }
+                    else
+                    {
+
+                        return null;
+                    }
                 }
                 else
                 {
 
-                    return false;
+                    return null;
                 }
             }
             catch (Exception ex)
             {
-                return false;
+                return null;
             }
         }
 

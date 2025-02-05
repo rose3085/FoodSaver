@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Location = Microsoft.Maui.Devices.Sensors.Location;
 
 namespace FoodSaverMaui.ViewModel
 {
@@ -28,6 +29,7 @@ namespace FoodSaverMaui.ViewModel
         string status = "Not Delivered";
         private readonly DeliveryService _deliveryService;
 
+        public Command OnPinLocationTapped { get; }
         public Command OnCheckDeliveryStatus { get; }
         public Command OnUpdateDeliveryStatusTapped { get; }
         public OrderDetailViewModel(DeliveryService deliveryService)
@@ -35,8 +37,40 @@ namespace FoodSaverMaui.ViewModel
             _deliveryService = deliveryService;
             OnCheckDeliveryStatus = new Command(async() => CheckDeliveryStatus());
             OnUpdateDeliveryStatusTapped = new Command(async() => UpdateDeliveryStatus());
+            OnPinLocationTapped = new Command(async () => await PinLocationTapped());
         }
+        public async Task PinLocationTapped()
+        {
+            if (!string.IsNullOrEmpty(OrderDetail.WardNumber) && !string.IsNullOrEmpty(OrderDetail.ToleName)
+                    && !string.IsNullOrEmpty(OrderDetail.CityName))
+            {
 
+                var address = $"{OrderDetail.CityName} {OrderDetail.ToleName}";
+
+                IEnumerable<Location> locations = await Geocoding.Default.GetLocationsAsync(address);
+                Location location = locations?.FirstOrDefault();
+
+                var options = new MapLaunchOptions { Name = "Butwal" };
+
+                try
+                {
+                    await Map.Default.OpenAsync(location, options);
+                }
+                catch (Exception ex)
+                {
+                    var toasts = Toast.Make($"Couldn't open GoogleMap", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                    await toasts.Show();
+
+                }
+            }
+            else
+            {
+
+                var toast = Toast.Make($"Enter all address fields!", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                await toast.Show();
+            }
+
+        }
         public async Task UpdateDeliveryStatus()
         {
 

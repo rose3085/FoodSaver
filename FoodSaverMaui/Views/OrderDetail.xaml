@@ -6,7 +6,7 @@
              xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:OrderDetailViewModel"
-             Title="OrderDetail">
+            >
 
 
     <ContentPage.Resources>
@@ -15,10 +15,21 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="10">
-        <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12">
-            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="30" RowSpacing="10">
+        <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12" BackgroundColor="#f4f4f4">
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="30" RowSpacing="10">
 
-                <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+
+
+
+
+                <Grid Grid.Row="0" RowDefinitions="Auto" Padding="0,0,0,0" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand">
+
+                    <Label Grid.Row="0" Text="Order Detail!"
+FontSize="30" TextColor="#385897" FontAutoScalingEnabled="False"
+FontFamily="PoppinsBold"
+HorizontalOptions="Center"></Label>
+                </Grid>
+                <Grid Grid.Row="1" ColumnDefinitions="Auto,*">
                     <Grid Grid.Column="0" RowDefinitions="Auto,*">
                         <Label Grid.Row="0" Text="{Binding OrderDetail.CreatedTime , Converter={StaticResource StringConverter}}"/>
                         <Border  Grid.Row="1"  StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="0.0" StrokeDashOffset="12" HorizontalOptions="EndAndExpand">
@@ -41,7 +52,7 @@
                     </Grid>
                 </Grid>
 
-                <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="3">
+                <Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="3">
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="10,10,0,0">
                         <Image Grid.Column="0" Source="user.png" HeightRequest="24" WidthRequest="24"/>
                         <Label Grid.Column="1" FontSize="18" TextColor="#385897" FontAttributes="Bold" FontAutoScalingEnabled="False" Text="Customer " />
@@ -64,8 +75,8 @@
                     </Grid>
                 </Grid>
 
-                <BoxView  Grid.Row="2" HeightRequest="0.5" BackgroundColor="Gray"/>
-                <Grid Grid.Row="3" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="3">
+                <BoxView  Grid.Row="3" HeightRequest="0.5" BackgroundColor="Gray"/>
+                <Grid Grid.Row="4" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="3">
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="10,10,0,0">
                         <Image Grid.Column="0" Source="user.png" HeightRequest="24" WidthRequest="24"/>
                         <Label Grid.Column="1" FontSize="18" TextColor="#385897" FontAttributes="Bold" FontAutoScalingEnabled="False" Text="Order Info " />
@@ -87,8 +98,8 @@
                         <Label Grid.Column="1" FontSize="16" Text="Khalti" />
                     </Grid>
                 </Grid>
-                <BoxView  Grid.Row="4" HeightRequest="0.5" BackgroundColor="Gray"/>
-                <Grid Grid.Row="5" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="3">
+                <BoxView  Grid.Row="5" HeightRequest="0.5" BackgroundColor="Gray"/>
+                <Grid Grid.Row="6" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="3">
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="3" Padding="10,10,0,0">
                         <Image Grid.Column="0" Source="user.png" HeightRequest="24" WidthRequest="24"/>
                         <Label Grid.Column="1" FontSize="18" TextColor="#385897" FontAttributes="Bold" FontAutoScalingEnabled="False" Text="Delivery Info " />
@@ -110,9 +121,18 @@
                         <Label Grid.Column="1" FontSize="16" Text="{Binding OrderDetail.WardNumber}" />
                     </Grid>
                 </Grid>
-               
+                <BoxView  Grid.Row="7" HeightRequest="0.5" BackgroundColor="Gray"/>
 
-               
+                <Grid Grid.Row="8"  RowDefinitions="Auto,Auto" Margin="35,0,10,0"  >
+
+                    <Label Grid.Row="0"  HorizontalOptions="StartAndExpand" Margin="0,0,10,0" Text="View Location" TextColor="#385897" FontAttributes="Bold" FontSize="18" />
+                    <Image Grid.Row="1" Source="map.png" Margin="5" HeightRequest="30" HorizontalOptions="StartAndExpand">
+
+                    </Image>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnPinLocationTapped}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
 
             </Grid>
         </Border>

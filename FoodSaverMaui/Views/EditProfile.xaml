@@ -2,67 +2,87 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FoodSaverMaui.Views.EditProfile"
-             Title="EditProfile"
+
                 xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
                 x:DataType="viewmodel:EditProfileViewModel"
              >
 
   
         <Frame BorderColor="Transparent" BackgroundColor="Transparent" >
-        <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12">
-            <Grid RowDefinitions="Auto,Auto,Auto" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+        <Border StrokeShape="RoundRectangle 24,24,24,24" BackgroundColor="#f7f7f7" StrokeThickness="0.5" StrokeDashOffset="12">
+            <Grid RowDefinitions="Auto,Auto,Auto,*"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
 
-                <Grid Grid.Row="0" RowDefinitions="Auto,Auto" RowSpacing="8" Padding="20">
-                    <BoxView Grid.Row="0" CornerRadius="60" HeightRequest="120" WidthRequest="120" BackgroundColor="Gray">
+                <Grid Grid.Row="0" RowDefinitions="Auto" Padding="50,80,100,30" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand">
 
-                    </BoxView>
-
-                    <!--<Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" ColumnSpacing="10" HorizontalOptions="CenterAndExpand"  VerticalOptions="CenterAndExpand" >
-                <Editor Grid.Column="0" Text="Rabina" HorizontalOptions="CenterAndExpand"  VerticalOptions="CenterAndExpand" 
-                   FontSize="20" FontAttributes="Bold" TextColor="#385897"
-                   />
-                <Image Grid.Column="1" Source="question.png" HeightRequest="20"/>
-            </Grid>-->
+                    <Label Grid.Row="0" Text="Edit Profile!"
+                    FontSize="30" TextColor="#385897" FontAutoScalingEnabled="False"
+                    FontFamily="PoppinsBold"
+                    HorizontalOptions="Center"></Label>
                 </Grid>
-                <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="20"  HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="20"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
-                    <Grid Grid.Row="0" RowDefinitions="Auto,Auto" Padding="20,0,0,0"  WidthRequest="320" >
-                        <Label Grid.Row="0" Text="UserName" FontSize="14" FontAttributes="Bold" TextColor="#888888"/>
-                        <Editor Grid.Row="1" Text="{Binding UserName}"  />
-                    </Grid>
-                    <Grid Grid.Row="1" RowSpacing="5" RowDefinitions="Auto,Auto,Auto" Padding="20,0,0,0"  WidthRequest="320" >
-                        <Label Grid.Row="0" Text="Email" FontSize="14" FontAttributes="Bold" TextColor="#888888"/>
-
-                        <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" ColumnSpacing="1" >
-                            <Label Grid.Column="0" Text="{Binding Email}"  Padding="3,0,0,0" />
-                            <!--<ImageButton Grid.Column="1" Source="rightarrows.png" Padding="0,0,0,0"  HeightRequest="18" />-->
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="5" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                        <Image Source="user.png" WidthRequest="25" HeightRequest="25"/>
+                        <Grid Grid.Column="1" RowSpacing="-10" RowDefinitions="Auto,Auto" Padding="5,0,0,0"  WidthRequest="250" >
+                            <Label Grid.Row="0" Text="UserName" FontSize="14" FontAttributes="Bold" TextColor="#888888"/>
+                            <Editor Grid.Row="1" Text="{Binding UserName}"  />
                         </Grid>
-                        <BoxView Grid.Row="2" HeightRequest="0.5" />
                     </Grid>
+                    <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" ColumnSpacing="5" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                        <Image Source="email.png" WidthRequest="25" HeightRequest="25"/>
+                        <Grid Grid.Column="1" RowSpacing="5" RowDefinitions="Auto,Auto,Auto" Padding="5,0,0,0"  WidthRequest="250" >
+                            <Label Grid.Row="0" Text="Email" FontSize="14" FontAttributes="Bold" TextColor="#888888"/>
 
-                    <Grid Grid.Row="2" RowSpacing="5" RowDefinitions="Auto,Auto,Auto" Padding="20,0,0,0"  WidthRequest="320" >
-                        <Label Grid.Row="0" Text="Role" FontSize="14" FontAttributes="Bold" TextColor="#888888"/>
-
-                        <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" ColumnSpacing="1" >
-                            <Label Grid.Column="0" Text="{Binding Role}" Padding="3,0,0,0" WidthRequest="42"/>
-                            <ImageButton Grid.Column="1" Source="rightarrows.png" Padding="0,0,0,0"  HeightRequest="18" >
-                                <ImageButton.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding OnUpdateRoleTapped}" />
-                                </ImageButton.GestureRecognizers>
-                            </ImageButton>
+                            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" ColumnSpacing="1" >
+                                <Label Grid.Column="0" Text="{Binding Email}"  Padding="3,0,0,0" />
+                                <!--<ImageButton Grid.Column="1" Source="rightarrows.png" Padding="0,0,0,0"  HeightRequest="18" />-->
+                            </Grid>
+                            <BoxView Grid.Row="2" HeightRequest="0.5" />
                         </Grid>
-                        <BoxView Grid.Row="2" HeightRequest="0.5" />
+                    </Grid>
+                    <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="5" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                        <Image Source="user.png" WidthRequest="25" HeightRequest="25"/>
+                        <Grid Grid.Column="1" RowSpacing="5" RowDefinitions="Auto,Auto,Auto" Padding="5,0,0,0"  WidthRequest="250" >
+                            <Label Grid.Row="0" Text="Role" FontSize="14" FontAttributes="Bold" TextColor="#888888"/>
+
+                            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" ColumnSpacing="1" >
+                                <Label Grid.Column="0" Text="{Binding Role}" Padding="0,0,0,0" WidthRequest="42"/>
+                                <ImageButton Grid.Column="1" Source="rightarrows.png" Padding="-60,0,0,0"  HeightRequest="18"  >
+                                    <ImageButton.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OnUpdateRoleTapped}" />
+                                    </ImageButton.GestureRecognizers>
+                                </ImageButton>
+                            </Grid>
+                            <BoxView Grid.Row="2" HeightRequest="0.5" />
+                        </Grid>
                     </Grid>
 
-                    <Grid Grid.Row="3" RowDefinitions="Auto,Auto" Padding="20,0,0,0"  WidthRequest="320" >
-                        <Label Grid.Row="0" Text="PhoneNumber" FontSize="14" FontAttributes="Bold" TextColor="#888888"/>
-                        <Editor Grid.Row="1" Text="{Binding PhoneNumber}" />
+                    <Grid Grid.Row="3" ColumnDefinitions="Auto,Auto" ColumnSpacing="5" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                        <Image Grid.Column="0" Source="phone.png" WidthRequest="25" HeightRequest="25"/>
+                        <Grid Grid.Column="1" RowDefinitions="Auto,Auto" Padding="5,0,0,0"  WidthRequest="250" >
+                            <Label Grid.Row="0" Text="PhoneNumber" FontSize="14" FontAttributes="Bold" TextColor="#888888"/>
+                            <Editor Grid.Row="1" Text="{Binding PhoneNumber}" />
+                        </Grid>
                     </Grid>
                 </Grid>
 
 
-                <Grid Grid.Row="2" HorizontalOptions="EndAndExpand" VerticalOptions="End" Padding="0,30,30,0">
-                    <Button Text="Save" Padding="20,0,20,0"   BackgroundColor="#53900f" Command="{Binding OnSaveButtonClicked}" />
+                <Grid Grid.Row="2" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Padding="30,30,30,0">
+                    <Button Text="Save" Padding="0,0,0,0" WidthRequest="260"   BackgroundColor="#53900f" Command="{Binding OnSaveButtonClicked}" />
+                </Grid>
+                <Grid Grid.Row="3" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+                    <Frame HeightRequest="75" 
+            BackgroundColor="Transparent" 
+            BorderColor="Transparent"
+>
+
+                        <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                   IsVisible="{Binding IsBusy}"
+                                   Color="Black" />
+
+
+                    </Frame>
+
                 </Grid>
             </Grid>
         </Border>

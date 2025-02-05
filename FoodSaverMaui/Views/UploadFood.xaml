@@ -25,7 +25,7 @@
     <Grid RowDefinitions="Auto,Auto" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         
         <Frame Grid.Row="1" BorderColor="Transparent"   Padding="10,10,10,0">
-            <Border StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="1.5" StrokeDashOffset="12">
+            <Border StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="1.5" StrokeDashOffset="12" BackgroundColor="#f4f4f4">
                 <Grid RowDefinitions="Auto,*,Auto" RowSpacing="10" Padding="5,10,5,5"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                     <Grid Grid.Row="0"   HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                         <Label Text="Upload Food"  TextColor="#385897" FontSize="23"  Padding="0,5,0,0" FontAttributes="Bold" />
@@ -44,7 +44,7 @@
                     </Grid>-->
 
                     <Frame Grid.Row="1" Padding="0" BorderColor="Transparent" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
-                        <Border StrokeShape="Rectangle " StrokeThickness="0.5" >
+                        <Border StrokeShape="Rectangle " StrokeThickness="0.5" BackgroundColor="#f4f4f4" >
                             <Grid  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="5"
             Padding="5,10,10,10" >
                                 

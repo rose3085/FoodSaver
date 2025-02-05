@@ -198,7 +198,7 @@ namespace FoodSaverMaui.ViewModel
                 var result = await _purchaseHistoryService.GetUserPurchase();
                 if (result == null)
                 {
-                    await Shell.Current.DisplayAlert("No Purchase History to display!!","Please try again later.","Ok!");
+                    //await Shell.Current.DisplayAlert("No Purchase History to display!!","Please try again later.","Ok!");
                 }
                 else 
                 {
@@ -445,7 +445,8 @@ namespace FoodSaverMaui.ViewModel
             if (confirm == true)
             {
                 Products.Clear();
-               await _cacheService.Clear();
+                PurchaseHistory.Clear();
+                await _cacheService.Clear();
                 await SecureStorage.SetAsync("isLoggedOut","yes");
                await _signalRService.Dispose();
                // Shell.Current.FlyoutIsPresented = false;

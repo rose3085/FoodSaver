@@ -5,7 +5,19 @@
                    
              NavigationPage.HasNavigationBar="False"
   NavigationPage.HasBackButton="False">
-    <VerticalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Image Source="checked.png" HeightRequest="120" />
-    </VerticalStackLayout>
+    <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <Frame HeightRequest="75" 
+            BackgroundColor="Transparent" 
+            BorderColor="Transparent"
+>
+
+            <ActivityIndicator IsRunning="True" IsVisible="True" 
+             
+                                   Color="Black" />
+
+
+        </Frame>
+
+    </Grid>
+
 </ContentPage>

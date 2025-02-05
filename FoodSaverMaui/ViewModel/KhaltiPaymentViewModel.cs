@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.KhaltiServices;
 using FoodSaverMaui.SignalRServices;
 using FoodSaverMaui.Views;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Location = Microsoft.Maui.Devices.Sensors.Location;
 
 namespace FoodSaverMaui.ViewModel
 {
@@ -102,18 +104,50 @@ namespace FoodSaverMaui.ViewModel
         private readonly IKhaltiService _khaltiServices;
         private readonly ISignalRService _signalRService;
 
+        public Command OnPinLocationTapped { get; }
         public Command OnKhaltiPaymentButtonClicked { get; }
         public KhaltiPaymentViewModel(IKhaltiService khaltiServices,ISignalRService signalRService)
         {
             _khaltiServices = khaltiServices;
             _signalRService = signalRService;
             OnKhaltiPaymentButtonClicked = new Command(async() => await KhaltiPaymentButton());
-           
+            OnPinLocationTapped = new Command(async () => await PinLocationTapped());
         }
 
 
 
+        public async Task PinLocationTapped()
+        {
+            if (!string.IsNullOrEmpty(WardNumber) && !string.IsNullOrEmpty(ToleName)
+                    && !string.IsNullOrEmpty(CityName))
+            {
 
+                var address = $"{CityName} {ToleName}";
+
+                IEnumerable<Location> locations = await Geocoding.Default.GetLocationsAsync(address);
+                Location location = locations?.FirstOrDefault();
+
+                var options = new MapLaunchOptions { Name = "Butwal" };
+
+                try
+                {
+                    await Map.Default.OpenAsync(location, options);
+                }
+                catch (Exception ex)
+                {
+                    var toasts = Toast.Make($"Couldn't open GoogleMap", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                    await toasts.Show();
+
+                }
+            }
+            else
+            {
+
+                var toast = Toast.Make($"Enter all address fields!", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                await toast.Show();
+            }
+
+        }
 
         public async Task KhaltiPaymentButton()
         {

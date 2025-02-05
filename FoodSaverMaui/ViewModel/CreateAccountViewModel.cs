@@ -180,12 +180,12 @@ namespace FoodSaverMaui.ViewModel
                         };
 
                         var registerRequest = await _userServices.RegisterUser(requestModel, SelectedRole);
-                        if (registerRequest == true)
+                        if (registerRequest != null)
                         {
                             //await Shell.Current.DisplayAlert("Success", "User successfully registered.", "OK!");
                             await Shell.Current.GoToAsync("//Login");
-                            string resultError = "Enter registerd data to login!";
-                            var toast = Toast.Make($"{resultError}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                            string result = "Account created sucessfully. You can now login to your account.";
+                            var toast = Toast.Make($"{result}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
                             await toast.Show();
                         }
                         else
