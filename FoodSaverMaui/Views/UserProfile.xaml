@@ -97,8 +97,14 @@
                                 IsVisible="{Binding IsBusy}"
                                         Color="Black"  HeightRequest="25" WidthRequest="25"/>
                         </Grid>
-                        
-                        <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single" IsVisible="{Binding IsComponent1Visible}" EmptyView="No posts to display!">
+
+
+
+
+                        <RefreshView IsRefreshing="{Binding IsRefreshing}"  Grid.Row="2"
+        Command="{Binding OnRefreshTapped}">
+
+                            <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single" IsVisible="{Binding IsComponent1Visible}" EmptyView="No posts to display!">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="model:GetProductsResponse">
                                         <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -123,10 +129,10 @@
 
 
                                                             </Grid>
-                                                        <Image IsVisible="{Binding IsBooked}"  Grid.Column="1" Source="sold.png" HeightRequest="27"  >
-                                                            
-                                                        </Image>
-                                                        <Image  Grid.Column="2" Source="dots.png" HeightRequest="22" HorizontalOptions="EndAndExpand" Margin="0,0,5,0">
+                                                            <Image IsVisible="{Binding IsBooked}"  Grid.Column="1" Source="sold.png" HeightRequest="27"  >
+
+                                                            </Image>
+                                                            <Image  Grid.Column="2" Source="dots.png" HeightRequest="22" HorizontalOptions="EndAndExpand" Margin="0,0,5,0">
                                                                 <Image.GestureRecognizers>
                                                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UserProfileViewModel}}, Path=OnDotsTapped}"
                                                                    CommandParameter="{Binding .}"/>
@@ -170,7 +176,8 @@
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
-                     
+                        </RefreshView>
+
 
 
                         <Frame IsVisible="{Binding IsComponent2Visible}"  BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">

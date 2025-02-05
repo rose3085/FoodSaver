@@ -45,6 +45,8 @@ namespace FoodSaverMaui.ViewModel
         [ObservableProperty]
         public bool showSalesLimitReachedMessage;
 
+        [ObservableProperty]
+        bool isRefreshing = false;
 
 
         //private double _percentage;
@@ -105,6 +107,7 @@ namespace FoodSaverMaui.ViewModel
         public Command OnPurchaseHistoryTapped { get; }
         public Command OnDetailButtonTapped { get; }
         public Command OnConfirmPaymentTapped { get; }
+        public Command OnRefreshTapped { get; }
 
         private readonly HubConnection _hubConnection;
         private readonly ISignalRService _signalRService;
@@ -136,8 +139,24 @@ namespace FoodSaverMaui.ViewModel
             OnPageLoad = new Command(async() => await GetUserRoles());
             OnPurchaseHistoryTapped = new Command(async() => await PurchaseHistoryTapped());
             OnConfirmPaymentTapped = new Command(async () => await ConfirmPayment());
+            OnRefreshTapped = new Command(async() => await OnRefresh());
         }
 
+
+        public async Task OnRefresh()
+        {
+            try
+            {
+                IsRefreshing = true;
+                await _cacheService.RemoveFromCache("UserProduct");
+                await PostTapped();
+            }
+            finally
+            {
+                IsRefreshing = false;
+            }
+        
+        }
         public async Task ConfirmPayment()
         {
 
