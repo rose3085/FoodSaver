@@ -11,6 +11,15 @@
                 Command="{Binding OnKhaltiPaymentButtonClicked}"/>
     </StackLayout>-->
 
+    <ContentPage.Resources>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+        <Style x:Key="ValidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Green" />
+        </Style>
+    </ContentPage.Resources>
+
     <Frame BorderColor="Transparent" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
         <Border StrokeShape="RoundRectangle 35,35,35,35" StrokeThickness="1.5" BackgroundColor="#f7f7f7" StrokeDashOffset="12">
             <Grid RowDefinitions="Auto,Auto,Auto,Auto,*" RowSpacing="20" Padding="50"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">

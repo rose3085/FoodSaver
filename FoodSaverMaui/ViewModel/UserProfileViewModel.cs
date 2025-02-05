@@ -1,5 +1,4 @@
-﻿using Android.Accounts;
-using CommunityToolkit.Maui.Alerts;
+﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Helper;

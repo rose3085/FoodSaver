@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Hubs.InMemoryDb;
 using Application.Hubs.Models;
+using Application.Hubs.Response;
 using Application.Interfaces.Food;
 using Domain.Entities.User;
 using Microsoft.AspNetCore.Authorization;
@@ -125,12 +126,19 @@ namespace Application.Hubs
             var notifications =await _notificationDb.GetByUserId(userId);
                 if (notifications != null && notifications.Any())
                 {
-                    List<string> message = new List<string>();
+                    List<NotificationMessageResponse> message = new List<NotificationMessageResponse>();
 
                     foreach (var notification in notifications)
                     {
                         //string message = notification.Message;
-                        message.Add(notification.Message);
+                        string messages = notification.Message;
+                        string productId = notification.ProductId;
+                        var listMessage =  new NotificationMessageResponse()
+                        {
+                            Message = messages,
+                            ProductId = productId,
+                        };
+                        message.Add(listMessage);
                         await Clients.Client(connectionId).SendAsync("ReceiveMessage", message);
                        
                       
@@ -146,7 +154,7 @@ namespace Application.Hubs
 
 
 
-        public async Task SendNotification(string sellerId,string message)
+        public async Task SendNotification(string sellerId,string message,string productId)
         {
             var userInfo = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
             var buyerId = userInfo.Id;
@@ -163,7 +171,8 @@ namespace Application.Hubs
                     {
                         BuyerId = buyerId,
                         SellerId = sellerId,
-                        Message = message
+                        Message = message,
+                        ProductId = productId
                     };
 
                     _notificationDb.AddNotification(sellerId, notification);

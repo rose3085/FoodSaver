@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Hubs.Models
+namespace Application.Hubs.Response
 {
-    public class NotificationDto
+   public class NotificationMessageResponse
     {
-        public string SellerId { get; set; }
-        public string BuyerId { get; set; }
         public string Message { get; set; }
         public string ProductId { get; set; }
     }

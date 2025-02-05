@@ -69,7 +69,7 @@ namespace FoodSaverMaui.ViewModel
                     {
 
                         var message = $"{buyerName} has bought your product";
-                        await _signalRService.SendNotification(sellerId, message,buyerId);
+                        await _signalRService.SendNotification(sellerId, message,productId);
 
                     }
                 }

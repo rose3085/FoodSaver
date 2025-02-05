@@ -88,7 +88,31 @@ namespace FoodSaverMaui.ViewModel
                         var wardNumber = await Shell.Current.DisplayPromptAsync("Delivery Address", "Enter your ward number?");
                         if (wardNumber != null)
                         {
-                           
+                            //try
+                            //{
+                            //   // var productId = await SecureStorage.GetAsync("productId");
+
+                            //    var productId = Product.Id;
+
+                            //    var product = await _foodService.GetProductById(productId);
+                            //    if (product != null)
+                            //    {
+                            //        var user = await _userProfileService.GetUserByName();
+                            //        var buyerId = user.Id;
+                            //        var sellerId = product.SellerId;
+                            //        var token = await SecureStorage.GetAsync("token");
+                            //        var buyerName = _jwtHelper.ExtractUserInfo(token);
+                            //        if (sellerId != null && buyerName != null && buyerId != null)
+                            //        {
+
+                            //            var message = $"{buyerName} has bought your product";
+
+                            //            await _signalRService.SendNotification(sellerId, message, productId);
+
+                            //        }
+                            //    }
+                            //}
+                            //catch { }
                              await Shell.Current.GoToAsync($"{nameof(KhaltiPaymentView)}?Amount={product.PricePerKg}&ProductId={product.Id}&CityName={city}&ToleName={toleName}&WardNumber={wardNumber}");
                         }
                     }

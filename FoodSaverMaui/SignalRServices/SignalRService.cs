@@ -1,6 +1,10 @@
 ﻿using FoodSaverMaui.Model;
+using FoodSaverMaui.Response.Notification;
+using FoodSaverMaui.Services.Food;
+using FoodSaverMaui.Views;
 using Microsoft.AspNetCore.SignalR.Client;
 using Plugin.LocalNotification;
+using Plugin.LocalNotification.EventArgs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,12 +16,13 @@ namespace FoodSaverMaui.SignalRServices
 {
     public class SignalRService : ISignalRService
     {
+        private readonly FoodService _foodService;
         private readonly HubConnection _hubConnection;
         private bool _isProcessingNotifications = false;
-        public ObservableCollection<string> Notifications { get; set; } = new ObservableCollection<string>();
-        public SignalRService()
+        public ObservableCollection<NotificationMessageResponse> Notifications { get; set; } = new ObservableCollection<NotificationMessageResponse>();
+        public SignalRService(FoodService foodService)
         {
-            
+            _foodService = foodService;
             _hubConnection = new HubConnectionBuilder()
                  .WithUrl($"{App.Settings.ApiBaseUrl}/notificationHub", options =>
                  {
@@ -32,7 +37,7 @@ namespace FoodSaverMaui.SignalRServices
                  .Build();
          
 
-            _hubConnection.On<List<string>>("ReceiveMessage", (message) =>
+            _hubConnection.On<List<NotificationMessageResponse>>("ReceiveMessage", (message) =>
             {
                 // Add the message to the UI-bound collection
                 MainThread.BeginInvokeOnMainThread(() =>
@@ -49,7 +54,8 @@ namespace FoodSaverMaui.SignalRServices
                             NotificationId = notificationCounter++,
                             Title = "Food Saver",
                             Subtitle = "Notifications",
-                            Description = messages,
+                            Description = messages.Message,
+                            ReturningData = messages.ProductId,
                             BadgeNumber = 27,
                             Schedule = new NotificationRequestSchedule
                             {
@@ -64,8 +70,31 @@ namespace FoodSaverMaui.SignalRServices
                 
             });
 
+            //  LocalNotificationCenter.Current.NotificationActionTapped += OnNotificationTapped();
+            LocalNotificationCenter.Current.NotificationActionTapped += Current_NotificationActionTapped;
         }
 
+        private async void Current_NotificationActionTapped(Plugin.LocalNotification.EventArgs.NotificationActionEventArgs e)
+        {
+           await LocalNotificationCenter.Current.GetDeliveredNotificationList();
+
+            var productId = e.Request.ReturningData;
+            if (productId != null)
+            {
+                //App.Current.MainPage.DisplayAlert(e.Request.Title, e.Request.Description, "ok");
+                var order = await _foodService.GetOrderByProductId(productId);
+                if (order != null)
+                {
+
+                    await Shell.Current.GoToAsync(nameof(OrderDetail), true, new Dictionary<string, object>
+                    {
+
+                     {"OrderDetail", order }
+                    });
+                }
+                //Shell.Current.GoToAsync(nameof(OrderDetail));
+            }
+        }
         public async Task Dispose()
         {
             if (_hubConnection != null)
@@ -82,13 +111,13 @@ namespace FoodSaverMaui.SignalRServices
             _isProcessingNotifications = true;
             while (Notifications.Count > 0)
             {
-                string message = Notifications[0];
+               // string message = Notifications.Messa[0];
                 var request = new NotificationRequest
                 {
                     NotificationId = 1111,
                     Title = "Food Saver",
                     Subtitle = "Notifications",
-                    Description = message,
+                   // Description = message,
                     BadgeNumber = 27,
                     Schedule = new NotificationRequestSchedule
                     {
@@ -128,14 +157,14 @@ namespace FoodSaverMaui.SignalRServices
 
        
         
-       public async Task SendNotification(string sellerId, string message, string buyerId)
+       public async Task SendNotification(string sellerId, string message, string productId)
         {
 
 
             try
             {
                 
-                await _hubConnection.InvokeAsync("SendNotification",sellerId, message);
+                await _hubConnection.InvokeAsync("SendNotification",sellerId, message,productId);
                 // Messages.Add($" {Name} Joined chat room: {Message}");
             }
 
