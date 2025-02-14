@@ -14,6 +14,7 @@ using Domain.Entities.Location;
 using System.Security.Claims;
 using System.Net;
 using SixLabors.ImageSharp.PixelFormats;
+using System.Threading.Tasks;
 
 
 namespace Application.Services.Food
@@ -104,7 +105,7 @@ namespace Application.Services.Food
                         ProductImage = createdImageName,
                         Seller = userInfo,
                         Address = address,
-                        Date = DateTime.Today,
+                        Date = DateTime.UtcNow,
                     };
                     var createdProduct = await _uow.AsyncRepositories<FoodModel>().AddAsync(product);
                    
@@ -202,24 +203,41 @@ namespace Application.Services.Food
 
         public async Task<string> CalculateTime(DateTime dateTime)
         {
-            var currentTime = DateTime.Now;
+            var currentTime = DateTime.UtcNow;
             var timeDifference = currentTime - dateTime;
-            if (timeDifference.TotalMinutes < 60)
-            {
-                return $"{(int)timeDifference.TotalMinutes}m";
 
-            }
-            else if (timeDifference.TotalHours < 24)
+            if (timeDifference.Minutes >= 1)
             {
-                return $"{(int)timeDifference.TotalHours}h";
+                if (timeDifference.Hours >= 1)
+                {
+                    if (timeDifference.Days >= 1)
+                    {
+                        return $"{(int)(timeDifference.TotalDays)}d";
+                    }
+                    else 
+                    {
+                        return $"{(int)(timeDifference.TotalHours)}h";
+                    }
+
+
+                }
+                else
+                {
+
+                    return $"{(int)(timeDifference.TotalMinutes)}m";
+                }
+
 
             }
             else 
             {
-                return $"{(int)timeDifference.TotalDays}d";
+                return $"{(int)(timeDifference.TotalSeconds)}s";
             }
 
+
+
         }
+
 
         public async Task<double> CalculateDistance(double currentLat, double currentLong, double latitude, double longitude)
         {
@@ -242,25 +260,50 @@ namespace Application.Services.Food
         }
         public async Task<IEnumerable<GetProductResponse>> GetProductsAsync(double currentLat, double currentLong)
         {
-            var includes = new Expression<Func<FoodModel, object>>[]
-                   {
+            try
+            {
+                var includes = new Expression<Func<FoodModel, object>>[]
+                       {
                         s => s.Seller,
                         s => s.Address,
-                   };
-            var result = await _uow.AsyncRepositories<FoodModel>().GetRandomWithIncludeAsync(includes);
+                       };
+                var result = await _uow.AsyncRepositories<FoodModel>().GetRandomWithIncludeAsync(includes);
 
 
-             var baseUrl = $"https://9d85-2405-acc0-1504-cce4-98c9-36b4-d35a-6799.ngrok-free.app";
-            // var baseUrl = $"https://localhost:7293";
-            var productResult =  result
-                .Where(product => product.IsBooked == false)
-                .Select(async product => 
+                var baseUrl = $"https://9d85-2405-acc0-1504-cce4-98c9-36b4-d35a-6799.ngrok-free.app";
+                // var baseUrl = $"https://localhost:7293";
+                
+                var productResult = result
+                    .Where(product => product.IsBooked == false)
+                    .Select(product => ProcessAllProduct(product, currentLat, currentLong, baseUrl))
+                   
+                    .ToList();
+                // var getResult = _mapper.Map<IEnumerable<GetProductResponse>>(productResult);
+                //var finalResult = await Task.WhenAll(productResult);
+                //var sortedResult = finalResult.OrderBy(product => product.Distance).ToList();
+                if (productResult.Count > 0 && productResult != null)
                 {
-                var timeDifference = await CalculateTime(product.Date);
-                    var latitude = product.Address.Latitude;
-                   var longitude = product.Address.Longitude;
+                    var sortedResult = (await Task.WhenAll(productResult))
+                    .Where(product => product != null) // Filters out null values
+                    .OrderBy(product => product.Distance)
+                    .ToList();
+                    return sortedResult;
+                }
+                else { return null; }
+            }
+            catch { return null; }
+        }
 
-                    var distance = await CalculateDistance(currentLat,currentLong,latitude,longitude);
+        public async Task<GetProductResponse> ProcessAllProduct(FoodModel product,double currentLat,double currentLong,string baseUrl)
+        {
+
+            try
+            {
+                var timeDifference = await CalculateTime(product.Date);
+                var latitude = product.Address.Latitude;
+                var longitude = product.Address.Longitude;
+
+                var distance = await CalculateDistance(currentLat, currentLong, latitude, longitude);
                 return new GetProductResponse
                 {
                     Id = product.Id,
@@ -279,14 +322,33 @@ namespace Application.Services.Food
                     // image Url form ma return garne
                     ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
                 };
-            }).ToList();
-            // var getResult = _mapper.Map<IEnumerable<GetProductResponse>>(productResult);
-            var finalResult = await Task.WhenAll(productResult);
-            var sortedResult = finalResult.OrderBy(product => product.Distance).ToList();
-
-            return sortedResult;
+            }
+            catch {
+                return null;
+            }
         }
 
+        public async Task<GetProductResponse> ProcessUserProduct(FoodModel product, string baseUrl)
+        {
+            var timeDifference = await CalculateTime(product.Date);
+            return new GetProductResponse
+            {
+                Id = product.Id,
+                ProductName = product.FoodName,
+                Description = product.Description,
+                PricePerKg = product.PricePerKg,
+                Quantity = product.Quantity,
+                IsBooked = product.IsBooked,
+                UserName = product.Seller?.UserName,
+                CityName = product.Address?.CityName,
+                ToleName = product.Address?.ToleName,
+                Latitude = product.Address.Latitude,
+                Longitude = product.Address.Longitude,
+                Date = timeDifference,
+                // image Url form ma return garne
+                ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
+            };
+        }
         public async Task<IEnumerable<GetProductResponse>> GetUsersProduct()
         {
             try {
@@ -306,29 +368,9 @@ namespace Application.Services.Food
                     var getProduct = result
                         .Where(product => product.Seller == userInfo)
                         .OrderByDescending(product => product.Date)
-                               .Select(async product =>
-                               {
-
-                                   var timeDifference = await CalculateTime(product.Date);
-                                   return new GetProductResponse
-                                   {
-                                       Id = product.Id,
-                                       ProductName = product.FoodName,
-                                       Description = product.Description,
-                                       PricePerKg = product.PricePerKg,
-                                       Quantity = product.Quantity,
-                                       IsBooked = product.IsBooked,
-                                       UserName = product.Seller?.UserName,
-                                       CityName = product.Address?.CityName,
-                                       ToleName = product.Address?.ToleName,
-                                       Latitude = product.Address.Latitude,
-                                       Longitude = product.Address.Longitude,
-                                       Date = timeDifference,
-                                       // image Url form ma return garne
-                                       ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
-                                   };
-                               }).ToList();
-                    if (getProduct != null)
+                               .Select( product => ProcessUserProduct(product,baseUrl)  )
+                               .ToList();
+                    if (getProduct != null && getProduct.Count >0)
                     {
                         var finalResult = await Task.WhenAll(getProduct);
                         return finalResult;
