@@ -125,7 +125,7 @@ namespace FoodSaverMaui.SignalRServices
                     }
 
                 };
-                LocalNotificationCenter.Current.Show(request);
+               await LocalNotificationCenter.Current.Show(request);
                 await Task.Delay(TimeSpan.FromSeconds(5));
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
@@ -163,8 +163,7 @@ namespace FoodSaverMaui.SignalRServices
 
             try
             {
-                
-                await _hubConnection.InvokeAsync("SendNotification",sellerId, message,productId);
+               await _hubConnection.InvokeAsync("SendNotification",sellerId, message,productId);
                 // Messages.Add($" {Name} Joined chat room: {Message}");
             }
 

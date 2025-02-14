@@ -42,7 +42,7 @@ namespace FoodSaverMaui.Services.Food
                 }
                 var url = $"{App.Settings.ApiBaseUrl}/api/Order/GetOrderByProductId?productId={productId}";
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                var response = await _httpClient.GetAsync(url, CancellationToken.None);
+                var response = await _httpClient.GetAsync(url);
                 Console.WriteLine($"s Code: {(int)response.StatusCode}");
                 if (response.IsSuccessStatusCode)
                 {
@@ -79,7 +79,7 @@ namespace FoodSaverMaui.Services.Food
                 }
                 var url = $"{App.Settings.ApiBaseUrl}/api/Food/GetFoodById?id={id}";
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                var response = await _httpClient.GetAsync(url, CancellationToken.None);
+                var response = await _httpClient.GetAsync(url);
                 Console.WriteLine($"s Code: {(int)response.StatusCode}");
                 if (response.IsSuccessStatusCode)
                 {
@@ -115,7 +115,7 @@ namespace FoodSaverMaui.Services.Food
                 }
                 var url = $"{App.Settings.ApiBaseUrl}/api/Food/GetAllFood?currentLat={currentLat}&currentLong={currentLong}";
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                var response = await _httpClient.GetAsync(url, CancellationToken.None);
+                var response = await _httpClient.GetAsync(url);
                 Console.WriteLine($"s Code: {(int)response.StatusCode}");
                 if (response.IsSuccessStatusCode)
                 {
@@ -148,7 +148,7 @@ namespace FoodSaverMaui.Services.Food
                 }
                 var url = $"{App.Settings.ApiBaseUrl}/api/Food/GetUserFood";
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                var response = await _httpClient.GetAsync(url, CancellationToken.None);
+                var response = await _httpClient.GetAsync(url);
                 Console.WriteLine($"s Code: {(int)response.StatusCode}");
                 if (response.IsSuccessStatusCode)
                 {

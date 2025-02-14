@@ -174,7 +174,7 @@ namespace FoodSaverMaui.ViewModel
                 {
                     double currentLat = location.Latitude;
                     double currentLong = location.Longitude;
-                    var request = await Task.Run(() => _foodService.GetAllProducts(currentLat, currentLong));
+                    var request = await  _foodService.GetAllProducts(currentLat, currentLong);
 
                     if (request != null)
                     {

@@ -24,11 +24,11 @@
 
     <Grid RowDefinitions="Auto,Auto" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         
-        <Frame Grid.Row="1" BorderColor="Transparent"   Padding="10,10,10,0">
+        <Frame Grid.Row="1" BorderColor="Transparent"   Padding="10,10,10,0" WidthRequest="400" HeightRequest="750">
             <Border StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="1.5" StrokeDashOffset="12" BackgroundColor="#f4f4f4">
                 <Grid RowDefinitions="Auto,*,Auto" RowSpacing="10" Padding="5,10,5,5"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                     <Grid Grid.Row="0"   HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                        <Label Text="Upload Food"  TextColor="#385897" FontSize="23"  Padding="0,5,0,0" FontAttributes="Bold" />
+                        <Label Text="Upload Food" FontAutoScalingEnabled="False"  TextColor="#385897" FontSize="23"  Padding="0,5,0,0" FontAttributes="Bold" />
                     </Grid>
                     <!--<Grid Grid.Row="0" ColumnDefinitions="Auto,Auto"  >
                         <Label Text="{Binding UserName}" Grid.Column="0" TextColor="Gray" FontSize="20" Padding="20,0,0,0" FontAttributes="Bold" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
@@ -43,7 +43,7 @@
 
                     </Grid>-->
 
-                    <Frame Grid.Row="1" Padding="0" BorderColor="Transparent" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                    <Frame Grid.Row="1" Padding="0" BorderColor="Transparent" HorizontalOptions="StartAndExpand"  WidthRequest="365" VerticalOptions="CenterAndExpand">
                         <Border StrokeShape="Rectangle " StrokeThickness="0.5" BackgroundColor="#f4f4f4" >
                             <Grid  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="5"
             Padding="5,10,10,10" >
@@ -87,8 +87,8 @@
 
                                         </ImageButton>
                                         <Grid RowDefinitions="Auto,*"  Grid.Row="1" RowSpacing="5" VerticalOptions="CenterAndExpand" IsVisible="{Binding IsImageNotSelected}" >
-                                            <Label Text="Browse Image" Grid.Row="0" FontSize="15" TextColor="#385897" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsImageNotSelected}"/>
-                                            <Label Text="Supported Image : PNG, JPG, JPEG" Grid.Row="1" FontSize="13" TextColor="Gray" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsImageNotSelected}" />
+                                            <Label FontAutoScalingEnabled="False" Text="Browse Image" Grid.Row="0" FontSize="15" TextColor="#385897" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsImageNotSelected}"/>
+                                            <Label FontAutoScalingEnabled="False" Text="Supported Image : PNG, JPG, JPEG" Grid.Row="1" FontSize="13" TextColor="Gray" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsImageNotSelected}" />
                                         </Grid>
                                     </Grid>
 
@@ -96,10 +96,10 @@
 
                                 <Grid Grid.Row="1"  RowDefinitions="Auto,Auto" >
 
-                                    <Label Grid.Row="0" Text="Title"
+                                    <Label Grid.Row="0" Text="Title" FontAutoScalingEnabled="False"
                        FontSize="18" FontAttributes="Bold" TextColor="#385897"/>
 
-                                    <Entry  Grid.Row="1" Text="{Binding Food}" Placeholder="Enter Food Name" WidthRequest='320' 
+                                    <Entry  Grid.Row="1" FontAutoScalingEnabled="False" Text="{Binding Food}" Placeholder="Enter Food Name" WidthRequest='320' 
                                 x:Name="FoodName"
                                 toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference FoodDescription}" ReturnType="Next"
                                       >
@@ -116,10 +116,10 @@
 
                                 <Grid Grid.Row="2"  RowDefinitions="Auto,Auto" >
 
-                                    <Label Grid.Row="0" Text="Description"
+                                    <Label Grid.Row="0" Text="Description" FontAutoScalingEnabled="False"
                                     FontSize="18" FontAttributes="Bold" TextColor="#385897"/>
 
-                                    <Editor 
+                                    <Editor FontAutoScalingEnabled="False"
                                     Grid.Row="1"
                                     Placeholder="Enter description here..."
                                     AutoSize="TextChanges"
@@ -149,9 +149,9 @@
 
                                     <Grid Grid.Column="0"  RowDefinitions="Auto,Auto" >
 
-                                        <Label Grid.Row="0" TextColor="#385897"  Text="Price" FontAttributes="Bold" FontSize="14" />
+                                        <Label Grid.Row="0" TextColor="#385897" FontAutoScalingEnabled="False"  Text="Price" FontAttributes="Bold" FontSize="14" />
                                         <Entry Grid.Row="1" Text="{Binding Price}" Placeholder="Enter price" WidthRequest='120'
-                                      x:Name="FoodPrice"
+                                      x:Name="FoodPrice" FontAutoScalingEnabled="False"
                                         toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference WardNumber}" ReturnType="Next"    
                                            >
                                             <Entry.Behaviors>
@@ -172,14 +172,14 @@
                                     </Grid>
                                     <Grid Grid.Column="1"  RowDefinitions="Auto,Auto" RowSpacing="10" >
 
-                                        <Label Grid.Row="0" TextColor="#385897"  Text="Quantity" FontAttributes="Bold" FontSize="14" />
-                                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="30" Grid.Row="1"  HorizontalOptions="Center" VerticalOptions="End" >
+                                        <Label Grid.Row="0" FontAutoScalingEnabled="False" TextColor="#385897"  Text="Quantity" FontAttributes="Bold" FontSize="14" />
+                                        <Grid ColumnDefinitions="Auto,*,Auto"  ColumnSpacing="30" Grid.Row="1"  HorizontalOptions="Center" VerticalOptions="End" >
                                             <ImageButton Grid.Column="0"
-                                          Source="minus.png"
+                                          Source="minus.png" 
                                           WidthRequest="10"
                                           HeightRequest="10"
                                           Command="{Binding DecrementCommand}" />
-                                            <Label Grid.Column="1" Text="{Binding StepperValue}" FontSize="18" FontAttributes="Bold" TextColor="#385897"/>
+                                            <Label FontAutoScalingEnabled="False" Grid.Column="1" Text="{Binding StepperValue}" FontSize="18" FontAttributes="Bold" TextColor="#385897"/>
 
                                             <ImageButton  Grid.Column="2"
                                         Source="plus.png"
@@ -194,7 +194,7 @@
 
                                     <Grid Grid.Column="0"  RowDefinitions="Auto,Auto" >
 
-                                        <Label Grid.Row="0" TextColor="#385897"  Text="Ward No." FontAttributes="Bold" FontSize="14" />
+                                        <Label FontAutoScalingEnabled="False" Grid.Row="0" TextColor="#385897"  Text="Ward No." FontAttributes="Bold" FontSize="14" />
                                         <Entry Grid.Row="1" Text="{Binding WardNumber}" Placeholder="Enter ward no" WidthRequest='120'
                                            x:Name="WardNumber"
                                         toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference ToleName}" ReturnType="Next" >
@@ -215,8 +215,8 @@
                                     </Grid>
                                     <Grid Grid.Column="1"  RowDefinitions="Auto,Auto"  >
 
-                                        <Label Grid.Row="0" TextColor="#385897"  Text="ToleName" FontAttributes="Bold" FontSize="14" />
-                                        <Entry Grid.Row="1" Text="{Binding ToleName}" Placeholder="Enter tolename" WidthRequest='120'
+                                        <Label FontAutoScalingEnabled="False" Grid.Row="0" TextColor="#385897"  Text="ToleName" FontAttributes="Bold" FontSize="14" />
+                                        <Entry FontAutoScalingEnabled="False" Grid.Row="1" Text="{Binding ToleName}" Placeholder="Enter tolename" WidthRequest='120'
                                            x:Name="ToleName"
                                             toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference CityName}" ReturnType="Next"
                                            >
@@ -237,8 +237,8 @@
 
                                     <Grid Grid.Column="0"  RowDefinitions="Auto,Auto" >
 
-                                        <Label Grid.Row="0" TextColor="#385897"  Text="City Name" FontAttributes="Bold" FontSize="14" />
-                                        <Entry Grid.Row="1" Text="{Binding CityName}" Placeholder="Enter your city" WidthRequest='120'
+                                        <Label Grid.Row="0" FontAutoScalingEnabled="False" TextColor="#385897"  Text="City Name" FontAttributes="Bold" FontSize="14" />
+                                        <Entry Grid.Row="1" FontAutoScalingEnabled="False" Text="{Binding CityName}" Placeholder="Enter your city" WidthRequest='120'
                                            x:Name="CityName"
                                        >
                                             <Entry.Behaviors>
@@ -259,7 +259,7 @@
                                     </Grid>
                                     <Grid Grid.Column="1"  RowDefinitions="Auto,Auto"  >
 
-                                        <Label Grid.Row="0"  HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="Select Location" TextColor="#385897" FontAttributes="Bold" FontSize="14" />
+                                        <Label Grid.Row="0" FontAutoScalingEnabled="False"  HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="Select Location" TextColor="#385897" FontAttributes="Bold" FontSize="14" />
                                         <Image Grid.Row="1" Source="map.png" HeightRequest="30" >
                                             <!--<Image.Behaviors>
                                                 <toolkit:IconTintColorBehavior TintColor="Gray" />
@@ -277,7 +277,7 @@
                         </Border>
                     </Frame>
                     <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="50" Padding="15,0,0,10">
-                        <Button Grid.Column="0" Command="{Binding OnPostTapped}"  HorizontalOptions="EndAndExpand" Margin="0,0,35,0" Text="Confirm Post" HeightRequest="40" WidthRequest="110" Background="#53900f"/>
+                        <Button Grid.Column="0" FontAutoScalingEnabled="False" Command="{Binding OnPostTapped}"  HorizontalOptions="EndAndExpand" Margin="0,0,35,0" Text="Confirm Post" HeightRequest="40" WidthRequest="110" Background="#53900f"/>
                         <ActivityIndicator Grid.Column="1" IsRunning="{Binding IsBusy}" 
                    IsVisible="{Binding IsBusy}" HorizontalOptions="EndAndExpand" HeightRequest="20" WidthRequest="20"
                            Color="Black" />

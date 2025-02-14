@@ -73,7 +73,7 @@
 
                                     <Grid RowDefinitions="Auto,*" RowSpacing="10" Padding="10,20,8,20"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
 
-                                        <Image Grid.Row="0"  HeightRequest="180"  WidthRequest="200" Aspect="AspectFill" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
+                                        <Image Grid.Row="0"  HeightRequest="150"  WidthRequest="200" Aspect="AspectFill" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
                                             <Image.Source>
                                                 <UriImageSource Uri="{Binding ImageUrl}"   CacheValidity="2" CachingEnabled="True"/>
                                             </Image.Source>

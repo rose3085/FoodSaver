@@ -5,7 +5,7 @@
              Title="FoodDetail"
             xmlns:viewmodel="clr-namespace:FoodSaverMaui.ViewModel"
             x:DataType="viewmodel:FoodDetailViewModel">
-    <Frame BorderColor="Transparent" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+    <Frame BorderColor="Transparent" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" WidthRequest="400">
         <Border StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="1.5" StrokeDashOffset="12">
             <Grid RowDefinitions="Auto,*,Auto" RowSpacing="10" Padding="5,20,3,20"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
 
@@ -13,14 +13,14 @@
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                         <Grid Grid.Column="0" WidthRequest="220" RowDefinitions="Auto,Auto" ColumnSpacing="5" >
                             <Grid Grid.Row="0" ColumnSpacing="10" ColumnDefinitions="Auto,Auto" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                            <Label Text="{Binding Product.UserName}"  Grid.Column="0" TextColor="Gray" FontSize="22" Padding="15,0,0,0" FontAttributes="Bold" />
+                            <Label Text="{Binding Product.UserName}" FontAutoScalingEnabled="False" Grid.Column="0" TextColor="Gray" FontSize="22" Padding="15,0,0,0" FontAttributes="Bold" />
                                 <Label Grid.Column="1" Text="{Binding Product.Date}" FontSize="14" VerticalOptions="CenterAndExpand"/>
                             </Grid>
                             <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,Auto,Auto" Padding="20,0,0,0" ColumnSpacing="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                 <Image Grid.Column="0" Source="location.png" HeightRequest="12" />
-                                <Label Grid.Column="1" Text="{Binding Product.CityName}" FontSize="12" />
+                                <Label Grid.Column="1" Text="{Binding Product.CityName}" FontSize="12" FontAutoScalingEnabled="False" />
                                 <Label Grid.Column="2" Text="," FontSize="12" />
-                                <Label Grid.Column="3" Text="{Binding Product.ToleName}" FontSize="12" />
+                                <Label Grid.Column="3" Text="{Binding Product.ToleName}" FontSize="12" FontAutoScalingEnabled="False" />
 
                             </Grid>
 
@@ -40,26 +40,26 @@
                     <Border StrokeShape="Rectangle " StrokeThickness="0.5" >
                         <Grid  RowDefinitions="Auto,Auto,Auto,Auto" 
                            Padding="0,0,0,10" >
-                            <Image Grid.Row="0" WidthRequest="330"  HeightRequest="330" Aspect="AspectFill" >
+                            <Image Grid.Row="0" WidthRequest="340"  HeightRequest="250" Aspect="AspectFill" >
                                 <Image.Source>
                                     <UriImageSource Uri="{Binding Product.ImageUrl}"   CacheValidity="2" CachingEnabled="True"/>
                                 </Image.Source>
                             </Image>
 
-                            <Label Grid.Row="1" Text="{Binding Product.ProductName}" TextColor="#385897" FontSize="20" Padding="20,0,0,0" FontAttributes="Bold" />
+                            <Label Grid.Row="1" FontAutoScalingEnabled="False" Text="{Binding Product.ProductName}" TextColor="#385897" FontSize="20" Padding="20,0,0,0" FontAttributes="Bold" />
 
 
-                            <Label Grid.Row="2" Text="{Binding Product.Description}"  TextColor="Gray" FontSize="20" Padding="20,10,0,10"  />
+                            <Label Grid.Row="2" Text="{Binding Product.Description}" FontAutoScalingEnabled="False" TextColor="Gray" FontSize="20" Padding="20,10,0,10"  />
 
                             <Grid  Grid.Row="3" ColumnDefinitions="Auto,*" ColumnSpacing="70" Padding="20,0,20,0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                 <Grid Grid.Column="0" RowDefinitions="Auto,Auto" RowSpacing="10">
 
-                                    <Label Grid.Row="0" TextColor="#385897"  Text="{Binding Product.PricePerKg, StringFormat='Price: Rs {0}'}" FontAttributes="Bold" FontSize="14" />
-                                    <Label Grid.Row="1" TextColor="#385897"  Text="{Binding Product.Quantity, StringFormat='Quantity: {0} kg'}" FontAttributes="Bold" FontSize="14"  />
+                                    <Label Grid.Row="0" FontAutoScalingEnabled="False" TextColor="#385897"  Text="{Binding Product.PricePerKg, StringFormat='Price: Rs {0}'}" FontAttributes="Bold" FontSize="14" />
+                                    <Label Grid.Row="1" FontAutoScalingEnabled="False" TextColor="#385897"  Text="{Binding Product.Quantity, StringFormat='Quantity: {0} kg'}" FontAttributes="Bold" FontSize="14"  />
                                 </Grid>
                                 <Grid Grid.Column="1"  RowDefinitions="Auto,Auto"  >
 
-                                    <Label Grid.Row="0"  HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="View Location" TextColor="#385897" FontAttributes="Bold" FontSize="14" />
+                                    <Label Grid.Row="0" FontAutoScalingEnabled="False"  HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="View Location" TextColor="#385897" FontAttributes="Bold" FontSize="14" />
                                     <Image Grid.Row="1" Source="map.png" HeightRequest="30" >
 
                                     </Image>
@@ -75,7 +75,7 @@
 
 
                     <Button Command="{Binding OnBuyButtonPressed}" 
-                           IsVisible="{Binding IsBuyButtonVisible}"
+                           IsVisible="{Binding IsBuyButtonVisible}" FontAutoScalingEnabled="False"
                             Grid.Column="0" HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="Buy" HeightRequest="40" WidthRequest="100" Background="#53900f"/>
                     <ActivityIndicator Grid.Column="1" IsRunning="{Binding IsBusy}" 
                         IsVisible="{Binding IsBusy}" HorizontalOptions="EndAndExpand" 

@@ -31,7 +31,7 @@ HorizontalOptions="Center"></Label>
                 </Grid>
                 <Grid Grid.Row="1" ColumnDefinitions="Auto,*">
                     <Grid Grid.Column="0" RowDefinitions="Auto,*">
-                        <Label Grid.Row="0" Text="{Binding OrderDetail.CreatedTime , Converter={StaticResource StringConverter}}"/>
+                        <Label  Grid.Row="0" Text="{Binding OrderDetail.CreatedTime , Converter={StaticResource StringConverter}}"/>
                         <Border  Grid.Row="1"  StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="0.0" StrokeDashOffset="12" HorizontalOptions="EndAndExpand">
                             <Grid Padding="5" BackgroundColor="#edf9eb">
                                 <Label Grid.Row="0" Text="{Binding Status}" TextColor="#385897" FontSize="15"/>
