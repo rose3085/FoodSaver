@@ -15,6 +15,7 @@ using System.Security.Claims;
 using System.Net;
 using SixLabors.ImageSharp.PixelFormats;
 using System.Threading.Tasks;
+using System;
 
 
 namespace Application.Services.Food
@@ -145,22 +146,22 @@ namespace Application.Services.Food
         public async Task<FoodServiceResponse> DeleteFood(string foodId)
         {
             try {
-                var includes = new Expression<Func<FoodModel, object>>[]
-                   {
-                        s => s.Seller,
-                   };
-                var seller = await _uow.AsyncRepositories<FoodModel>().GetWithIncludeAndId(foodId,includes);
-                if (seller == null)
-                {
-                    return new FoodServiceResponse()
-                    {
-                        IsSuccess = false,
-                        Message = "select a valid food!",
+                //var includes = new Expression<Func<FoodModel, object>>[]
+                //   {
+                //        s => s.Seller,
+                //   };
+                //var seller = await _uow.AsyncRepositories<FoodModel>().GetWithIncludeAndId(foodId,includes);
+                //if (seller == null)
+                //{
+                //    return new FoodServiceResponse()
+                //    {
+                //        IsSuccess = false,
+                //        Message = "select a valid food!",
                         
 
-                    };
+                //    };
 
-                }
+                //}
 
                 var userInfo = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
 
@@ -175,6 +176,23 @@ namespace Application.Services.Food
                     };
                 }
 
+                var includes = new Expression<Func<OrderModel, object>>[]
+                  {
+                        s => s.Food,
+                  };
+
+                Expression<Func<OrderModel, bool>> filter = x => x.Food.Id == foodId;
+                var orderModel = await _uow.AsyncRepositories<OrderModel>().GetwithIncludeAndFilter(includes,filter);
+                var order = orderModel.FirstOrDefault();
+                if(order != null && order.IsDelivered == false)
+                {
+                    return new FoodServiceResponse()
+                    {
+                        IsSuccess = false,
+                        Message = "You can not delete the food without delivery!!",
+
+                    };
+                }
                 var result = _uow.AsyncRepositories<FoodModel>().DeleteById(foodId);
                 _uow.save();
 
@@ -272,7 +290,8 @@ namespace Application.Services.Food
 
                 var baseUrl = $"https://9d85-2405-acc0-1504-cce4-98c9-36b4-d35a-6799.ngrok-free.app";
                 // var baseUrl = $"https://localhost:7293";
-                
+
+
                 var productResult = result
                     .Where(product => product.IsBooked == false)
                     .Select(product => ProcessAllProduct(product, currentLat, currentLong, baseUrl))
@@ -283,8 +302,9 @@ namespace Application.Services.Food
                 //var sortedResult = finalResult.OrderBy(product => product.Distance).ToList();
                 if (productResult.Count > 0 && productResult != null)
                 {
+                    Random random = new Random();
                     var sortedResult = (await Task.WhenAll(productResult))
-                    .Where(product => product != null) // Filters out null values
+                    .Where(product => product != null ) // Filters out null values
                     .OrderBy(product => product.Distance)
                     .ToList();
                     return sortedResult;
@@ -302,26 +322,33 @@ namespace Application.Services.Food
                 var timeDifference = await CalculateTime(product.Date);
                 var latitude = product.Address.Latitude;
                 var longitude = product.Address.Longitude;
+                var currentTime = DateTime.UtcNow;
+                var filterTime = currentTime - product.Date;
 
                 var distance = await CalculateDistance(currentLat, currentLong, latitude, longitude);
-                return new GetProductResponse
+                if (filterTime.TotalDays <= 4)
                 {
-                    Id = product.Id,
-                    ProductName = product.FoodName,
-                    Description = product.Description,
-                    PricePerKg = product.PricePerKg,
-                    Quantity = product.Quantity,
-                    IsBooked = product.IsBooked,
-                    UserName = product.Seller?.UserName,
-                    CityName = product.Address?.CityName,
-                    ToleName = product.Address?.ToleName,
-                    Latitude = product.Address.Latitude,
-                    Longitude = product.Address.Longitude,
-                    Date = timeDifference,
-                    Distance = distance,
-                    // image Url form ma return garne
-                    ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
-                };
+                    return new GetProductResponse
+                    {
+                        Id = product.Id,
+                        ProductName = product.FoodName,
+                        Description = product.Description,
+                        PricePerKg = product.PricePerKg,
+                        Quantity = product.Quantity,
+                        IsBooked = product.IsBooked,
+                        UserName = product.Seller?.UserName,
+                        CityName = product.Address?.CityName,
+                        ToleName = product.Address?.ToleName,
+                        Latitude = product.Address.Latitude,
+                        Longitude = product.Address.Longitude,
+                        Date = timeDifference,
+                        Distance = distance,
+                        // image Url form ma return garne
+                        ImageUrl = $"{baseUrl}/Resources/{product.ProductImage}"
+                    };
+                }
+                else
+                { return null; }
             }
             catch {
                 return null;
