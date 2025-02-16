@@ -103,7 +103,12 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Infrastructure"));
+    options.UseSqlServer(connectionString, b =>
+    {
+        b.MigrationsAssembly("Infrastructure");
+        b.EnableRetryOnFailure();
+    });
+    
 });
 
 

@@ -43,13 +43,19 @@ namespace FoodSaverMaui.Services.User
                     {
                         await SecureStorage.SetAsync("token", result.Token);
                         var roles = System.Text.Json.JsonSerializer.Serialize(result.Role);
-                        await SecureStorage.SetAsync("roles",roles);
+                        await SecureStorage.SetAsync("roles", roles);
                         return true;
                     }
-                    else 
+                 
+                    else
                     {
                         return false;
                     }
+                }
+                else if ((int)response.StatusCode == 401)
+                {
+                     SecureStorage.Remove("token");
+                    return false;
                 }
                 else
                 {
