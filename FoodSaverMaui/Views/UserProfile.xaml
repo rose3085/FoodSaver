@@ -179,75 +179,74 @@
                         </RefreshView>
 
 
+                            <Frame IsVisible="{Binding IsComponent2Visible}"  BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <Grid RowDefinitions="Auto,Auto" RowSpacing="10" >
 
-                        <Frame IsVisible="{Binding IsComponent2Visible}"  BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                            <Grid RowDefinitions="Auto,Auto" RowSpacing="10" >
-
-                                <Grid  RowSpacing="5" RowDefinitions="Auto,*" Padding="0,20,0,20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12">
-                                    <Grid Grid.Row="0"  RowSpacing="10" RowDefinitions="Auto,Auto,Auto,*" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
-                                        <Label Grid.Row="0" Padding="0,45,0,0" Text="Maximum sale limit is Rs.200."  HorizontalOptions="CenterAndExpand"
+                                    <Grid  RowSpacing="5" RowDefinitions="Auto,*" Padding="0,20,0,20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                        <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12">
+                                            <Grid Grid.Row="0"  RowSpacing="10" RowDefinitions="Auto,Auto,Auto,*" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
+                                                <Label Grid.Row="0" Padding="0,45,0,0" Text="Maximum sale limit is Rs.200."  HorizontalOptions="CenterAndExpand"
                                             TextColor="#385897" FontSize="18" FontAttributes="Bold" FontFamily="Poppins"/>
-                                        <Frame Grid.Row="1" BorderColor="Beige" Padding="20" >
-                                            
-                                                <Grid RowDefinitions="Auto,*">
-                                                    <ProgressBar Grid.Row="0" ProgressColor="#53900f"  WidthRequest="250"  Progress="{Binding Percentage}"   />
-                                                    <Grid Grid.Row="1"  RowDefinitions="Auto,Auto">
-                                                        <Label Grid.Row="0" Padding="0,0,0,0" Text="Remaining sales limit:" HorizontalOptions="CenterAndExpand"
+                                                <Frame Grid.Row="1" BorderColor="Beige" Padding="20" >
+
+                                                    <Grid RowDefinitions="Auto,*">
+                                                        <ProgressBar Grid.Row="0" ProgressColor="#53900f"  WidthRequest="250"  Progress="{Binding Percentage}"   />
+                                                        <Grid Grid.Row="1"  RowDefinitions="Auto,Auto">
+                                                            <Label Grid.Row="0" Padding="0,0,0,0" Text="Remaining sales limit:" HorizontalOptions="CenterAndExpand"
                                                 TextColor="Gray" FontSize="15" FontAttributes="Bold" FontFamily="Poppins"/>
-                                                        <Grid Grid.Row="1"  ColumnDefinitions="Auto,Auto" HorizontalOptions="CenterAndExpand">
-                                                            <Label Grid.Column="0" Padding="0,0,0,0" Text="RS. " 
+                                                            <Grid Grid.Row="1"  ColumnDefinitions="Auto,Auto" HorizontalOptions="CenterAndExpand">
+                                                                <Label Grid.Column="0" Padding="0,0,0,0" Text="RS. " 
                                                     TextColor="#385897" FontSize="15" FontAttributes="Bold" FontFamily="Poppins"/>
-                                                            <Label Grid.Column="1" Padding="0,0,0,0" Text="{Binding RemainingLimit}" HorizontalOptions="CenterAndExpand"
+                                                                <Label Grid.Column="1" Padding="0,0,0,0" Text="{Binding RemainingLimit}" HorizontalOptions="CenterAndExpand"
                                                 TextColor="#385897" FontSize="15" FontAttributes="Bold" FontFamily="Poppins"/>
+                                                            </Grid>
                                                         </Grid>
                                                     </Grid>
-                                                </Grid>
-                                   
-                                        </Frame>
-                                        <Grid Grid.Row="2" Padding="0,10,0,45" ColumnDefinitions="Auto,Auto,Auto" HorizontalOptions="CenterAndExpand">
-                                            <BoxView WidthRequest="10" BackgroundColor="Transparent" Grid.Column="0"
+
+                                                </Frame>
+                                                <Grid Grid.Row="2" Padding="0,10,0,45" ColumnDefinitions="Auto,Auto,Auto" HorizontalOptions="CenterAndExpand">
+                                                    <BoxView WidthRequest="10" BackgroundColor="Transparent" Grid.Column="0"
                                                  HeightRequest="10" 
                                                  CornerRadius="5" 
-                                                 Color="#53900f" /> 
-                                            
-                                            <Label Padding="10,0,0,0" Grid.Column="1"  Text="Your total sale is " 
+                                                 Color="#53900f" />
+
+                                                    <Label Padding="10,0,0,0" Grid.Column="1"  Text="Your total sale is " 
                                                     TextColor="#385897" FontSize="18" FontAttributes="Bold" FontFamily="Poppins"/>
-                                            <Grid Grid.Column="2"  ColumnDefinitions="Auto,Auto" HorizontalOptions="CenterAndExpand">
-                                                <Label Grid.Column="0" Padding="0,0,0,0" Text="Rs. " 
+                                                    <Grid Grid.Column="2"  ColumnDefinitions="Auto,Auto" HorizontalOptions="CenterAndExpand">
+                                                        <Label Grid.Column="0" Padding="0,0,0,0" Text="Rs. " 
                                                         TextColor="#385897" FontSize="18" FontAttributes="Bold" FontFamily="Poppins"/>
-                                                <Label Grid.Column="1" Padding="0,0,0,0" Text="{Binding Totalsales}" HorizontalOptions="CenterAndExpand"
-                                                        TextColor="#385897" FontSize="18" FontAttributes="Bold" FontFamily="Poppins"/> 
+                                                        <Label Grid.Column="1" Padding="0,0,0,0" Text="{Binding Totalsales}" HorizontalOptions="CenterAndExpand"
+                                                        TextColor="#385897" FontSize="18" FontAttributes="Bold" FontFamily="Poppins"/>
+                                                    </Grid>
+                                                </Grid>
                                             </Grid>
-                                        </Grid>
+                                        </Border>
                                     </Grid>
-                                </Border>
-                            </Grid>
-                                <!--IsVisible="{Binding ShowSalesLimitReachedMessage}"-->
-                                <Grid  IsVisible="{Binding ShowSalesLimitReachedMessage}"
+                                    <!--IsVisible="{Binding ShowSalesLimitReachedMessage}"-->
+                                    <Grid  IsVisible="{Binding ShowSalesLimitReachedMessage}"
                                       RowDefinitions="Auto,Auto" RowSpacing="10" Grid.Row="2" Padding="0,20,0,0" HorizontalOptions="CenterAndExpand" >
-                                    <Grid Grid.Row="0" HorizontalOptions="CenterAndExpand" RowDefinitions="Auto,Auto" VerticalOptions="EndAndExpand">
-                                        <Label Grid.Row="0" HorizontalOptions="CenterAndExpand" Text="You have reached your daily limit !!" TextColor="Red" />
-                                        <Label Grid.Row="1" HorizontalOptions="CenterAndExpand" Text="Please pay Rs. 20 to continue your sale." TextColor="Red" />
+                                        <Grid Grid.Row="0" HorizontalOptions="CenterAndExpand" RowDefinitions="Auto,Auto" VerticalOptions="EndAndExpand">
+                                            <Label Grid.Row="0" HorizontalOptions="CenterAndExpand" Text="You have reached your daily limit !!" TextColor="Red" />
+                                            <Label Grid.Row="1" HorizontalOptions="CenterAndExpand" Text="Please pay Rs. 20 to continue your sale." TextColor="Red" />
 
 
-                                    </Grid>
-                                    <Border  Grid.Row="1"  StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="0.0" StrokeDashOffset="12"
-                                              HorizontalOptions="CenterAndExpand">
-                                        <Grid Padding="10"  BackgroundColor="#edf9eb" HorizontalOptions="CenterAndExpand" RowDefinitions="Auto,Auto" VerticalOptions="CenterAndExpand">
-                                            <Label Grid.Row="0" Text="Confirm Payment" TextColor="#385897" FontSize="16" FontAttributes="Bold" FontFamily="Poppins"/>
-                                            <!--<Button   Grid.Row="0" HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="Pay" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>-->
-                                            <Grid.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding OnConfirmPaymentTapped}"/>
-                                            </Grid.GestureRecognizers>
                                         </Grid>
-                                    </Border>
+                                        <Border  Grid.Row="1"  StrokeShape="RoundRectangle 20,20,20,20" StrokeThickness="0.0" StrokeDashOffset="12"
+                                              HorizontalOptions="CenterAndExpand">
+                                            <Grid Padding="10"  BackgroundColor="#edf9eb" HorizontalOptions="CenterAndExpand" RowDefinitions="Auto,Auto" VerticalOptions="CenterAndExpand">
+                                                <Label Grid.Row="0" Text="Confirm Payment" TextColor="#385897" FontSize="16" FontAttributes="Bold" FontFamily="Poppins"/>
+                                                <!--<Button   Grid.Row="0" HorizontalOptions="CenterAndExpand" Margin="0,0,10,0" Text="Pay" HeightRequest="40" WidthRequest="100" Background="#03b25a"/>-->
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding OnConfirmPaymentTapped}"/>
+                                                </Grid.GestureRecognizers>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </Frame>
+                            </Frame>
+                      
 
-
-                      <CollectionView ItemsSource="{Binding PurchaseHistory}" SelectionMode="Single" IsVisible="{Binding IsComponent3Visible}" EmptyView="No Purchase History to display!">
+                        <CollectionView ItemsSource="{Binding PurchaseHistory}" SelectionMode="Single" IsVisible="{Binding IsComponent3Visible}" EmptyView="No Purchase History to display!">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="purchaseModel:GetPurchaseWrapper">
                                         <Frame BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">

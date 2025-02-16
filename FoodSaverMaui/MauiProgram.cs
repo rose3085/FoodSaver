@@ -107,8 +107,8 @@ namespace FoodSaverMaui
             builder.Services.AddSingleton<ISignalRService, SignalRService>();
 
 
-            builder.Services.AddSingleton<TempPage>();
-            builder.Services.AddSingleton<TempPageViewModel>();
+            builder.Services.AddTransient<TempPage>();
+            builder.Services.AddTransient<TempPageViewModel>();
 
 
 #if DEBUG

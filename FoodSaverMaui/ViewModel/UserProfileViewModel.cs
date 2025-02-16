@@ -108,6 +108,7 @@ namespace FoodSaverMaui.ViewModel
         public Command OnDetailButtonTapped { get; }
         public Command OnConfirmPaymentTapped { get; }
         public Command OnRefreshTapped { get; }
+        public Command OnRefreshTappedComponent2 { get; }
 
         private readonly HubConnection _hubConnection;
         private readonly ISignalRService _signalRService;
@@ -140,8 +141,18 @@ namespace FoodSaverMaui.ViewModel
             OnPurchaseHistoryTapped = new Command(async() => await PurchaseHistoryTapped());
             OnConfirmPaymentTapped = new Command(async () => await ConfirmPayment());
             OnRefreshTapped = new Command(async() => await OnRefresh());
+            OnRefreshTappedComponent2 = new Command(async() => await OnComponent2Refresh());
         }
 
+
+        public async Task OnComponent2Refresh()
+        {
+            try {
+                IsRefreshing = true;
+                await HistoryTapped();
+            }
+            finally { IsRefreshing = false; }
+        }
 
         public async Task OnRefresh()
         {
@@ -336,6 +347,12 @@ namespace FoodSaverMaui.ViewModel
                         ShowSalesLimitReachedMessage = true;
 
                     }
+                    else
+                    {
+                        isSalesLimitReached = false;
+                        ShowSalesLimitReachedMessage = false;
+                      
+                    }
                     Percentage = newAmount / maxLimit;
 
                     if (Percentage > 1.0)
@@ -464,6 +481,7 @@ namespace FoodSaverMaui.ViewModel
             {
                 Products.Clear();
                 PurchaseHistory.Clear();
+                IsComponent2Visible = false;
                 await _cacheService.Clear();
                 await SecureStorage.SetAsync("isLoggedOut","yes");
                await _signalRService.Dispose();

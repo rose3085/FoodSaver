@@ -143,6 +143,8 @@ namespace FoodSaverMaui.ViewModel
                     if (request == true)
                     {
                         //await Shell.Current.DisplayAlert("Success", "User login successful", "Ok!");
+                        await Shell.Current.GoToAsync("//TempPage");
+                        await Task.Delay(1000);
                         await Shell.Current.GoToAsync("//HomePage", true);
 
                     }

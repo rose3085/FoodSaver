@@ -170,6 +170,15 @@ namespace FoodSaverMaui.ViewModel
                         if (result == "Product added successfully")
                         {
 
+                            Food = null;
+                            Description = null;
+                            Price = 0;
+                            _stepperValue = 0;
+                            WardNumber = null;
+                            ToleName = null;
+                            CityName = null;
+
+
                             await Shell.Current.GoToAsync("//HomePage");
                             //await Shell.Current.Navigation.PushModalAsync(UploadPostSucessfull);
                         }  

@@ -30,9 +30,13 @@ namespace FoodSaverMaui.ViewModel
                 var request = await _salesRecordService.PostSellerRevenue(revenueModel);
                 if (request != null)
                 {
+                    await Shell.Current.GoToAsync("//HomePage");
                     var message = "Payement successfull";
                     var toast = Toast.Make($"{message}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
                     await toast.Show();
+                    //IsSeller = true;
+                    // string limitReached = request.dailyLimitReached.ToString();
+                    SecureStorage.Remove("dailyLimitReached");
 
 
                 }

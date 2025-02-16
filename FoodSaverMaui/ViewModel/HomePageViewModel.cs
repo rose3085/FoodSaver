@@ -28,9 +28,9 @@ namespace FoodSaverMaui.ViewModel
             OnPageMount = new Command(async() => await PageMount());
             _jwtHelper = jwtHelper;
             _userProfileService = userProfileService;
-            _signalRService = signalRService;
+            //_signalRService = signalRService;
            
-            _signalRService.ConnectToHubAsync();
+            //_signalRService.ConnectToHubAsync();
 
         }
         public async Task PageMount()
