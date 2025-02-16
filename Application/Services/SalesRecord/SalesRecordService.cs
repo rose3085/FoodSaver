@@ -127,7 +127,7 @@ namespace Application.Services.SalesRecord
                         foreach (var idExists in checkNewSellerId)
 
                         {
-                            if (idExists.Seller == request.SellerId)
+                            if (idExists.Seller != request.SellerId)
                             {
                                 var id = Guid.NewGuid().ToString();
                                 var requestModel = new SalesRecordModel()
@@ -224,6 +224,7 @@ namespace Application.Services.SalesRecord
                     if (request.Amount >= 20.0)
                     {
                         sellerSalesRecord.CommissionPaid = true;
+                     
                     }
                     await _uow.AsyncRepositories<SalesRecordModel>().UpdateAsync(sellerSalesRecord);
                     _uow.save();
@@ -253,6 +254,9 @@ namespace Application.Services.SalesRecord
                     if (request.Amount >= 20.0)
                     {
                         sellerSalesRecord.CommissionPaid = true;
+                        sellerSalesRecord.TotalPreviousAmount += sellerSalesRecord.NewAmount;
+                        sellerSalesRecord.NewAmount = 0;
+                        sellerSalesRecord.DailyLimitReached = false;
                         sellerSalesRecord.Seller.CanPost = true;
                     }
                     await _uow.AsyncRepositories<SalesRecordModel>().UpdateAsync(sellerSalesRecord);
