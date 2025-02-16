@@ -78,7 +78,7 @@ namespace Application.Services.Payment
                        
                    };
                     var checkProductExist = await _uow.AsyncRepositories<FoodModel>().GetWithIncludeAndId(createOrderRequest.ProductId, includes);
-                    if (checkProductExist == null)
+                    if (checkProductExist == null || checkProductExist.IsBooked== true)
                     {
                         return new OrderResponse
                         {

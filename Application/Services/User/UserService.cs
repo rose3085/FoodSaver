@@ -450,7 +450,7 @@ namespace Application.Services.User
                 if (updatePasswordRequest.NewPassword == updatePasswordRequest.ConfirmNewPassword)
                 {
                     var updateRequest = await _userManager.ChangePasswordAsync(checkEmail, updatePasswordRequest.OldPassword, updatePasswordRequest.NewPassword);
-                    if (updateRequest != null)
+                    if (updateRequest.Succeeded)
                     {
                         return new UserManagerResponse
                         {
