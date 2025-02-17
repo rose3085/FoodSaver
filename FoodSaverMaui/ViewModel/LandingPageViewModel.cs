@@ -137,7 +137,7 @@ namespace FoodSaverMaui.ViewModel
                 }
             }
             catch
-            { }
+            { Products.Clear(); }
         }
 
         public async Task PageMounted()

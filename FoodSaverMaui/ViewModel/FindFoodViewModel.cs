@@ -205,7 +205,7 @@ namespace FoodSaverMaui.ViewModel
                     }
                 }
             }
-            catch { }
+            catch { Products.Clear(); }
             finally
             {
                 IsBusy = false;
