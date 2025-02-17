@@ -97,7 +97,7 @@
              </Image.Behaviors>-->
                                 </Image>
                                 <Grid.GestureRecognizers>
-                                    <!--<TapGestureRecognizer Command="{Binding OnPinLocationTapped}" />-->
+                                    <TapGestureRecognizer Command="{Binding OnPinLocationTapped}" />
                                 </Grid.GestureRecognizers>
                             </Grid>
                         </Grid>
