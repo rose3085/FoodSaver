@@ -246,7 +246,7 @@ namespace FoodSaverMaui.ViewModel
 
             }
             catch(Exception ex) {
-                await Shell.Current.DisplayAlert("Something went wrong!", "Couldn't display Purchase History", "Ok");
+               // await Shell.Current.DisplayAlert("Something went wrong!", "Couldn't display Purchase History", "Ok");
             }
             finally { IsBusy = false; }
         }
@@ -366,7 +366,7 @@ namespace FoodSaverMaui.ViewModel
             catch
             {
 
-                await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
+                //await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
             }
             finally
             {
@@ -440,7 +440,7 @@ namespace FoodSaverMaui.ViewModel
             catch
             {
 
-                await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
+                //await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
             }
 
             finally

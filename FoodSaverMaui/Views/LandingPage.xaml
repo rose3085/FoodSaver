@@ -58,7 +58,7 @@
                     </Grid.GestureRecognizers>
                 </Grid>-->
             </Grid>
-            <ScrollView  Grid.Row="1" BackgroundColor="Transparent" >
+            <Grid  Grid.Row="1" BackgroundColor="Transparent" >
 
 
 
@@ -97,7 +97,7 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-            </ScrollView>
+            </Grid>
 
 
 

@@ -77,7 +77,7 @@ namespace FoodSaverMaui.Services.User
         }
 
 
-        public async Task<string> UpdateUser(UpdateUserRequest request)
+        public async Task<bool> UpdateUser(UpdateUserRequest request)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace FoodSaverMaui.Services.User
                 if (jwtToken == null)
                 {
 
-                    return null;
+                    return false;
                 }
                 var url = $"{App.Settings.ApiBaseUrl}/api/User/UpdateUser";
                 var json = JsonConvert.SerializeObject(request);
@@ -100,23 +100,23 @@ namespace FoodSaverMaui.Services.User
                     {
 
                        
-                        return result.Message;
+                        return true;
                     }
 
                     else
                     {
-                        return result.Message;
+                        return false;
                     }
                 }
                 else
                 {
-                    return null;
+                    return false;
                 }
             }
             catch (Exception ex)
             {
 
-                return null;
+                return false;
             }
         }
         public async Task<string> UpdatePassword(UpdatePasswordRequest request)

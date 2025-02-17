@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using FoodSaverMaui.Model;
 using FoodSaverMaui.Services.User;
+using FoodSaverMaui.Views;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace FoodSaverMaui.ViewModel
@@ -84,9 +86,14 @@ namespace FoodSaverMaui.ViewModel
                 if (result == true)
                 {
                     newRole = "Seller";
+                //    var listRole = new List<string>()
+                //{"Seller","Buyer"
+                //};
+                //    var roles = JsonSerializer.Serialize<List<string>>(listRole);
+                //    await SecureStorage.SetAsync("roles", roles);
                 }
                 else { newRole = "string"; }
-
+                
             }
             else if (Role == "Seller")
             {
@@ -94,6 +101,11 @@ namespace FoodSaverMaui.ViewModel
                 if (result == true)
                 {
                     newRole = "Buyer";
+                //    var listRole = new List<string>()
+                //{"Seller","Buyer"
+                //                };
+                //    var roles = JsonSerializer.Serialize<List<string>>(listRole);
+                //    await SecureStorage.SetAsync("roles", roles);
                 }
                 else { newRole = "string"; }
             }
@@ -129,10 +141,48 @@ namespace FoodSaverMaui.ViewModel
                         PhoneNumber = newPhoneNumber
                     };
                     var result = await _userProfileService.UpdateUser(requestModel);
-                    if (result != null)
+                    if (result == true)
                     {
-                        // string resultError = "Enter Valid Credentials!!";
-                        var toast = Toast.Make($"{result}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                        if (newRole != "string")
+                        {
+                            var listRole = new List<string>()
+                            {"Seller","Buyer"
+                            };
+                            var roles = JsonSerializer.Serialize<List<string>>(listRole);
+                            await SecureStorage.SetAsync("roles", roles);
+                        }
+                        
+                       
+
+                        await Shell.Current.GoToAsync("//TempPage"); 
+                        await Task.Delay(200); 
+                        //var homePage = Shell.Current.Items[2];
+                        var homePage = Shell.Current.Items.FirstOrDefault(x => x.Title == null && x.Route == "IMPL_HomePage");
+                        if (homePage != null)
+                        {
+                            Shell.Current.Items.Remove(homePage);
+                            await Task.Delay(100); 
+                        }
+
+                        Routing.UnRegisterRoute("HomePage");
+                       
+                        Shell.Current.Items.Add(new ShellContent
+                        {
+                            Route = "HomePage",
+                            ContentTemplate = new DataTemplate(typeof(HomePage))
+                        });
+
+                        await Shell.Current.GoToAsync("//HomePage");
+                        string message = "User Updated Sucessfully!!";
+                        var toast = Toast.Make($"{message}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
+                        await toast.Show();
+
+
+                    }
+                    else
+                    {
+                        string message = "Couldn't Update User!!!";
+                        var toast = Toast.Make($"{message}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
                         await toast.Show();
                     }
                 }

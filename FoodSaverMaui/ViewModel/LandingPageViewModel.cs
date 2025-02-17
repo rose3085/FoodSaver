@@ -103,7 +103,7 @@ namespace FoodSaverMaui.ViewModel
         {
             try
             {
-
+                IsBusy = true;
                 var location = await GetLocation();
                 if (location != null)
                 {
@@ -115,6 +115,7 @@ namespace FoodSaverMaui.ViewModel
                     {
                         if (request.Count() > 0)
                         {
+                           
                             Products.Clear();
                             foreach (var product in request)
                             {
@@ -160,10 +161,14 @@ namespace FoodSaverMaui.ViewModel
                 //else
                 //{
                 await ImageCarousel();
-                    await GetProducts();
+
+             
+                await GetProducts();
+
                 
             }
             catch { }
+            finally { IsBusy = false; }
 
         }
     }

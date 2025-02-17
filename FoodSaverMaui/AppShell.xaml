@@ -19,11 +19,13 @@
         ContentTemplate="{DataTemplate local:Login}"
         Route="Login" />
 
-    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}" IsVisible="True" />
-    <ShellContent Route="TempPage" ContentTemplate="{DataTemplate local:TempPage}" />
-    <ShellContent Route="CreateAccount" ContentTemplate="{DataTemplate local:CreateAccount}" />
-   
   
+    <ShellContent Route="TempPage" ContentTemplate="{DataTemplate local:TempPage}" />
+    <ShellContent Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}" IsVisible="True" />
+    <ShellContent Route="CreateAccount" ContentTemplate="{DataTemplate local:CreateAccount}" />
+
+    <ShellContent Route="UploadPostSucessfull" ContentTemplate="{DataTemplate local:UploadPostSucessfull}" />
+
 
 
 </Shell>

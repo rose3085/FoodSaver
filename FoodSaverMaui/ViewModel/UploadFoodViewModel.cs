@@ -173,10 +173,11 @@ namespace FoodSaverMaui.ViewModel
                             Food = null;
                             Description = null;
                             Price = 0;
-                            _stepperValue = 0;
+                            StepperValue = 0;
                             WardNumber = null;
                             ToleName = null;
                             CityName = null;
+                            PickedImage = null;
 
 
                             await Shell.Current.GoToAsync("//HomePage");
