@@ -58,7 +58,7 @@
                     </Grid.GestureRecognizers>
                 </Grid>-->
             </Grid>
-            <Grid  Grid.Row="1" BackgroundColor="Transparent" >
+            <Grid  Grid.Row="1" BackgroundColor="Transparent" HeightRequest="260">
 
 
 
