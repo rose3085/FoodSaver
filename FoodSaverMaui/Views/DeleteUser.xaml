@@ -39,7 +39,7 @@
                     <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
 
 
-                        <Image  Source="email.png" WidthRequest="25" HeightRequest="25"
+                        <Image  Source="user.png" WidthRequest="25" HeightRequest="25"
 Margin="10,0,0,0"
                 HorizontalOptions="Start"
                 VerticalOptions="Center" Grid.Column="0" />
@@ -74,7 +74,7 @@ Margin="10,0,0,0"
                        toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference DeleteUserPassword}" ReturnType="Next"
                                Text="{Binding Email}"
                                PlaceholderColor="Black"
-                           FontSize="15"
+                           FontSize="18"
                                Grid.Column="1" HorizontalOptions="Start"
                            WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
                         <Entry.Behaviors>
@@ -104,7 +104,7 @@ Margin="10,0,0,0"
                         <Entry Placeholder="Password" x:Name="DeleteUserPassword"
                                Text="{Binding Password}"
                                PlaceholderColor="Black" IsPassword="True"
-                       FontSize="15" Grid.Column="1" HorizontalOptions="Start"
+                       FontSize="18" Grid.Column="1" HorizontalOptions="Start"
                          WidthRequest="{OnIdiom Phone=220, Tablet=400}" >
                             <Entry.Behaviors>
                                 <toolkit:CharactersValidationBehavior 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FoodSaverMaui.Views;
 
 namespace FoodSaverMaui.ViewModel
 {
@@ -19,6 +20,19 @@ namespace FoodSaverMaui.ViewModel
             _salesRecordService = salesRecordServices;
             OnPageMount = new Command(async () => PageMount());
         }
+
+        private void RestartApp()
+        {
+            // Get the current application instance
+            var currentApp = Application.Current;
+
+            // Create a new instance of AppShell
+            var newShell = new AppShell();
+
+            // Set the new shell as the main page
+            currentApp.MainPage = newShell;
+
+        }
         public async Task PageMount()
         {
             try {
@@ -30,7 +44,27 @@ namespace FoodSaverMaui.ViewModel
                 var request = await _salesRecordService.PostSellerRevenue(revenueModel);
                 if (request != null)
                 {
-                    await Shell.Current.GoToAsync("//HomePage");
+
+                    //await Shell.Current.GoToAsync("//TempPage");
+                    //await Task.Delay(200);
+                    ////var homePage = Shell.Current.Items[2];
+                    //var homePage = Shell.Current.Items.FirstOrDefault(x => x.Title == null && x.Route == "IMPL_HomePage");
+                    //if (homePage != null)
+                    //{
+                    //    Shell.Current.Items.Remove(homePage);
+                    //    await Task.Delay(100);
+                    //}
+
+                    //Routing.UnRegisterRoute("HomePage");
+
+                    //Shell.Current.Items.Add(new ShellContent
+                    //{
+                    //    Route = "HomePage",
+                    //    ContentTemplate = new DataTemplate(typeof(HomePage))
+                    //});
+
+                    //await Shell.Current.GoToAsync("//HomePage");
+
                     var message = "Payement successfull";
                     var toast = Toast.Make($"{message}", CommunityToolkit.Maui.Core.ToastDuration.Long, 14);
                     await toast.Show();
@@ -38,6 +72,7 @@ namespace FoodSaverMaui.ViewModel
                     // string limitReached = request.dailyLimitReached.ToString();
                     SecureStorage.Remove("dailyLimitReached");
 
+                    //RestartApp();
 
                 }
                 else {

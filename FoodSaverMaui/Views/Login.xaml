@@ -44,7 +44,7 @@
                     <Grid ColumnSpacing="15" Padding="3" ColumnDefinitions="Auto,*" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
 
 
-                        <Image  Source="email.png" WidthRequest="25" HeightRequest="25"
+                        <Image  Source="user.png" WidthRequest="25" HeightRequest="25"
 Margin="10,0,0,0"
                 HorizontalOptions="Start"
                 VerticalOptions="Center" Grid.Column="0" />

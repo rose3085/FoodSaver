@@ -51,8 +51,8 @@ namespace Application.Services.User
             try {
                 //var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
                 var userInfo = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
-                var userExists = await _userManager.FindByEmailAsync(deleteRequest.Email);
-                if (userExists == null || userInfo != userExists)
+                //var userExists = await _userManager.FindByEmailAsync(deleteRequest.Email);
+                if (userInfo == null)
                 {
                     return new UserManagerResponse
                     {
@@ -61,7 +61,7 @@ namespace Application.Services.User
                     };
 
                 }
-                var isPasswordCorrect = await _userManager.CheckPasswordAsync(userExists, deleteRequest.Password);
+                var isPasswordCorrect = await _userManager.CheckPasswordAsync(userInfo, deleteRequest.Password);
                 if (!isPasswordCorrect)
                 {
                     return new UserManagerResponse
@@ -131,7 +131,7 @@ namespace Application.Services.User
             {
                 //var userExists = await _userManager.FindByEmailAsync(loginRequest.Email);
                 var userExists = await _userManager.FindByNameAsync(loginRequest.UserName);
-                if (userExists == null || userExists.IsDeleted == true && userExists.Email != loginRequest.Email)
+                if (userExists == null )
                 {
                     return new UserLoginResponse
                     { 
@@ -141,7 +141,15 @@ namespace Application.Services.User
                     };
 
                 }
+                if (userExists.IsDeleted == true || userExists.UserName != loginRequest.UserName || userExists.Email != loginRequest.Email)
+                {
+                    return new UserLoginResponse
+                    {
 
+                        IsSuccess = false,
+                        Message = "Invalid Credentials!!"
+                    };
+                }
 
                 var isPasswordCorrect = await _userManager.CheckPasswordAsync(userExists, loginRequest.Password);
                 if (!isPasswordCorrect)

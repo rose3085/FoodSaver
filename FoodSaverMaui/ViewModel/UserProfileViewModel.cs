@@ -49,6 +49,9 @@ namespace FoodSaverMaui.ViewModel
         bool isRefreshing = false;
 
 
+        [ObservableProperty]
+        public bool isNotAvailableMessage = false;
+
         //private double _percentage;
 
         //public double Percentage
@@ -246,7 +249,10 @@ namespace FoodSaverMaui.ViewModel
 
             }
             catch(Exception ex) {
-               // await Shell.Current.DisplayAlert("Something went wrong!", "Couldn't display Purchase History", "Ok");
+                IsComponent1Visible = false;
+                IsComponent2Visible = false;
+                IsComponent3Visible = true;
+                // await Shell.Current.DisplayAlert("Something went wrong!", "Couldn't display Purchase History", "Ok");
             }
             finally { IsBusy = false; }
         }
@@ -303,7 +309,7 @@ namespace FoodSaverMaui.ViewModel
                 { 
                     var result = await _foodService.DeleteFood(id);
                     if (result == true)
-                    { await Shell.Current.DisplayAlert("Delete Product successful", "gffdhf", "Ok");
+                    { await Shell.Current.DisplayAlert("Delete Product successful", "Product deleted successfully", "Ok");
                         if (Products.Contains(selectedProduct))
                         {
                             Products.Remove(selectedProduct);
@@ -311,7 +317,7 @@ namespace FoodSaverMaui.ViewModel
                     }
                     else
                     {
-                        await Shell.Current.DisplayAlert("Delete Product unSuccessful", "gffdhf", "Ok");
+                        await Shell.Current.DisplayAlert("Couldn't delete product", "Please deliver the product first", "Ok");
                     }
                 }
             }
@@ -365,7 +371,10 @@ namespace FoodSaverMaui.ViewModel
             }
             catch
             {
-
+                IsComponent1Visible = false;
+                IsComponent2Visible = true;
+                IsComponent3Visible = false;
+                IsNotAvailableMessage = true;
                 //await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
             }
             finally
@@ -433,6 +442,7 @@ namespace FoodSaverMaui.ViewModel
                 }
                 else
                 {
+                    Products.Clear();
                     await GetUserProduct();
                 }
                

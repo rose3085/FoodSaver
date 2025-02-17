@@ -181,8 +181,11 @@
 
                             <Frame IsVisible="{Binding IsComponent2Visible}"  BorderColor="Beige" Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                 <Grid RowDefinitions="Auto,Auto" RowSpacing="10" >
+                                <Grid IsVisible="{Binding IsNotAvailableMessage}">
+                                    <Label HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Text="No Sales History to display!"  FontSize="16" />
+                                </Grid>
 
-                                    <Grid  RowSpacing="5" RowDefinitions="Auto,*" Padding="0,20,0,20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <Grid  RowSpacing="5" RowDefinitions="Auto,*" Padding="0,20,0,20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                         <Border StrokeShape="RoundRectangle 24,24,24,24" StrokeThickness="1.5" StrokeDashOffset="12">
                                             <Grid Grid.Row="0"  RowSpacing="10" RowDefinitions="Auto,Auto,Auto,*" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
                                                 <Label Grid.Row="0" Padding="0,45,0,0" Text="Maximum sale limit is Rs.200."  HorizontalOptions="CenterAndExpand"

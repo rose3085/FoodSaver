@@ -68,7 +68,23 @@ namespace FoodSaverMaui.ViewModel
                             SecureStorage.RemoveAll();
                             Preferences.Clear();
                             await _cacheService.Clear();
+                            await Shell.Current.GoToAsync("//TempPage");
+                            await Task.Delay(200);
+                            //var homePage = Shell.Current.Items[2];
+                            var homePage = Shell.Current.Items.FirstOrDefault(x => x.Title == null && x.Route == "IMPL_HomePage");
+                            if (homePage != null)
+                            {
+                                Shell.Current.Items.Remove(homePage);
+                                await Task.Delay(100);
+                            }
 
+                            Routing.UnRegisterRoute("HomePage");
+
+                            Shell.Current.Items.Add(new ShellContent
+                            {
+                                Route = "HomePage",
+                                ContentTemplate = new DataTemplate(typeof(HomePage))
+                            });
                             await Shell.Current.GoToAsync("//Login");
                         }
                         else

@@ -123,11 +123,14 @@ namespace FoodSaverMaui.ViewModel
                             }
                             OnPropertyChanged(nameof(Products));
                         }
-                        else { await Shell.Current.DisplayAlert("No products available to display!!", "Please try again later.", "Ok!"); }
+                        else
+                        {
+                            Products.Clear();
+                            await Shell.Current.DisplayAlert("No products available to display!!", "Please try again later.", "Ok!"); }
                     }
                     else
                     {
-
+                        Products.Clear();
                         await Shell.Current.DisplayAlert("Network Error", "Couldn't display products!!", "Ok!");
 
                     }
