@@ -52,7 +52,7 @@ builder.Services.AddSwaggerGen(option =>
             Name = "Authorization",
             Type = SecuritySchemeType.Http,
             BearerFormat = "JWT",
-            Scheme = "bearer"
+            Scheme = "Bearer"
         }
     );
     option.AddSecurityRequirement(
@@ -226,8 +226,8 @@ if (!Directory.Exists(uploadsPath))
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    //app.UseSwagger();
-    //app.UseSwaggerUI();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
