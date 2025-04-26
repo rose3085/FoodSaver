@@ -126,6 +126,7 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Plugin.LocalNotification" Version="10.1.8" />
 		<PackageReference Include="Plugin.Maui.Biometric" Version="0.0.2" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
 		<PackageReference Include="System.Linq" Version="4.3.0" />
 		<PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
 	</ItemGroup>

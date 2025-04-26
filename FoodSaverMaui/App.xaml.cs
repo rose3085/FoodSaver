@@ -8,7 +8,7 @@
             InitializeComponent();
             Settings = new AppSettings
             {
-                ApiBaseUrl = "https://0d6c-2405-acc0-1504-cce4-00-1.ngrok-free.app"
+                ApiBaseUrl = "https://your-api.azurewebsites.net"
             };
 
             MainPage = new AppShell();
