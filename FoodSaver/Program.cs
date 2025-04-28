@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Builder;
 using Infrastructure.Data.DataContext;
 using Application.Interfaces.Data;
 using Infrastructure.Data.Repository;
@@ -43,7 +42,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {
     option.MapType<DateOnly>(() => new OpenApiSchema { Type = "string", Format = "date" });
-    option.SwaggerDoc("v1", new OpenApiInfo { Title = "FoodSaver", Version = "v1" });
+    option.SwaggerDoc("v1", new OpenApiInfo { Title = "Signin Manager", Version = "v1" });
     option.AddSecurityDefinition(
         "Bearer",
         new OpenApiSecurityScheme
@@ -208,6 +207,7 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader();
     });
 });
+
 
 
 
