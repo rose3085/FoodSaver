@@ -30,6 +30,7 @@ using Application.Hubs;
 using Application.Hubs.InMemoryDb;
 using Application.Interfaces.OrderDelivery;
 using Application.Services.OrderDelivery;
+using FoodSaver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -208,7 +209,8 @@ builder.Services.AddCors(options =>
     });
 });
 
-
+var startup = new Startup();
+startup.ConfigureServices(builder.Services);
 
 
 var app = builder.Build();
@@ -229,9 +231,10 @@ if (!Directory.Exists(uploadsPath))
 //    app.UseSwagger();
 //    app.UseSwaggerUI();
 //}
-app.UseDeveloperExceptionPage();
-app.UseSwagger();
-app.UseSwaggerUI();
+startup.Configure(app);
+//app.UseDeveloperExceptionPage();
+//app.UseSwagger();
+//app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
